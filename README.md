@@ -1,13 +1,12 @@
 # Wagon-Counter-Bot 
-![image](https://user-images.githubusercontent.com/43221618/130920685-1557ab56-425e-4461-ab37-f76299aafedb.png)
+![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
+
 
 ## Version 1.0.0
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
 The 'Wagon Counter Bot' is a fully functional command-oriented program implemented using Discord.py APIs. The bot's main functionality is to search through a channel's message history and return a list of users, along with the number of occurrences of a specific phrase. The bot also has popular secondary features like: 
-
-![image](https://user-images.githubusercontent.com/43221618/130920306-db630cc7-ad21-46b0-90a3-8b31b18b85f4.png)
 
 
 ## Planned Features
