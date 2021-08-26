@@ -30,7 +30,11 @@ The 'Wagon Counter Bot' is a fully functional command-oriented program implement
 - [x] Making '!members' more readable by separating users into 2+ columns.
 - [x] Updated the '!wagonSteals' command to search each message for 'bhwagon' and return the count.
 
+## Command Call Demo
+
+
+
 ## License
 I retain all rights to the source code and no one may reproduce, distribute, or create derivative works from this work. 
 
-However, I would love to keep this project going as much as possible. If you have any improved implementation ideas, would like to incorperate this bot into your own server, or have any questions about the functionality of this project, feel free to reach out 😋
+However, I would love to keep this project going as much as possible. If you have any improved implementation ideas, would like to incorperate this bot into your own server, or have any questions about the functionality of this project, feel free to reach out 
