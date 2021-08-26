@@ -6,7 +6,7 @@
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
-The 'Wagon Counter Bot' is a fully functional command-oriented program implemented using Discord.py APIs. The bot's main functionality is to search through a channel's message history and return a list of users, along with the number of occurrences of a specific phrase. The bot also has popular secondary features like: 
+The 'Wagon Counter Bot' is a fully functional command-oriented program implemented using Discord.py API. The bot's main functionality is to search through a channel's message history and return a list of users, along with the number of occurrences of a specific phrase. The bot also has popular secondary features like: 
 
 
 ## Planned Features
