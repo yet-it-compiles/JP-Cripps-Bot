@@ -32,4 +32,4 @@ The 'Wagon Counter Bot' is a fully functional command-oriented program implement
 ## License
 I retain all rights to the source code and no one may reproduce, distribute, or create derivative works from this work. 
 
-However, I would love to keep this project going as much as possible. If you have any improved implementation ideas, would like to incorporate some of the functionality in your own work, or have any questions about the functionality of this project, feel free to reach out 😋
+However, I would love to keep this project going as much as possible. If you have any improved implementation ideas, would like to incorperate this bot into your own server, or have any questions about the functionality of this project, feel free to reach out 😋
