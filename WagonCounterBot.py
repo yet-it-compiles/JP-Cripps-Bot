@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 import bhwagonCounter as wagonCounter
+from PIL import Image
 
 load_dotenv()  # loads the encapsulated values from the .env file
 
@@ -40,12 +41,20 @@ async def on_message(message):
 
 async def cool_down_ended(message):
     """
-    Sends the author of the message a personal DM
+    Sends the author of the message a personal DM 24 minutes after they type 'bhwagon' in the guild
     :param message: is the message the author sent
     :return: a message to the author
     """
     time.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
-    await message.author.send("Your wagon steal timer is up!")
+
+    cool_down_quotes = [
+        '*A wondering postman walks up to you and hands you a letter* \n *The letter reads:* \n '
+        '"The camps materials are dwindling, lets start looking for another wagon to hit soon."',
+        'Cripps told me to come find ya, said your materials are running low again.',
+        "Crips said that law should be gone by now. Materials are low. Let's head to Valentine and make plans for "
+        "another", 'Looks like we needed more materials than we thought. Lets head back out and get some more',
+    ]
+    await message.author.send("Your wagon steal timer is up 🎩 time for another materials run!")
 
 
 @client.event
@@ -256,7 +265,7 @@ async def command(ctx):
                                                             "the amount of wagons each person has stolen. The xx is a "
                                                             "value that must be entered by the user to tell the bot how"
                                                             " many days you'd like to search back to see the score. "
-                                                            , inline=False)
+                              , inline=False)
     command_message.add_field(name="!members",
                               value="This command returns a complete list of each user in the guild, along with how many"
                                     " members are in each available role.", inline=False)
