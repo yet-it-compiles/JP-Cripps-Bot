@@ -15,13 +15,13 @@ The 'Wagon Counter Bot' is a fully functional command-oriented program implement
 - [ ] Create a command to view the total number of wagon steals.
 - [ ] Auto-update channel name to update total count.
 - [ ] The bot will send a message to an announcement channel, reminding members 10 minutes before 'Trade Route' starts.
-- [ ] Command which returns the amount of days each member has been in the guild, and sorts them into a list
+- [ ] Command which returns the amount of days each member has been in the guild, and sorts them into a list.
 
 
 ## Current Fixes
 - [x] Each command should now return a different color.
 - [x] Members list should now reflect the number of people in each role accurately.
-- [x] Bot now displays Playing RDO - Wagon Stealing as a game activity .
+- [x] Bot now displays Playing RDO - Wagon Stealing as a game activity.
 - [x] Removed all bots in !members command.
 - [x] Removed repeat members.
 - [x] Updated bot command calls to reflect updates.
