@@ -3,12 +3,10 @@
 
 import os
 import time
-
 import discord
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
 import bhwagonCounter as wagonCounter
-from PIL import Image
 
 load_dotenv()  # loads the encapsulated values from the .env file
 
@@ -26,6 +24,12 @@ user_vs_occurrence = {}  # creates an empty dictionary , populated by on_ready
 
 
 @client.event
+async def on_ready():
+    """ Sets the presence status of the bot when it first connects to the guild """
+    await client.change_presence(activity=discord.Game('RDO - Wagon Stealing'))  # sets the bots Activity
+
+
+@client.listen()
 async def on_message(message):
     """
     Looks for when a member calls 'bhwagon', and after 24 minutes, sends them a message
@@ -48,12 +52,6 @@ async def cool_down_ended(message):
     time.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
 
     await message.author.send("Your wagon steal timer is up 🎩 time for another materials run!")
-
-
-@client.event
-async def on_ready():
-    """ Sets the presence status of the bot when it first connects to the guild """
-    await client.change_presence(activity=discord.Game('RDO - Wagon Stealing'))  # sets the bots Activity
 
 
 @client.command()
