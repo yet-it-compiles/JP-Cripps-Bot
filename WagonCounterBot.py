@@ -2,8 +2,10 @@
  to be embedded that is sent from the bot """
 
 import os
+import time
+
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
 import bhwagonCounter as wagonCounter
 
@@ -11,6 +13,7 @@ load_dotenv()  # loads the encapsulated values from the .env file
 
 # Declaration of Encapsulated Variables
 BOT_TOKEN = os.getenv('BOT_TOKEN')
+WAGON_CHANNEL = os.getenv('WAGON_STEAL_CHANNEL_KEY')
 
 # Declaration Discord.py Variables
 intents = discord.Intents.default()  # Turns on the connection
@@ -19,6 +22,30 @@ client = commands.Bot(command_prefix='!', intents=intents)  # defines the symbol
 
 # Declaration of Discord.py Variables
 user_vs_occurrence = {}  # creates an empty dictionary , populated by on_ready
+
+
+@client.event
+async def on_message(message):
+    """
+    Looks for when a member calls 'bhwagon', and after 24 minutes, sends them a message
+    :param message: the message sent by the user
+    :return: a DM to the user letting them know their cooldown ended
+    """
+    channel = client.get_channel(int(WAGON_CHANNEL))  # sets the
+
+    if message.content.startswith("bhwagon"):
+        channel = message.channel
+        await cool_down_ended(message)
+
+
+async def cool_down_ended(message):
+    """
+    Sends the author of the message a personal DM
+    :param message: is the message the author sent
+    :return: a message to the author
+    """
+    time.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
+    await message.author.send("Your wagon steal timer is up!")
 
 
 @client.event
