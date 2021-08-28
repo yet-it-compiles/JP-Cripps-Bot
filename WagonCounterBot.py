@@ -47,13 +47,6 @@ async def cool_down_ended(message):
     """
     time.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
 
-    cool_down_quotes = [
-        '*A wondering postman walks up to you and hands you a letter* \n *The letter reads:* \n '
-        '"The camps materials are dwindling, lets start looking for another wagon to hit soon."',
-        'Cripps told me to come find ya, said your materials are running low again.',
-        "Crips said that law should be gone by now. Materials are low. Let's head to Valentine and make plans for "
-        "another", 'Looks like we needed more materials than we thought. Lets head back out and get some more',
-    ]
     await message.author.send("Your wagon steal timer is up 🎩 time for another materials run!")
 
 
