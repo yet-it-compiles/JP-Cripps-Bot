@@ -4,7 +4,7 @@ import asyncio
 import os
 import signal
 import discord
-from discord.ext import commands, tasks
+from discord.ext import commands
 from dotenv import load_dotenv
 import bhwagonCounter as wagonCounter
 
@@ -89,6 +89,7 @@ async def wagonSteals(ctx, days):
 
 @client.command()
 async def members(ctx):
+    # TODO - Possibly doesn't update list after connection
     """
     Defines the ability for a user to call '!members' in a channel and the bot will return a list of all members
     organized into columns. The end of the message displays the total number of members in each role.
@@ -127,7 +128,7 @@ async def members(ctx):
     second_half_members = all_members[first_half + 1:second_half]
     last_half_members = all_members[second_half + 1:length]
 
-    # Shoes the title of each list
+    # Shows the title of each list
     members_message.add_field(name="Member List 1 ".title(), value=str("\n".join(first_half_members)), inline=True)
     members_message.add_field(name="Member List 2".title(), value=str("\n".join(second_half_members)), inline=True)
     members_message.add_field(name="Member List 3".title(), value=str("\n".join(last_half_members)), inline=True)
@@ -304,7 +305,8 @@ def remove_all_bots(list_of_members):
     list_of_members.remove("WagonCounter#8388")
     list_of_members.remove("WordCounter#2462")
     list_of_members.remove("RDO Compendium#9528")
+    list_of_members.remove("ModMail#5460")
 
 
-signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))  # todo
+signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))
 client.run(BOT_TOKEN)
