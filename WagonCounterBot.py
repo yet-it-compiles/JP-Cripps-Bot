@@ -1,8 +1,8 @@
 """ A module which defines how a user may call the bot to respond to specific commands, and then allows for each message
  to be embedded that is sent from the bot """
-
+import asyncio
 import os
-import time
+import signal
 import discord
 from discord.ext import commands, tasks
 from dotenv import load_dotenv
@@ -36,10 +36,7 @@ async def on_message(message):
     :param message: the message sent by the user
     :return: a DM to the user letting them know their cooldown ended
     """
-    channel = client.get_channel(int(WAGON_CHANNEL))  # sets the
-
     if message.content.startswith("bhwagon"):
-        channel = message.channel
         await cool_down_ended(message)
 
 
@@ -49,7 +46,7 @@ async def cool_down_ended(message):
     :param message: is the message the author sent
     :return: a message to the author
     """
-    time.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
+    await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
 
     await message.author.send("Your wagon steal timer is up 🎩 time for another materials run!")
 
@@ -309,4 +306,5 @@ def remove_all_bots(list_of_members):
     list_of_members.remove("RDO Compendium#9528")
 
 
+signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))  # todo
 client.run(BOT_TOKEN)
