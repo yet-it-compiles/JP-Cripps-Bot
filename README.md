@@ -2,7 +2,7 @@
 ![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
 
 
-## Version 1.0.1
+## Version 1.0.2
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
