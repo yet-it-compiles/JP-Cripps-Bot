@@ -4,9 +4,12 @@ import asyncio
 import os
 import signal
 import discord
+import random
+import bhwagonCounter as wagonCounter
 from discord.ext import commands
 from dotenv import load_dotenv
-import bhwagonCounter as wagonCounter
+from PIL import Image
+
 
 load_dotenv()  # loads the encapsulated values from the .env file
 
@@ -20,7 +23,7 @@ intents.members = True  # Ensures the member list will be updated properly
 client = commands.Bot(command_prefix='!', intents=intents)  # defines the symbol used to call a command from the bot
 
 # Declaration of Discord.py Variables
-user_vs_occurrence = {}  # creates an empty dictionary , populated by on_ready
+user_vs_occurrence = {}  # creates an empty dictionary
 
 
 @client.event
@@ -46,9 +49,32 @@ async def cool_down_ended(message):
     :param message: is the message the author sent
     :return: a message to the author
     """
-    await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
+    # Varibales which store the pictures
+    picture1 = discord.File('Old Cripps Lookign Weathered.png')
+    picture2 = discord.File('Cripps Smoking.png')
 
-    await message.author.send("Your wagon steal timer is up 🎩 time for another materials run!")
+    list_of_quotes = [  # A list which stores the possible quotes to send to the user
+        "Your wagon steal timer is up 🎩\nLooks like it's time for another materials run!",
+        f'Hey {message.author}, looks like our materials are running low again',
+        'Did you get the telegram I sent you? \nWe need to get some more materials, so lets get out there and hit '
+        'another wagon.',
+        "*A mailman walks up to you and hands you a letter..."
+        "you open it, realizing it's from Cripps* "
+        f"\n\nDear {message.author},\nI need more materials to keep our trade post running. \nBring some more when you"
+        f" can.",
+        picture1, picture2
+
+                      ]
+
+    await asyncio.sleep(0.1)  # sets a time for 24 minutes = 1440 seconds
+    response = random.choice(list_of_quotes)
+
+    if response == picture1:
+        await message.author.send(file=discord.File('Old Cripps Lookign Weathered.png'))
+    elif response == picture2:
+        await message.author.send(file=discord.File('Cripps Smoking.png'))
+    else:
+        await message.author.send(response)
 
 
 @client.command()
