@@ -72,3 +72,5 @@ def is_target_phrase(message):
         return True
     else:
         return False
+
+
