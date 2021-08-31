@@ -62,6 +62,8 @@ async def cool_down_ended(message):
         "you open it, realizing it's from Cripps* "
         f"\n\nDear {message.author},\nI need more materials to keep our trade post running. \nBring some more when you"
         f" can.",
+        f"It's huntin' time, {message.author}. Time to get on that horse!",
+        "Look at Jay on that wagon list, you won't just let him top that leaderboard -that- easy, right? \nGet out there!",
         picture1, picture2
 
                       ]
