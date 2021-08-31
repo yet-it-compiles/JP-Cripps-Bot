@@ -8,8 +8,6 @@ import random
 import bhwagonCounter as wagonCounter
 from discord.ext import commands
 from dotenv import load_dotenv
-from PIL import Image
-
 
 load_dotenv()  # loads the encapsulated values from the .env file
 
@@ -45,34 +43,37 @@ async def on_message(message):
 
 async def cool_down_ended(message):
     """
-    Sends the author of the message a personal DM 24 minutes after they type 'bhwagon' in the guild
-    :param message: is the message the author sent
-    :return: a message to the author
+    Sends the author of the message a personal DM 24 minutes after they type 'bhwagon' in a guild channel
+    :param message: message the author sent
+    :return: a message to the author letting them know they can wagon steal again
     """
-    # Varibales which store the pictures
+    # Variables which store the pictures
     picture1 = discord.File('Old Cripps Lookign Weathered.png')
     picture2 = discord.File('Cripps Smoking.png')
 
-    list_of_quotes = [  # A list which stores the possible quotes to send to the user
-        "Your wagon steal timer is up 🎩\nLooks like it's time for another materials run!",
-        f'Hey {message.author}, looks like our materials are running low again',
-        'Did you get the telegram I sent you? \nWe need to get some more materials, so lets get out there and hit '
-        'another wagon.',
-        "*A mailman walks up to you and hands you a letter..."
-        "you open it, realizing it's from Cripps* "
-        f"\n\nDear {message.author},\nI need more materials to keep our trade post running. \nBring some more when you"
-        f" can.",
-        f"It's huntin' time, {message.author}. Time to get on that horse!",
-        "Look at Jay on that wagon list, you won't just let him top that leaderboard -that- easy, right? \nGet out there!",
-        picture1, picture2
+    # A list which stores the possible quotes to send to the user
+    list_of_quotes = \
+        [
+            "Your wagon steal timer is up 🎩\nLooks like it's time for another materials run!",
+            f'Hey {message.author}, looks like our materials are running low again',
+            'Did you get the telegram I sent you? \nWe need to get some more materials, so lets get out there and hit '
+            'another wagon.',
+            "*A mailman walks up to you and hands you a letter..."
+            "you open it, realizing it's from Cripps* "
+            f"\n\nDear {message.author},\nI need more materials to keep our trade post running. \nBring some more "
+            f"when you can.",
+            f"It's huntin' time, {message.author}. Time to get on that horse!",
+            "Look at Jay on that wagon list, you won't just let him top that leaderboard -that- easy, right? \nGet "
+            "out there!",
+            picture1, picture2
 
-                      ]
+        ]
 
-    await asyncio.sleep(0.1)  # sets a time for 24 minutes = 1440 seconds
+    await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
     response = random.choice(list_of_quotes)
 
     if response == picture1:
-        await message.author.send(file=discord.File('Old Cripps Lookign Weathered.png'))
+        await message.author.send(file=discord.File('Old Cripps Lookign Weathered.png'))  # TODO - fix image name
     elif response == picture2:
         await message.author.send(file=discord.File('Cripps Smoking.png'))
     else:
@@ -82,6 +83,7 @@ async def cool_down_ended(message):
 @client.command()
 async def wagonSteals(ctx, days):
     """
+    TODO - finish method
     Defines a command which is called by typing '!wagonCounter xx' in any channel.
     The xx represents the amount of days look back through.
     NOTE: 'Read Message History' must be turn on in Channel Permissions
@@ -102,6 +104,7 @@ async def wagonSteals(ctx, days):
                                    url="https://www.blackhatsride.com",
                                    icon_url=ctx.author.avatar_url)
 
+    # number_of_steals = wagonCounter.number_of_occurrences()
     # Determines which message to print based on the users passed in 'days' argument
     if int(days) > 1:
         wagon_steal_message.add_field(name=f"Top occurrences of 'bhwagon' in the last {days} days".title(),
@@ -197,24 +200,24 @@ async def guide(ctx):
 
 
 # TODO - finish writing method
-@client.command()
-async def streamers(ctx):
-    """
-    Defines the ability for a user to call '!streamers' in a channel and the bot will return a list of all the streamers
-    along with links to each of their channels
-    :param ctx: represents the context in which a command is being invoked under
-    :return: a hyperlink to a website which contains the survival guide - outlaw 101
-    """
-    streamers_message = discord.Embed(
-        title="Black Hat RDO Guide - Outlaw 101",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
-        description="This is the RDO Black Hats Guide, which will be helpful for new and veteran players alike. Feel "
-                    "free to download a copy and use it as you wish!",
-        color=0xE39DC2)
-
-    streamers_message.set_author(name="Malthiel/xXMal911Xx",
-                                 url="https://www.twitch.tv/realitybyt3s",
-                                 icon_url="https://www.twitch.tv/realitybyt3s")
+# @client.command()
+# async def streamers(ctx):
+#     """
+#     Defines the ability for a user to call '!streamers' in a channel and the bot will return a list of all the streamers
+#     along with links to each of their channels
+#     :param ctx: represents the context in which a command is being invoked under
+#     :return: a hyperlink to a website which contains the survival guide - outlaw 101
+#     """
+#     streamers_message = discord.Embed(
+#         title="Black Hat RDO Guide - Outlaw 101",
+#         url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+#         description="This is the RDO Black Hats Guide, which will be helpful for new and veteran players alike. Feel "
+#                     "free to download a copy and use it as you wish!",
+#         color=0xE39DC2)
+#
+#     streamers_message.set_author(name="",
+#                                  url="https://www.twitch.tv/realitybyt3s",
+#                                  icon_url="https://www.twitch.tv/realitybyt3s")
 
 
 @client.command()
@@ -329,12 +332,12 @@ def remove_all_bots(list_of_members):
     list_of_members.remove("Statbot#3472")
     list_of_members.remove("YAGPDB.xyz#8760")
     list_of_members.remove("GatorRed#9857")
-    list_of_members.remove("WagonCounter#8388")
-    list_of_members.remove("WagonCounter#8388")
+    list_of_members.remove("JB Cripps#8388")
+    list_of_members.remove("JB Cripps#8388")
     list_of_members.remove("WordCounter#2462")
     list_of_members.remove("RDO Compendium#9528")
     list_of_members.remove("ModMail#5460")
 
 
-signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))
+signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))  # allows asychio to run
 client.run(BOT_TOKEN)
