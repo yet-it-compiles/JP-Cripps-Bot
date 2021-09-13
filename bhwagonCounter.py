@@ -9,34 +9,18 @@ async def wagon_steals(ctx, days):
     Defines the functionality for the bot to return a list of users and the number of times they've said 'bhwagon'
     :param ctx: represents the context in which a command is being invoked under
     :param days: the number of days the user wants to search back in a channels message history
-    :return: an output string of occurrences in descending order
+    :return: an output string of occurrences of wagon stealers in descending order
     """
     # Date variables for amount of time to go back
-    after_date = dt.datetime.utcnow() - dt.timedelta(days=int(days))
-    dictionary = await build_dictionary(ctx, after_date)  # dictionary with users and phrase occurrences
+    time_interval = dt.datetime.utcnow() - dt.timedelta(days=int(days))
+    users_vs_occurrences = await build_dictionary(ctx, time_interval)  # dictionary with users and phrase occurrences
 
     # Sorts the occurrences and builds an output string
-    sorted_occurrences = sorted(dictionary.items(), key=lambda x: x[1], reverse=True)
+    sorted_occurrences = sorted(users_vs_occurrences.items(), key=lambda x: x[1], reverse=True)
 
     list_output = build_output_string(sorted_occurrences)
 
     return list_output
-
-
-def build_output_string(dictionary_occurrences):
-    """
-    Defines how the list is going to print
-    :param dictionary_occurrences:  each member of the guild along with the number of times each said 'bhwagon'
-    :return: a list of users with the amount of occurrences of 'bhwagon'
-    """
-    helper_string = ""
-
-    # Logic for how the dictionary should be printed
-    for each_index, tuple in enumerate(dictionary_occurrences):
-        name = tuple[0]
-        number = tuple[1]
-        helper_string += name + ": " + str(number) + "\n"
-    return helper_string
 
 
 async def build_dictionary(ctx, days):
@@ -46,7 +30,7 @@ async def build_dictionary(ctx, days):
     :param days: the number of days the user wants to search back in a channels message history
     :return: a dictionary of each member along with the number of occurrences from the time frame specified
     """
-    dictionary = {}  # declares an empty dictionary
+    users_vs_occurrences = {}  # declares an empty dictionary
 
     # Defines logic for searching through a channels messages
     async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
@@ -54,12 +38,12 @@ async def build_dictionary(ctx, days):
             wagon_stealer = each_message.author.name
 
             # Logic for adding new members into the dictionary and sets their occurrences to 0
-            if wagon_stealer not in dictionary:
-                dictionary[wagon_stealer] = 0
+            if wagon_stealer not in users_vs_occurrences:
+                users_vs_occurrences[wagon_stealer] = 0
 
             # else they are already in the dictionary, and increment the amount of this users occurrences by 1
-            dictionary[wagon_stealer] = dictionary[wagon_stealer] + 1
-    return dictionary
+            users_vs_occurrences[wagon_stealer] = users_vs_occurrences[wagon_stealer] + 1
+    return users_vs_occurrences
 
 
 def is_target_phrase(message):
@@ -73,4 +57,19 @@ def is_target_phrase(message):
     else:
         return False
 
+
+def build_output_string(dictionary_occurrences):
+    """
+    Defines how the list is going to print
+    :param dictionary_occurrences:  each member of the guild along with the number of times each said 'bhwagon'
+    :return: a list of users with the amount of occurrences of 'bhwagon'
+    """
+    helper_string = ""
+
+    # Logic for how the dictionary should be printed
+    for each_index, tuple in enumerate(dictionary_occurrences):
+        wagon_stealers_name = tuple[0]
+        number_of_steals = tuple[1]
+        helper_string += wagon_stealers_name + ": " + str(number_of_steals) + "\n"
+    return helper_string
 
