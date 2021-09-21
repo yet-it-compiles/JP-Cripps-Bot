@@ -2,7 +2,7 @@
 ![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
 
 
-## Version 1.0.4
+## Version 1.1.0
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
@@ -25,7 +25,7 @@ Therefore, the bot aims to give the ability to any member to look back in the me
 - [ ] Command which returns the number of days each member has been in the guild and sorts them into a list.
 
 
-## Current Fixes
+## Current Fixes / Implementations
 - [x] Each command should now return a different color.
 - [x] Members list should now reflect the number of people in each role accurately.
 - [x] Bot now displays Playing RDO - Wagon Stealing as a game activity.
@@ -36,6 +36,8 @@ Therefore, the bot aims to give the ability to any member to look back in the me
 - [x] Making '!members' more readable by separating users into 2+ columns.
 - [x] Updated the '!wagonSteals' command to search each message for 'bhwagon' and return the count.
 - [X] Sends a private message to a member 24 minutes after typing 'bhwagon' in the server, to let them know their cooldown is up.
+- [X] Records the amount of alive/dead bounties brought in by the player - New!
+- [X] Allows players to see how many alive / dead bounties the possee has brought by typing '!bountiesAlive', '!bountiesDead', and '!bounties'
 
 
 ## License
