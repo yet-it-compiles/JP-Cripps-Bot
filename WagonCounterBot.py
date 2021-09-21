@@ -1,11 +1,15 @@
 """ A module which defines how a user may call the bot to respond to specific commands, and then allows for each message
- to be embedded that is sent from the bot """
+ to be embedded
+  is sent from the bot """
 import asyncio
 import os
 import signal
 import discord
 import random
 import bhwagonCounter as wagonCounter
+import bhbountiesCounter as bountyCounter
+import bhAliveCounter as bountyAliveCounter
+import bhdeadCounter as bountyDeadCounter
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -65,6 +69,9 @@ async def cool_down_ended(message):
             f"It's huntin' time, {message.author}. Time to get on that horse!",
             "Look at Jay on that wagon list, you won't just let him top that leaderboard -that- easy, right? \nGet "
             "out there!",
+            "The law should be looong gone by now, already talked to the other Black Hats, we're just waiting on the "
+            "call. Let's get out there again",
+            "Alright folks, time to earn that money!",
             picture1, picture2
 
         ]
@@ -80,10 +87,53 @@ async def cool_down_ended(message):
         await message.author.send(response)
 
 
+@client.event
+async def on_reaction_add(reaction, user):  # reaction & user as an argument
+    """
+    Sends a message to a user 24 minutes later, after they react to a message
+    :param reaction: '✅'
+    :param user: is the member who reacted to the message
+    :return: a message to the user letting them know their cooldown is up
+    """
+    if reaction.emoji == '✅':  # See if the reaction is the same as in the code
+        await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
+
+        # Variables which store the pictures
+        picture1 = discord.File('Old Cripps Lookign Weathered.png')
+        picture2 = discord.File('Cripps Smoking.png')
+
+        # A list which stores the possible quotes to send to the user
+        list_of_quotes = \
+            [
+                "Your wagon steal timer is up 🎩\nLooks like it's time for another materials run!",
+                f'Hey {user}, looks like our materials are running low again',
+                'Did you get the telegram I sent you? \nWe need to get some more materials, so lets get out there and hit '
+                'another wagon.',
+                "*A mailman walks up to you and hands you a letter..."
+                "you open it, realizing it's from Cripps* "
+                f"\n\nDear {user},\nI need more materials to keep our trade post running. \nBring some more "
+                f"when you can.",
+                f"It's huntin' time, {user}. Time to get on that horse!",
+                "Look at Jay on that wagon list, you won't just let him top that leaderboard -that- easy, right? \nGet "
+                "out there!",
+                "Cops should be gone by now, already talked to the other Black Hats, we're just waiting on the call. "
+                "Let's get out there again",
+                picture1, picture2
+            ]
+
+        response = random.choice(list_of_quotes)
+
+        if response == picture1:
+            await user.send(file=discord.File('Old Cripps Lookign Weathered.png'))  # TODO - fix image name
+        elif response == picture2:
+            await user.send(file=discord.File('Cripps Smoking.png'))
+        else:
+            await user.send(response)
+
+
 @client.command()
 async def wagonSteals(ctx, days):
     """
-    TODO - finish method
     Defines a command which is called by typing '!wagonCounter xx' in any channel.
     The xx represents the amount of days look back through.
     NOTE: 'Read Message History' must be turn on in Channel Permissions
@@ -119,8 +169,79 @@ async def wagonSteals(ctx, days):
 
 
 @client.command()
+async def bounties(ctx, days):
+    bounties_recovered_data = await bountyCounter.bounty_hunters(ctx, days)  # gets the dictionary output list
+
+    bounties_recovered = discord.Embed(
+        title="Bounty Leader Board",
+        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        color=0x2D95EB)
+
+    bounties_recovered.set_author(name=ctx.author.display_name,
+                                  url="https://www.blackhatsride.com",
+                                  icon_url=ctx.author.avatar_url)
+
+    if int(days) > 1:
+        bounties_recovered.add_field(name=f"Top Bounty Hunters in the last {days} days".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} days is {number_of_steals}")
+    elif int(days) == 1:
+        bounties_recovered.add_field(name=f"Top Bounty Hunters in the last {days} day".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} day is {number_of_steals}")
+    await ctx.send(embed=bounties_recovered)
+
+
+@client.command()
+async def bountiesDead(ctx, days):
+    bounties_recovered_data = await bountyDeadCounter.bounty_hunters(ctx, days)  # gets the dictionary output list
+
+    bounties_recovered = discord.Embed(
+        title="Bounty Leader Board",
+        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        color=0x2D95EB)
+
+    bounties_recovered.set_author(name=ctx.author.display_name,
+                                  url="https://www.blackhatsride.com",
+                                  icon_url=ctx.author.avatar_url)
+
+    if int(days) > 1:
+        bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last {days} days".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} days is {number_of_steals}")
+    elif int(days) == 1:
+        bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last day".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} day is {number_of_steals}")
+    await ctx.send(embed=bounties_recovered)
+
+
+@client.command()
+async def bountiesAlive(ctx, days):
+    bounties_recovered_data = await bountyAliveCounter.bounty_hunters(ctx, days)  # gets the dictionary output list
+
+    bounties_recovered = discord.Embed(
+        title="Bounty Leader Board",
+        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        color=0x2D95EB)
+
+    bounties_recovered.set_author(name=ctx.author.display_name,
+                                  url="https://www.blackhatsride.com",
+                                  icon_url=ctx.author.avatar_url)
+
+    if int(days) > 1:
+        bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last {days} days".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} days is {number_of_steals}")
+    elif int(days) == 1:
+        bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last day".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} day is {number_of_steals}")
+    await ctx.send(embed=bounties_recovered)
+
+
+@client.command()
 async def members(ctx):
-    # TODO - Possibly doesn't update list after connection
     """
     Defines the ability for a user to call '!members' in a channel and the bot will return a list of all members
     organized into columns. The end of the message displays the total number of members in each role.
@@ -323,7 +444,6 @@ def remove_all_bots(list_of_members):
     :return: nothing
     """
     list_of_members.remove("Carl-bot#1536")
-    list_of_members.remove("Groovy#7254")
     list_of_members.remove("Rythm#3722")
     list_of_members.remove("Rythm 4#0952")
     list_of_members.remove("Rythm 3#0817")
@@ -339,5 +459,5 @@ def remove_all_bots(list_of_members):
     list_of_members.remove("ModMail#5460")
 
 
-signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))  # allows asychio to run
+signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))
 client.run(BOT_TOKEN)
