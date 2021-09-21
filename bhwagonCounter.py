@@ -13,10 +13,12 @@ async def wagon_steals(ctx, days):
     """
     # Date variables for amount of time to go back
     time_interval = dt.datetime.utcnow() - dt.timedelta(days=int(days))
-    users_vs_occurrences = await build_dictionary(ctx, time_interval)  # dictionary with users and phrase occurrences
+
+    # Declaration of Dictionaries containing members vs. occurrences of the phrases
+    dict_of_wagon_stealers = await build_dictionary(ctx, time_interval)
 
     # Sorts the occurrences and builds an output string
-    sorted_occurrences = sorted(users_vs_occurrences.items(), key=lambda x: x[1], reverse=True)
+    sorted_occurrences = sorted(dict_of_wagon_stealers.items(), key=lambda x: x[1], reverse=True)
 
     list_output = build_output_string(sorted_occurrences)
 
@@ -34,15 +36,16 @@ async def build_dictionary(ctx, days):
 
     # Defines logic for searching through a channels messages
     async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
-        if is_target_phrase(each_message):  # if this message is 'bhwagon'
-            wagon_stealer = each_message.author.name
+        if is_target_phrase(each_message):  # if this message is a target message
+            member = each_message.author.name
 
             # Logic for adding new members into the dictionary and sets their occurrences to 0
-            if wagon_stealer not in users_vs_occurrences:
-                users_vs_occurrences[wagon_stealer] = 0
+            if member not in users_vs_occurrences:
+                users_vs_occurrences[member] = 0
 
             # else they are already in the dictionary, and increment the amount of this users occurrences by 1
-            users_vs_occurrences[wagon_stealer] = users_vs_occurrences[wagon_stealer] + 1
+            users_vs_occurrences[member] = users_vs_occurrences[member] + 1
+
     return users_vs_occurrences
 
 
@@ -72,4 +75,3 @@ def build_output_string(dictionary_occurrences):
         number_of_steals = tuple[1]
         helper_string += wagon_stealers_name + ": " + str(number_of_steals) + "\n"
     return helper_string
-
