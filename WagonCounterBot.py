@@ -41,7 +41,7 @@ async def on_message(message):
     :param message: the message sent by the user
     :return: a DM to the user letting them know their cooldown ended
     """
-    if message.content.startswith("bhwagon"):
+    if message.content.startswith("drwagon"):
         await cool_down_ended(message)
 
 
@@ -118,6 +118,12 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
                 "out there!",
                 "Cops should be gone by now, already talked to the other Black Hats, we're just waiting on the call. "
                 "Let's get out there again",
+                "Did I ever tell you about the time.... wait the hell am I talkin to you for there are wagons need "
+                "stealin!   And to think my Pa thought you'd be a no good trader all your life",
+                "As much as I love our conversations.   Some poor bastard needs his wagon liberating from them.   "
+                "Take the damn dog with you.   Flea biten mongrel gives me all kinds of evils",
+                "You know how Moses parted the Red Sea?   Well I can tell you like to part traders from their goods, "
+                "and guess what time it is?",
                 picture1, picture2
             ]
 
@@ -350,7 +356,7 @@ async def eliteRanks(ctx):
     :return: a complete list of all possible roles the members may earn
     """
     elite_ranks_message = discord.Embed(
-        title="Black Hat RDO - Elite Titles",
+        title="Dead Rabbits RDO - Elite Titles",
         url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
         description="This is a list of the 'Elite Titles' that can be earned as described below ",
         color=0xFFDF00)
@@ -360,26 +366,78 @@ async def eliteRanks(ctx):
                                    url="https://www.blackhatsride.com",
                                    icon_url=ctx.author.avatar_url)
 
-    elite_ranks_message.add_field(name="The Honorable".title(),
-                                  value="Given monthly to whichever Black Hat has accrued the most"
-                                        " honor points for the month.", inline=False)
-    elite_ranks_message.add_field(name="Wagon Whisperer".title(),
-                                  value="Given Monthly to whichever Black Hat steals the most "
-                                        "wagons in the month.", inline=False)
-    elite_ranks_message.add_field(name="Wagon Chief".title(),
-                                  value="This title, once earned stays with you. To earn this Elite "
-                                        "Title, you must complete the following challenges: \n- Be a"
-                                        " Full Black Hat. (Cannot be a recruit or prospect.) \n- 50 "
-                                        "Wagons stolen as the Posse leader and documented in the "
-                                        "Wagon Steal Counter channel. \n- Stolen a Wagon without "
-                                        "killing anyone (Must be witnessed by at least two Black Hat"
-                                        "s) \n- Stolen a Wagon solo. (Must be witnessed by at least "
-                                        "two Black Hats. You may still posse up and announce the "
-                                        "steal as usual, but the posse will remain in Valentine "
-                                        "while the player pursuing the challenge completes the steal."
-                                        ")"
+    elite_ranks_message.add_field(name="Wanderer".title(),
+                                  value="The base role of the server. All members joining the server will receive this "
+                                        "rank once they have acknowledged the rules. Those in this rank are in their "
+                                        "one month probationary period.", inline=False)
+    elite_ranks_message.add_field(name="Short Tail".title(),
+                                  value="Members will progress to this rank upon their initiation after one month of "
+                                        "active membership. These are trusted members of the crew and will now have "
+                                        "access to 'The Clink' where they can post about absences and not be "
+                                        "automatically kicked for inactivity. Short Tails also get access to the "
+                                        "suggestion box where they can make recommendations for the server.",
+                                  inline=False)
+    elite_ranks_message.add_field(name="Dead Rabbit".title(),
+                                  value="Members will progress to this rank after two months spent as a Short Tail for "
+                                        "a total of three months of being an active member. Dead Rabbits are full "
+                                        "members of the crew. They are the most loyal and trusted members. Dead "
+                                        "Rabbits have access to additional channels in the server and are eligible for "
+                                        "Elite Ranks. ", inline=False)
+    elite_ranks_message.add_field(name="Highwayman".title(),
+                                  value="Awarded monthly to whoever leads the most wagon steals. \n"
+                                        "\nNotes: steals for this award must be performed on the server.\n"
+                                        "Credit goes to whoever spotted the wagon. 'drwagon'", inline=False)
+    elite_ranks_message.add_field(name="Butcher".title(),
+                                  value="Awarded monthly to whoever has made the most griefers parley or leave session "
+                                        "during a griefer call.\n\n"
+                                        "Notes: Must be performed on the server. Any member of the posse may claim "
+                                        "credit. \n"
+                                        "Salty players after content do not count as griefers. 'drparley'", inline=False)
+    elite_ranks_message.add_field(name="Recovery Agent".title(),
+                                  value="Awarded monthly to whoever has earned the most points for player bounties.\n\n"
+                                        "Notes: 'dralive' 1 point and 'drdead' 1/2 point\n"
+                                        "submissions to the bounty counter must be accompanied by a screenshot of the "
+                                        "'Bounty Complete' screen.\n"
+                                        "May be performed solo or in a posse. Does not have to be performed on the "
+                                        "server, but is preferred."
+                                        , inline=False)
+    elite_ranks_message.add_field(name="Hell-Cat Maggie".title(),
+                                  value="Love stealing wagons? This Rank goes to any member that has lead 100 wagon "
+                                        "steals as tracked in the Wagon Steal Counter, and has performed at least one "
+                                        "of them solo without killing anyone. The Solo No Kill steal must be witnessed "
+                                        "by a full Dead Rabbit. Any steals led while a Wanderer or Short Tail will"
+                                        " count towards the total."
                                   , inline=False)
-    elite_ranks_message.set_footer(text="Notes: a single witness may be substituted for a video and/or stream")
+    elite_ranks_message.add_field(name="Roach Guard".title(),
+                                  value="These are the most feared and ruthless members of the crew when it comes to "
+                                        "PvP. This Rank goes to members who have documented 50 Parleys in the counter, "
+                                        "and have Defended the crew 10 times during content. "
+                                        "(Content can be anything from a rival trader attempting to steal a wagon, a "
+                                        "player bounty, or hostile players attacking a free roam mission.)"
+                                  , inline=False)
+    elite_ranks_message.add_field(name="Bondsman".title(),
+                                  value="Criminals flee from them. This rank goes to members who have met the following "
+                                        "criteria:\n"
+                                        "- 50 player bounties brought in alive\n"
+                                        "- 50 player bounties brought in dead\n"
+                                        "- Achieved max player bounty of $100 with screenshot as proof"
+                                        "- Been turned in to jail with screenshot as proof)"
+                                  , inline=False)
+    elite_ranks_message.add_field(name="Five Pointer".title(),
+                                  value="The Moderators of the crew. They have the authority and ability to mute,"
+                                        " deafen members should the rare need arise. They are well versed in the rules"
+                                        " and support the vision of the crew.)"
+                                  , inline=False)
+
+
+
+
+
+
+
+
+
+
     await ctx.send(embed=elite_ranks_message)
 
 
@@ -407,6 +465,23 @@ async def command(ctx):
                                                             "value that must be entered by the user to tell the bot how"
                                                             " many days you'd like to search back to see the score. "
                               , inline=False)
+    command_message.add_field(name="!bounties xx",
+                              value="This command returns a list of how many points each bounty hunter has accumulated "
+                                    "so far. 1 point is given for a bounty brought in alive, 0.5 points for a bounty "
+                                    "brought in dead."
+                              , inline=False)
+
+    command_message.add_field(name="!bountiesAlive xx",
+                              value="This command returns a list of how many bounties have been turned in alive by "
+                                    "each bounty hunter in the given amount of days"
+                              , inline=False)
+
+    command_message.add_field(name="!bountiesDead xx",
+                              value="This command returns a list of how many bounties have been turned in dead by "
+                                    "each bounty hunter in the given amount of days"
+                              , inline=False)
+
+
     command_message.add_field(name="!members",
                               value="This command returns a complete list of each user in the guild, along with how many"
                                     " members are in each available role.", inline=False)
@@ -416,6 +491,8 @@ async def command(ctx):
     command_message.add_field(name="!eliteRanks", value="This command returns all attainable titles in the guild, along"
                                                         " with description of each rank, and how to earn them.",
                               inline=False)
+
+
 
     await ctx.send(embed=command_message)
 
@@ -444,19 +521,8 @@ def remove_all_bots(list_of_members):
     :return: nothing
     """
     list_of_members.remove("Carl-bot#1536")
-    list_of_members.remove("Rythm#3722")
-    list_of_members.remove("Rythm 4#0952")
-    list_of_members.remove("Rythm 3#0817")
-    list_of_members.remove("Rythm 2#2000")
-    list_of_members.remove("Rythm-chan#1001")
     list_of_members.remove("Statbot#3472")
-    list_of_members.remove("YAGPDB.xyz#8760")
-    list_of_members.remove("GatorRed#9857")
     list_of_members.remove("JB Cripps#8388")
-    list_of_members.remove("JB Cripps#8388")
-    list_of_members.remove("WordCounter#2462")
-    list_of_members.remove("RDO Compendium#9528")
-    list_of_members.remove("ModMail#5460")
 
 
 signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))

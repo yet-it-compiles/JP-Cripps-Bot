@@ -45,7 +45,7 @@ async def build_dictionary(ctx, days):
                 users_vs_total[member] = 0
 
             # else they are already in the dictionary, and increment the amount of this users occurrences by 1
-            if message == 'bhdead':
+            if message == 'drdead':
                 users_vs_total[member] = users_vs_total[member] + 1
 
     return users_vs_total
@@ -57,7 +57,7 @@ def is_target_phrase(message):
     :param message: each message visible in the channels history
     :return: a true or false value dependant on if the message is 'bhwagon' or not
     """
-    if 'bhalive' in message.content or 'bhdead' in message.content:
+    if 'dralive' in message.content or 'drdead' in message.content:
         return True
 
 

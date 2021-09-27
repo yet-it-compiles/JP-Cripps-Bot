@@ -55,7 +55,7 @@ def is_target_phrase(message):
     :param message: each message visible in the channels history
     :return: a true or false value dependant on if the message is 'bhwagon' or not
     """
-    if 'bhwagon' in message.content:
+    if 'drwagon' in message.content:
         return True
     else:
         return False
