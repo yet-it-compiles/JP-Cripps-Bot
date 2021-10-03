@@ -42,5 +42,3 @@ Therefore, the bot aims to give the ability to any member to look back in the me
 
 ## License
 I retain all rights to the source code and no one may reproduce, distribute, or create derivative works from this work. 
-
-However, I would love to keep this project going as much as possible. If you have any improved implementation ideas, would like to incorporate this bot into your server, or have any questions about the functionality of this project, feel free to reach out 
