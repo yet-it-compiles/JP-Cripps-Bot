@@ -1,6 +1,4 @@
-""" A module which defines how a user may call the bot to respond to specific commands, and then allows for each message
- to be embedded
-  is sent from the bot """
+""" A module which creates the call command, and """
 import asyncio
 import os
 import signal
@@ -10,6 +8,7 @@ import bhwagonCounter as wagonCounter
 import bhbountiesCounter as bountyCounter
 import bhAliveCounter as bountyAliveCounter
 import bhdeadCounter as bountyDeadCounter
+import parleyCounter as parleyCounter
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -18,6 +17,7 @@ load_dotenv()  # loads the encapsulated values from the .env file
 # Declaration of Encapsulated Variables
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 WAGON_CHANNEL = os.getenv('WAGON_STEAL_CHANNEL_KEY')
+test = os.getenv('TESTING_GUILD_NAME')
 
 # Declaration Discord.py Variables
 intents = discord.Intents.default()  # Turns on the connection
@@ -32,6 +32,7 @@ user_vs_occurrence = {}  # creates an empty dictionary
 async def on_ready():
     """ Sets the presence status of the bot when it first connects to the guild """
     await client.change_presence(activity=discord.Game('RDO - Wagon Stealing'))  # sets the bots Activity
+    print(test)
 
 
 @client.listen()
@@ -47,7 +48,7 @@ async def on_message(message):
 
 async def cool_down_ended(message):
     """
-    Sends the author of the message a personal DM 24 minutes after they type 'bhwagon' in a guild channel
+    Sends the author of the message a personal DM 24 minutes after they type 'drwagon' in a guild channel
     :param message: message the author sent
     :return: a message to the author letting them know they can wagon steal again
     """
@@ -69,7 +70,7 @@ async def cool_down_ended(message):
             f"It's huntin' time, {message.author}. Time to get on that horse!",
             "Look at Jay on that wagon list, you won't just let him top that leaderboard -that- easy, right? \nGet "
             "out there!",
-            "The law should be looong gone by now, already talked to the other Black Hats, we're just waiting on the "
+            "The law should be looong gone by now, already talked to the other Dead Rabbits, we're just waiting on the "
             "call. Let's get out there again",
             "Alright folks, time to earn that money!",
             picture1, picture2
@@ -80,7 +81,7 @@ async def cool_down_ended(message):
     response = random.choice(list_of_quotes)
 
     if response == picture1:
-        await message.author.send(file=discord.File('Old Cripps Lookign Weathered.png'))  # TODO - fix image name
+        await message.author.send(file=discord.File('Old Cripps Looking Weathered.png'))
     elif response == picture2:
         await message.author.send(file=discord.File('Cripps Smoking.png'))
     else:
@@ -93,7 +94,7 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
     Sends a message to a user 24 minutes later, after they react to a message
     :param reaction: '✅'
     :param user: is the member who reacted to the message
-    :return: a message to the user letting them know their cooldown is up
+    :return: a message to the user letting them know their cool down is up
     """
     if reaction.emoji == '✅':  # See if the reaction is the same as in the code
         await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
@@ -105,7 +106,7 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
         # A list which stores the possible quotes to send to the user
         list_of_quotes = \
             [
-                "Your wagon steal timer is up 🎩\nLooks like it's time for another materials run!",
+                "Your wagon steal timer is up 🐇\nLooks like it's time for another materials run!",
                 f'Hey {user}, looks like our materials are running low again',
                 'Did you get the telegram I sent you? \nWe need to get some more materials, so lets get out there and hit '
                 'another wagon.',
@@ -121,7 +122,7 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
                 "Did I ever tell you about the time.... wait the hell am I talkin to you for there are wagons need "
                 "stealin!   And to think my Pa thought you'd be a no good trader all your life",
                 "As much as I love our conversations.   Some poor bastard needs his wagon liberating from them.   "
-                "Take the damn dog with you.   Flea biten mongrel gives me all kinds of evils",
+                "Take the damn dog with you. Flea biten mongrel gives me all kinds of evils",
                 "You know how Moses parted the Red Sea?   Well I can tell you like to part traders from their goods, "
                 "and guess what time it is?",
                 picture1, picture2
@@ -130,7 +131,7 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
         response = random.choice(list_of_quotes)
 
         if response == picture1:
-            await user.send(file=discord.File('Old Cripps Lookign Weathered.png'))  # TODO - fix image name
+            await user.send(file=discord.File('Old Cripps Looking Weathered.png'))
         elif response == picture2:
             await user.send(file=discord.File('Cripps Smoking.png'))
         else:
@@ -163,11 +164,11 @@ async def wagonSteals(ctx, days):
     # number_of_steals = wagonCounter.number_of_occurrences()
     # Determines which message to print based on the users passed in 'days' argument
     if int(days) > 1:
-        wagon_steal_message.add_field(name=f"Top occurrences of 'bhwagon' in the last {days} days".title(),
+        wagon_steal_message.add_field(name=f"Top occurrences of 'drwagon' in the last {days} days".title(),
                                       value=wagon_steals_data, inline=False)
         # wagonSteals.set_footer(text=f"Total number of steals in the last {days} days is {number_of_steals}")
     elif int(days) == 1:
-        wagon_steal_message.add_field(name=f"Top occurrences of 'bhwagon' in the last day".title(),
+        wagon_steal_message.add_field(name=f"Top occurrences of 'drwagon' in the last day".title(),
                                       value=wagon_steals_data, inline=False)
         # wagonSteals.set_footer(text=f"Total number of steals in the last {days} day is {number_of_steals}")
 
@@ -247,6 +248,30 @@ async def bountiesAlive(ctx, days):
 
 
 @client.command()
+async def parley(ctx, days):
+    bounties_recovered_data = await parleyCounter.parleys(ctx, days)  # gets the dictionary output list
+
+    bounties_recovered = discord.Embed(
+        title="Bounty Leader Board",
+        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        color=0x1BF761)
+
+    bounties_recovered.set_author(name=ctx.author.display_name,
+                                  url="https://www.blackhatsride.com",
+                                  icon_url=ctx.author.avatar_url)
+
+    if int(days) > 1:
+        bounties_recovered.add_field(name=f"Number of Parleys in the last {days} days".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} days is {number_of_steals}")
+    elif int(days) == 1:
+        bounties_recovered.add_field(name=f"Number of Parleys in the last day".title(),
+                                     value=bounties_recovered_data, inline=False)
+        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} day is {number_of_steals}")
+    await ctx.send(embed=bounties_recovered)
+
+
+@client.command()
 async def members(ctx):
     """
     Defines the ability for a user to call '!members' in a channel and the bot will return a list of all members
@@ -306,15 +331,15 @@ async def members(ctx):
 async def guide(ctx):
     """
     Defines the ability for a user to call '!guide' in a channel and the bot will return a Survival Guide - Outlaw 101
-    created by a member of the Black Hats (author field)
+    created by a member of the Dead Rabbits (author field)
     :param ctx: represents the context in which a command is being invoked under
     :return: a hyperlink to a website which contains the Black Hats Survival Guide - Outlaw 101
     """
-
+    print()
     guide_message = discord.Embed(
-        title="Black Hat RDO Guide - Outlaw 101",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=34197895",
-        description="This is the RDO Black Hats Guide, which will be helpful for new and veteran players alike. Feel "
+        title="Dead Rabbits RDO Guide - Outlaw 101",
+        url="https://docs.google.com/spreadsheets/d/1unvfSJMlgApkbhW2JC_nWO2GRxYSwoo5SWi9GILmgQg/edit?usp=sharing",
+        description="This is the RDO Dead Rabbits Guide, which will be helpful for new and veteran players alike. Feel "
                     "free to download a copy and use it as you wish!",
         color=0xE39DC2)
 
@@ -324,27 +349,6 @@ async def guide(ctx):
         url="https://www.twitch.tv/katymcblagg",
         icon_url="https://pbs.twimg.com/profile_images/1373717181276491780/vOus29er_400x400.jpg")
     await ctx.send(embed=guide_message)
-
-
-# TODO - finish writing method
-# @client.command()
-# async def streamers(ctx):
-#     """
-#     Defines the ability for a user to call '!streamers' in a channel and the bot will return a list of all the streamers
-#     along with links to each of their channels
-#     :param ctx: represents the context in which a command is being invoked under
-#     :return: a hyperlink to a website which contains the survival guide - outlaw 101
-#     """
-#     streamers_message = discord.Embed(
-#         title="Black Hat RDO Guide - Outlaw 101",
-#         url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
-#         description="This is the RDO Black Hats Guide, which will be helpful for new and veteran players alike. Feel "
-#                     "free to download a copy and use it as you wish!",
-#         color=0xE39DC2)
-#
-#     streamers_message.set_author(name="",
-#                                  url="https://www.twitch.tv/realitybyt3s",
-#                                  icon_url="https://www.twitch.tv/realitybyt3s")
 
 
 @client.command()
@@ -392,7 +396,8 @@ async def eliteRanks(ctx):
                                         "during a griefer call.\n\n"
                                         "Notes: Must be performed on the server. Any member of the posse may claim "
                                         "credit. \n"
-                                        "Salty players after content do not count as griefers. 'drparley'", inline=False)
+                                        "Salty players after content do not count as griefers. 'drparley'",
+                                  inline=False)
     elite_ranks_message.add_field(name="Recovery Agent".title(),
                                   value="Awarded monthly to whoever has earned the most points for player bounties.\n\n"
                                         "Notes: 'dralive' 1 point and 'drdead' 1/2 point\n"
@@ -400,7 +405,7 @@ async def eliteRanks(ctx):
                                         "'Bounty Complete' screen.\n"
                                         "May be performed solo or in a posse. Does not have to be performed on the "
                                         "server, but is preferred."
-                                        , inline=False)
+                                  , inline=False)
     elite_ranks_message.add_field(name="Hell-Cat Maggie".title(),
                                   value="Love stealing wagons? This Rank goes to any member that has lead 100 wagon "
                                         "steals as tracked in the Wagon Steal Counter, and has performed at least one "
@@ -428,15 +433,6 @@ async def eliteRanks(ctx):
                                         " deafen members should the rare need arise. They are well versed in the rules"
                                         " and support the vision of the crew.)"
                                   , inline=False)
-
-
-
-
-
-
-
-
-
 
     await ctx.send(embed=elite_ranks_message)
 
@@ -481,7 +477,6 @@ async def command(ctx):
                                     "each bounty hunter in the given amount of days"
                               , inline=False)
 
-
     command_message.add_field(name="!members",
                               value="This command returns a complete list of each user in the guild, along with how many"
                                     " members are in each available role.", inline=False)
@@ -491,8 +486,6 @@ async def command(ctx):
     command_message.add_field(name="!eliteRanks", value="This command returns all attainable titles in the guild, along"
                                                         " with description of each rank, and how to earn them.",
                               inline=False)
-
-
 
     await ctx.send(embed=command_message)
 
@@ -521,8 +514,10 @@ def remove_all_bots(list_of_members):
     :return: nothing
     """
     list_of_members.remove("Carl-bot#1536")
-    list_of_members.remove("Statbot#3472")
     list_of_members.remove("JB Cripps#8388")
+    list_of_members.remove("JB Cripps#8388")
+    list_of_members.remove("Live Countdown#4463")
+    list_of_members.remove("Statbot#3472")
 
 
 signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))

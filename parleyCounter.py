@@ -4,7 +4,7 @@ guilds channels messages. This program returns a leaderboard sorted by the membe
 import datetime as dt
 
 
-async def bounty_hunters(ctx, days):
+async def parleys(ctx, days):
     """
     Defines the functionality for the bot to return a list of users and the number of times they've said 'bhwagon'
     :param ctx: represents the context in which a command is being invoked under
@@ -15,10 +15,10 @@ async def bounty_hunters(ctx, days):
     time_interval = dt.datetime.utcnow() - dt.timedelta(days=int(days))
 
     # Declaration of Dictionaries containing members vs. occurrences of the phrases
-    dict_of_bounty_hunters = await build_dictionary(ctx, time_interval)
+    dict_of_wagon_stealers = await build_dictionary(ctx, time_interval)
 
     # Sorts the occurrences and builds an output string
-    sorted_occurrences = sorted(dict_of_bounty_hunters.items(), key=lambda x: x[1], reverse=True)
+    sorted_occurrences = sorted(dict_of_wagon_stealers.items(), key=lambda x: x[1], reverse=True)
 
     list_output = build_output_string(sorted_occurrences)
 
@@ -32,37 +32,33 @@ async def build_dictionary(ctx, days):
     :param days: the number of days the user wants to search back in a channels message history
     :return: a dictionary of each member along with the number of occurrences from the time frame specified
     """
-    users_vs_total = {}  # declares an empty dictionary recording the total score of each bounty hunter
+    users_vs_occurrences = {}  # declares an empty dictionary
 
     # Defines logic for searching through a channels messages
     async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
         if is_target_phrase(each_message):  # if this message is a target message
             member = each_message.author.name
-            message = decode_message(each_message)  # the message the user sent
 
             # Logic for adding new members into the dictionary and sets their occurrences to 0
-            if member not in users_vs_total:
-                users_vs_total[member] = 0
+            if member not in users_vs_occurrences:
+                users_vs_occurrences[member] = 0
 
             # else they are already in the dictionary, and increment the amount of this users occurrences by 1
-            if message == 'dralive':
-                users_vs_total[member] = users_vs_total[member] + 1
+            users_vs_occurrences[member] = users_vs_occurrences[member] + 1
 
-    return users_vs_total
+    return users_vs_occurrences
 
 
 def is_target_phrase(message):
     """
-    Determines if the message from the channel is 'bhalive' or 'bhdead'
+    Determines if the message from the channel is 'bhwagon'
     :param message: each message visible in the channels history
     :return: a true or false value dependant on if the message is 'bhwagon' or not
     """
-    if 'dralive' in message.content or 'drdead' in message.content:
+    if 'drparley' in message.content:
         return True
-
-
-def decode_message(message):
-    return message.content
+    else:
+        return False
 
 
 def build_output_string(dictionary_occurrences):
@@ -75,9 +71,7 @@ def build_output_string(dictionary_occurrences):
 
     # Logic for how the dictionary should be printed
     for each_index, tuple in enumerate(dictionary_occurrences):
-        bounty_hunters_name = tuple[0]
+        wagon_stealers_name = tuple[0]
         number_of_steals = tuple[1]
-
-        helper_string += bounty_hunters_name + ": " + str(number_of_steals) + "\n"
-
+        helper_string += wagon_stealers_name + ": " + str(number_of_steals) + "\n"
     return helper_string

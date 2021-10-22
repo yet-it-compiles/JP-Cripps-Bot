@@ -1,5 +1,5 @@
 """ A module which builds a dictionary of members based on the amount of occurrences found by iterating through a
-guilds channels messages """
+guilds channels messages. This program returns a leaderboard sorted by the members who've said 'bhdead' the most """
 
 import datetime as dt
 
