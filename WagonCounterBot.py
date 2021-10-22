@@ -164,11 +164,11 @@ async def wagonSteals(ctx, days):
     # number_of_steals = wagonCounter.number_of_occurrences()
     # Determines which message to print based on the users passed in 'days' argument
     if int(days) > 1:
-        wagon_steal_message.add_field(name=f"Top occurrences of 'drwagon' in the last {days} days".title(),
+        wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last {days} Days",
                                       value=wagon_steals_data, inline=False)
         # wagonSteals.set_footer(text=f"Total number of steals in the last {days} days is {number_of_steals}")
     elif int(days) == 1:
-        wagon_steal_message.add_field(name=f"Top occurrences of 'drwagon' in the last day".title(),
+        wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last Day",
                                       value=wagon_steals_data, inline=False)
         # wagonSteals.set_footer(text=f"Total number of steals in the last {days} day is {number_of_steals}")
 
