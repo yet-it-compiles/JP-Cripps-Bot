@@ -1,13 +1,14 @@
-""" A module which creates the call command, and """
+""" This module embeds the information sent to it within a message and sends it to the chat based on method specific
+command calls. c These calls are denoted by !haracter. """
 import asyncio
 import os
 import signal
 import discord
 import random
-import bhwagonCounter as wagonCounter
-import bhbountiesCounter as bountyCounter
-import bhAliveCounter as bountyAliveCounter
-import bhdeadCounter as bountyDeadCounter
+import wagonCounter as wagonCounter
+import bountiesCounter as bountyCounter
+import AliveCounter as bountyAliveCounter
+import deadCounter as bountyDeadCounter
 import parleyCounter as parleyCounter
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -17,7 +18,6 @@ load_dotenv()  # loads the encapsulated values from the .env file
 # Declaration of Encapsulated Variables
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 WAGON_CHANNEL = os.getenv('WAGON_STEAL_CHANNEL_KEY')
-test = os.getenv('TESTING_GUILD_NAME')
 
 # Declaration Discord.py Variables
 intents = discord.Intents.default()  # Turns on the connection
@@ -30,17 +30,16 @@ user_vs_occurrence = {}  # creates an empty dictionary
 
 @client.event
 async def on_ready():
-    """ Sets the presence status of the bot when it first connects to the guild """
-    await client.change_presence(activity=discord.Game('RDO - Wagon Stealing'))  # sets the bots Activity
-    print(test)
+    """ Sets the status of the bot when it connects to the guild """
+    await client.change_presence(activity=discord.Game('RDO - Wagon Stealing'))  # sets the bots activity status
 
 
 @client.listen()
 async def on_message(message):
     """
-    Looks for when a member calls 'bhwagon', and after 24 minutes, sends them a message
+    Listens for when a member calls 'drwagon', and after 24 minutes, sends them a message to the user
     :param message: the message sent by the user
-    :return: a DM to the user letting them know their cooldown ended
+    :return: a DM to the user letting them know their cooldown has ended
     """
     if message.content.startswith("drwagon"):
         await cool_down_ended(message)
@@ -52,11 +51,11 @@ async def cool_down_ended(message):
     :param message: message the author sent
     :return: a message to the author letting them know they can wagon steal again
     """
-    # Variables which store the pictures
+    # Variables which store pictures messages
     picture1 = discord.File('Old Cripps Lookign Weathered.png')
     picture2 = discord.File('Cripps Smoking.png')
 
-    # A list which stores the possible quotes to send to the user
+    # Defines a list which stores quotes to send to the user
     list_of_quotes = \
         [
             "Your wagon steal timer is up 🎩\nLooks like it's time for another materials run!",
@@ -78,14 +77,14 @@ async def cool_down_ended(message):
         ]
 
     await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
-    response = random.choice(list_of_quotes)
+    response_to_send = random.choice(list_of_quotes)
 
-    if response == picture1:
+    if response_to_send == picture1:
         await message.author.send(file=discord.File('Old Cripps Looking Weathered.png'))
-    elif response == picture2:
+    elif response_to_send == picture2:
         await message.author.send(file=discord.File('Cripps Smoking.png'))
     else:
-        await message.author.send(response)
+        await message.author.send(response_to_send)
 
 
 @client.event
@@ -153,39 +152,43 @@ async def wagonSteals(ctx, days):
     # Defines the name of the embed message along with the site to take a member to if they click on it
     wagon_steal_message = discord.Embed(
         title="Wagon Steals Counter",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         color=0xFF5733)
 
     # Assigns the author field to the member who called the bot
     wagon_steal_message.set_author(name=ctx.author.display_name,
-                                   url="https://www.blackhatsride.com",
+                                   url="https://www.deadrabbitsrdo.com",
                                    icon_url=ctx.author.avatar_url)
 
-    # number_of_steals = wagonCounter.number_of_occurrences()
     # Determines which message to print based on the users passed in 'days' argument
     if int(days) > 1:
         wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last {days} Days",
                                       value=wagon_steals_data, inline=False)
-        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} days is {number_of_steals}")
     elif int(days) == 1:
         wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last Day",
                                       value=wagon_steals_data, inline=False)
-        # wagonSteals.set_footer(text=f"Total number of steals in the last {days} day is {number_of_steals}")
 
     await ctx.send(embed=wagon_steal_message)
 
 
 @client.command()
 async def bounties(ctx, days):
+    """
+    Defines a command which keeps track of the amount of points a player recieved by determined by weather or not they
+    bring the bounty in dead or alive
+    :param ctx: represents the context in which a command is being invoked under
+    :param days: the number of days a member wants to look back into a channels message history
+    :return: an embedded message with a list of users with the amount of points they've recieved from their bounties
+    """
     bounties_recovered_data = await bountyCounter.bounty_hunters(ctx, days)  # gets the dictionary output list
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         color=0x2D95EB)
 
     bounties_recovered.set_author(name=ctx.author.display_name,
-                                  url="https://www.blackhatsride.com",
+                                  url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
     if int(days) > 1:
@@ -205,11 +208,11 @@ async def bountiesDead(ctx, days):
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         color=0x2D95EB)
 
     bounties_recovered.set_author(name=ctx.author.display_name,
-                                  url="https://www.blackhatsride.com",
+                                  url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
     if int(days) > 1:
@@ -229,11 +232,11 @@ async def bountiesAlive(ctx, days):
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         color=0x2D95EB)
 
     bounties_recovered.set_author(name=ctx.author.display_name,
-                                  url="https://www.blackhatsride.com",
+                                  url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
     if int(days) > 1:
@@ -253,11 +256,11 @@ async def parley(ctx, days):
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         color=0x1BF761)
 
     bounties_recovered.set_author(name=ctx.author.display_name,
-                                  url="https://www.blackhatsride.com",
+                                  url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
     if int(days) > 1:
@@ -297,7 +300,7 @@ async def members(ctx):
 
     # This shows the member who called the bot function
     members_message.set_author(name=ctx.author.display_name,
-                               url="https://www.blackhatsride.com",
+                               url="https://deadrabbitsrdo.com",
                                icon_url=ctx.author.avatar_url)
 
     # Determines how many members to keep in each list
@@ -338,7 +341,7 @@ async def guide(ctx):
     print()
     guide_message = discord.Embed(
         title="Dead Rabbits RDO Guide - Outlaw 101",
-        url="https://docs.google.com/spreadsheets/d/1unvfSJMlgApkbhW2JC_nWO2GRxYSwoo5SWi9GILmgQg/edit?usp=sharing",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         description="This is the RDO Dead Rabbits Guide, which will be helpful for new and veteran players alike. Feel "
                     "free to download a copy and use it as you wish!",
         color=0xE39DC2)
@@ -361,13 +364,13 @@ async def eliteRanks(ctx):
     """
     elite_ranks_message = discord.Embed(
         title="Dead Rabbits RDO - Elite Titles",
-        url="https://docs.google.com/spreadsheets/d/1or_UMRcmDrRPi1DyxbF0yYWOs7ujeW0qTmsf6nwrqPc/edit#gid=1230983397",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         description="This is a list of the 'Elite Titles' that can be earned as described below ",
         color=0xFFDF00)
 
     # This shows the member who called the bot function
     elite_ranks_message.set_author(name=ctx.author.display_name,
-                                   url="https://www.blackhatsride.com",
+                                   url="https://deadrabbitsrdo.com",
                                    icon_url=ctx.author.avatar_url)
 
     elite_ranks_message.add_field(name="Wanderer".title(),
@@ -452,7 +455,7 @@ async def command(ctx):
 
     # This shows the member who called the bot function
     command_message.set_author(name=ctx.author.display_name,
-                               url="https://www.blackhatsride.com",
+                               url="https://deadrabbitsrdo.com",
                                icon_url=ctx.author.avatar_url)
 
     # Defines the contents of each field in the embed message

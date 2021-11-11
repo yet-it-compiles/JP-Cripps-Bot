@@ -1,10 +1,10 @@
 """ A module which builds a dictionary of members based on the amount of occurrences found by iterating through a
-guilds channels messages. This program returns a leaderboard sorted by the members who've said 'drparley' the most """
+guilds channels messages. This program returns a leaderboard sorted by the members who've said 'drwagon' the most """
 
 import datetime as dt
 
 
-async def parleys(ctx, days):
+async def wagon_steals(ctx, days):
     """
     Defines the functionality for the bot to return a list of users and the number of times they've said 'drwagon'
     :param ctx: represents the context in which a command is being invoked under
@@ -32,7 +32,7 @@ async def build_dictionary(ctx, days):
     :param days: the number of days the user wants to search back in a channels message history
     :return: a dictionary of each member along with the number of occurrences from the time frame specified
     """
-    users_vs_occurrences = {}  # declares an empty dictionary
+    users_vs_occurrences = {}
 
     # Defines logic for searching through a channels messages
     async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
@@ -46,6 +46,7 @@ async def build_dictionary(ctx, days):
             # else they are already in the dictionary, and increment the amount of this users occurrences by 1
             users_vs_occurrences[member] = users_vs_occurrences[member] + 1
 
+        calculate(users_vs_occurrences)
     return users_vs_occurrences
 
 
@@ -55,7 +56,7 @@ def is_target_phrase(message):
     :param message: each message visible in the channels history
     :return: a true or false value dependant on if the message is 'drwagon' or not
     """
-    if 'drparley' in message.content:
+    if 'drwagon' in message.content:
         return True
     else:
         return False
@@ -75,3 +76,15 @@ def build_output_string(dictionary_occurrences):
         number_of_steals = tuple[1]
         helper_string += wagon_stealers_name + ": " + str(number_of_steals) + "\n"
     return helper_string
+
+
+def calculate(dict):
+    """
+
+    :return:
+    """
+    counter = 0
+    for each_element in dict.values():
+        counter += each_element
+
+    return counter
