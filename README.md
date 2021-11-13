@@ -2,30 +2,28 @@
 ![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
 
 
-## Version 1.1.0
+## Version 1.2.1
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
-The 'Wagon Counter Bot' is a fully functional command-oriented program implemented using Discord.py API. The bot's main functionality is to search through a channel's message history and return a list of users, along with the number of occurrences of a specific phrase. The bot also has popular secondary features like: 
+The 'Wagon Counter Bot' is a fully functional command-oriented program implemented using Discord.py API. The bot's purpose is to manage medial administrative level tasks in an efficent way, and to provide useful functionality to iterate through a channels message history and take relevant data to construct into a list. 
 
 ![command call snip](https://user-images.githubusercontent.com/43221618/130944745-fd25d690-5f3d-44df-9c8a-83c020fb2ad0.PNG)
 
-
 ## Project Inspiration
-This bot was inspired by an activity in Red Dead Redemption Online (RDO), which allows you to do wagon steals on players running pelt deliveries. The objective of this content is to steal the player's wagon, and successfully make it to an alternative seller location. Upon successful delivery, the Black Hat member will say 'bhwagon' in a designated channel to record their wagon steal. 
+This bot was inspired by an activity in Red Dead Redemption Online (RDO), which allows you to preform wagon steals on players running deliveries. The objective of this content is to steal the player's wagon, and successfully make it to an alternative seller location. Upon successful delivery, the guild member will say type a target phrase in a designated channel to record their wagon steal.
 
-Therefore, the bot aims to give the ability to any member to look back in the message history and see how many occurrences of 'bhwagon' have been said by each user. Along with adding other helpful administrative commands, and other requested features recorded below.
+Therefore, the bot aims to give the ability to any member to look back in the message history and see how many occurrences of a target word/phrase of have been said by each user, and then return this information in a formated chart.
 
 
 ## Planned Features
 - [ ] Displays at the bottom of '!wagonSteal' the total amount of wagons stolen during the time call xx.
-- [ ] Create a command to view the total number of wagon steals.
 - [ ] Auto-update channel name to update total count.
 - [ ] The bot will send a message to an announcement channel, reminding members 10 minutes before 'Trade Route' starts.
 - [ ] Command which returns the number of days each member has been in the guild and sorts them into a list.
 
 
-## Current Fixes / Implementations
+## Requested Features Implemented
 - [x] Each command should now return a different color.
 - [x] Members list should now reflect the number of people in each role accurately.
 - [x] Bot now displays Playing RDO - Wagon Stealing as a game activity.
@@ -36,8 +34,14 @@ Therefore, the bot aims to give the ability to any member to look back in the me
 - [x] Making '!members' more readable by separating users into 2+ columns.
 - [x] Updated the '!wagonSteals' command to search each message for 'bhwagon' and return the count.
 - [X] Sends a private message to a member 24 minutes after typing 'bhwagon' in the server, to let them know their cooldown is up.
-- [X] Records the amount of alive/dead bounties brought in by the player - New!
+- [X] Records the amount of alive/dead bounties brought in by the player
 - [X] Allows players to see how many alive / dead bounties the possee has brought by typing '!bountiesAlive', '!bountiesDead', and '!bounties'
+- [X] Create a command to view the total number of wagon steals
+
+
+## Additional Administrative Features Implemented
+- [x] Send embedded message announcements to #announcements
+- [x] Users may send messages to the bot which will be delivered to everyone with the @admins role
 
 
 ## License
