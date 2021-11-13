@@ -32,7 +32,7 @@ async def build_dictionary(ctx, days):
     :param days: the number of days the user wants to search back in a channels message history
     :return: a dictionary of each member along with the number of occurrences from the time frame specified
     """
-    users_vs_occurrences = {}
+    users_vs_occurrences = {} # Declares an empty dictionary
 
     # Defines logic for searching through a channels messages
     async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
@@ -68,7 +68,7 @@ def build_output_string(dictionary_occurrences):
     :param dictionary_occurrences:  each member of the guild along with the number of times each said 'drwagon'
     :return: a list of users with the amount of occurrences of 'drwagon'
     """
-    helper_string = ""
+    helper_string = "" # declares an empty string
 
     # Logic for how the dictionary should be printed
     for each_index, tuple in enumerate(dictionary_occurrences):
@@ -78,13 +78,17 @@ def build_output_string(dictionary_occurrences):
     return helper_string
 
 
+# TODO - Finish implementing this method
 def calculate(dict):
     """
-
-    :return:
+    Defines the logic to iterate through the dictionaries values and sum the elements
+    :return: the sum of the dictionaries values
     """
-    counter = 0
+    counter = 0 # initial value to start
+    
+    # calculate should be put in wagon_stealers, and have the values of dict_of_wagon_stealers passed to this method
+    
     for each_element in dict.values():
         counter += each_element
-
+    
     return counter
