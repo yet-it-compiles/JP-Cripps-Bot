@@ -77,7 +77,7 @@ async def cool_down_ended(message):
         ]
 
     await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
-    response_to_send = random.choice(list_of_quotes)
+    response_to_send = random.choice(list_of_quotes)  # randomizes the the responses
 
     if response_to_send == picture1:
         await message.author.send(file=discord.File('Old Cripps Looking Weathered.png'))
@@ -91,7 +91,7 @@ async def cool_down_ended(message):
 async def on_reaction_add(reaction, user):  # reaction & user as an argument
     """
     Sends a message to a user 24 minutes later, after they react to a message
-    :param reaction: '✅'
+    :param reaction: '✅' - checkmark emoji/reaction
     :param user: is the member who reacted to the message
     :return: a message to the user letting them know their cool down is up
     """
@@ -99,7 +99,7 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
         await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
 
         # Variables which store the pictures
-        picture1 = discord.File('Old Cripps Lookign Weathered.png')
+        picture1 = discord.File('Old Cripps Looking Weathered.png')
         picture2 = discord.File('Cripps Smoking.png')
 
         # A list which stores the possible quotes to send to the user
@@ -174,7 +174,7 @@ async def wagonSteals(ctx, days):
 @client.command()
 async def bounties(ctx, days):
     """
-    Defines a command which keeps track of the amount of points a player recieved by determined by weather or not they
+    Defines a command which keeps track of the amount of points a player received by determined by weather or not they
     bring the bounty in dead or alive
     :param ctx: represents the context in which a command is being invoked under
     :param days: the number of days a member wants to look back into a channels message history
@@ -182,15 +182,18 @@ async def bounties(ctx, days):
     """
     bounties_recovered_data = await bountyCounter.bounty_hunters(ctx, days)  # gets the dictionary output list
 
+    # Defines the embed header
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
         url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         color=0x2D95EB)
 
+    # Displays the person who called the command
     bounties_recovered.set_author(name=ctx.author.display_name,
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
+    # Logic to determine which embed message should send
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Top Bounty Hunters in the last {days} days".title(),
                                      value=bounties_recovered_data, inline=False)
@@ -278,9 +281,9 @@ async def parley(ctx, days):
 async def members(ctx):
     """
     Defines the ability for a user to call '!members' in a channel and the bot will return a list of all members
-    organized into columns. The end of the message displays the total number of members in each role.
+    organized into two columns. The end of the message displays the total number of members in each role.
     :param ctx: represents the context in which a command is being invoked under
-    :return: a complete list of members, the total amount in each role
+    :return: an embedded message displaying all the users, and how many are in each role
     """
 
     # Captures all members in the guild, and lists them in alphabetical order
@@ -334,7 +337,6 @@ async def guide(ctx):
     :param ctx: represents the context in which a command is being invoked under
     :return: a hyperlink to a website which contains the Black Hats Survival Guide - Outlaw 101
     """
-    print()
     guide_message = discord.Embed(
         title="Dead Rabbits RDO Guide - Outlaw 101",
         url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
@@ -524,7 +526,9 @@ def remove_all_bots(list_of_members):
     list_of_members.remove("Hydra#1214")
     list_of_members.remove("Hydra 2#9193")
     list_of_members.remove("ModMail#5460")
-    #list_of_members.remove("kovop#9237")
+    list_of_members.remove("rj#2899")
+    list_of_members.remove("Kovop#9237")
+
 
 
 signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))
