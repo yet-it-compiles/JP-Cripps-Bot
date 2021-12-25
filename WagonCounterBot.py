@@ -62,9 +62,10 @@ async def on_message(message):
         await message.delete()
     elif message.content.startswith("!progressionDates"):
         await message.delete()
-    elif message.content.startswith("!wagonSteals"):
+    elif message.content.startswith("!wagonSteals "):
         await message.delete()
-
+    else:
+        pass
 
 
 async def cool_down_ended(message):
@@ -129,7 +130,8 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
             [
                 "Your wagon steal timer is up 🐇\nLooks like it's time for another materials run!",
                 f'Hey {user}, looks like our materials are running low again',
-                'Did you get the telegram I sent you? \nWe need to get some more materials, so lets get out there and hit '
+                'Did you get the telegram I sent you? \nWe need to get some more materials, so lets get out there and '
+                'hit '
                 'another wagon.',
                 "*A mailman walks up to you and hands you a letter..."
                 "you open it, realizing it's from Cripps* "
@@ -182,7 +184,8 @@ async def wagonSteals(ctx, days):
                                    url="https://www.deadrabbitsrdo.com",
                                    icon_url=ctx.author.avatar_url)
 
-    wagon_steal_message.set_thumbnail(url="https://media-rockstargames-com.akamaized.net/tina-uploads/posts/k498991k775ka8/0d8094e147c018ccd87c79294eedce3fcfcbb405.png")
+    wagon_steal_message.set_thumbnail(url="https://media-rockstargames-com.akamaized.net/tina-uploads/posts"
+                                          "/k498991k775ka8/0d8094e147c018ccd87c79294eedce3fcfcbb405.png")
 
     # Determines which message to print based on the users passed in 'days' argument
     if int(days) > 1:
@@ -217,7 +220,8 @@ async def bounties(ctx, days):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
+    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041"
+                                         "-image004.png")
 
     # Logic to determine which embed message should send
     if int(days) > 1:
@@ -244,7 +248,8 @@ async def bountiesDead(ctx, days):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
+    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041"
+                                         "-image004.png")
 
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last {days} days".title(),
@@ -270,7 +275,8 @@ async def bountiesAlive(ctx, days):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
+    bounties_recovered.set_thumbnail(
+        url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
 
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last {days} days".title(),
@@ -296,7 +302,8 @@ async def parley(ctx, days):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(url="https://preview.redd.it/hzzvz0gi0j121.jpg?auto=webp&s=86411716d80ffc4516a2829ea362883ebc0ef36a")
+    bounties_recovered.set_thumbnail(url="https://preview.redd.it/hzzvz0gi0j121.jpg?auto=webp&s"
+                                         "=86411716d80ffc4516a2829ea362883ebc0ef36a")
 
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Parleys in the last {days} days".title(),
@@ -382,7 +389,8 @@ async def guide(ctx):
         url="https://www.twitch.tv/katymcblagg",
         icon_url="https://cdn.discordapp.com/attachments/868317767818960978/924089703228129340/Logo.png")
 
-    guide_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705/895470756371263578/Guide.jpg?width=1392&height=591")
+    guide_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705/895470756371263578"
+                                    "/Guide.jpg?width=1392&height=591")
 
     await ctx.send(embed=guide_message)
 
@@ -406,7 +414,8 @@ async def serverRanks(ctx):
                                     url="https://deadrabbitsrdo.com",
                                     icon_url=ctx.author.avatar_url)
 
-    server_ranks_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
+    server_ranks_message.set_thumbnail(
+        url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
 
     server_ranks_message.add_field(name="Wanderer".title(),
                                    value="The base role of the server. All members joining the server will receive this "
@@ -451,7 +460,8 @@ async def inGameRankTitles(ctx):
                                         url="https://deadrabbitsrdo.com",
                                         icon_url=ctx.author.avatar_url)
 
-    inGameRankTitles_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
+    inGameRankTitles_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main"
+                                               "/Ranks_and_titles.jpg?raw=true")
 
     inGameRankTitles_message.add_field(name="Plug Ugly: 0-99".title(),
                                        value="-",
@@ -519,7 +529,8 @@ async def monthlyEliteRanks(ctx):
                                          url="https://deadrabbitsrdo.com",
                                          icon_url=ctx.author.avatar_url)
 
-    monthlyEliteRanks_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
+    monthlyEliteRanks_message.set_thumbnail(
+        url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
 
     monthlyEliteRanks_message.add_field(name="Highwayman".title(),
                                         value="Awarded monthly to whoever leads the most wagon steals. Steals for this "
@@ -572,7 +583,8 @@ async def eliteRanks(ctx):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
-    eliteRanks_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
+    eliteRanks_message.set_thumbnail(
+        url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
 
     eliteRanks_message.add_field(name="Hell-Cat Maggie".title(),
                                  value="Love stealing wagons? This Rank goes to any member that has lead 100 "
@@ -605,7 +617,7 @@ async def eliteRanks(ctx):
 
 
 @client.command()
-async def progressionDates(ctx):
+async def dates(ctx):
     """
     Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
     of each attainable rank within the guild
@@ -623,7 +635,8 @@ async def progressionDates(ctx):
                                         url="https://deadrabbitsrdo.com",
                                         icon_url=ctx.author.avatar_url)
 
-    progressionDates_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705/895471020583055360/Progression_dates.jpg?width=1392&height=591")
+    progressionDates_message.set_thumbnail(
+        url="https://media.discordapp.net/attachments/880157196141338705/895471020583055360/Progression_dates.jpg?width=1392&height=591")
 
     progressionDates_message.add_field(name="Progression Date Spreadsheet".title(),
                                        value="https://docs.google.com/spreadsheets/d/1y3GK_q1fOYUGrAZ_n4cbSXGRLKw"

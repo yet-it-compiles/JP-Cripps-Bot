@@ -3,13 +3,12 @@ guilds channels messages. This program returns a leaderboard sorted by the membe
 
 import datetime as dt
 
-
 async def wagon_steals(ctx, days):
     """
-    Defines the functionality for the bot to return a list of users and the number of times they've said 'drwagon'
+    Defines the functionality which sends the dictionaries contents to the client as a string
     :param ctx: represents the context in which a command is being invoked under
     :param days: the number of days the user wants to search back in a channels message history
-    :return: an output string of occurrences of wagon stealers in descending order
+    :return: a string of users vs. occurrences of wagon stealers in descending order
     """
     # Date variables for amount of time to go back
     time_interval = dt.datetime.utcnow() - dt.timedelta(days=int(days))
@@ -22,21 +21,25 @@ async def wagon_steals(ctx, days):
 
     list_output = build_output_string(sorted_occurrences)
 
+    calculate(users_vs_occurrences)
     return list_output
 
 
 async def build_dictionary(ctx, days):
     """
-    Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
+    Builds a dictionary of key/value pairs by iterating through a discords channels messages and putting each member
+    that has said "drwagon" at least once in the dictionary, and assigning their values to += 1 each time the target
+    phrase is said by the user
     :param ctx: represents the context in which a command is being invoked under
     :param days: the number of days the user wants to search back in a channels message history
     :return: a dictionary of each member along with the number of occurrences from the time frame specified
     """
-    users_vs_occurrences = {} # Declares an empty dictionary
+
+    users_vs_occurrences = {}  # declares an empty dictionary
 
     # Defines logic for searching through a channels messages
     async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
-        if is_target_phrase(each_message):  # if this message is a target message
+        if is_target_phrase(each_message):  # if this message is a target message, assign the member to the dic. key
             member = each_message.author.name
 
             # Logic for adding new members into the dictionary and sets their occurrences to 0
@@ -46,7 +49,6 @@ async def build_dictionary(ctx, days):
             # else they are already in the dictionary, and increment the amount of this users occurrences by 1
             users_vs_occurrences[member] = users_vs_occurrences[member] + 1
 
-        calculate(users_vs_occurrences)
     return users_vs_occurrences
 
 
@@ -64,11 +66,11 @@ def is_target_phrase(message):
 
 def build_output_string(dictionary_occurrences):
     """
-    Defines how the list is going to print
+    Defines how the list is going to look
     :param dictionary_occurrences:  each member of the guild along with the number of times each said 'drwagon'
-    :return: a list of users with the amount of occurrences of 'drwagon'
+    :return: a string representation of the dictionary
     """
-    helper_string = "" # declares an empty string
+    helper_string = ""
 
     # Logic for how the dictionary should be printed
     for each_index, tuple in enumerate(dictionary_occurrences):
@@ -78,17 +80,19 @@ def build_output_string(dictionary_occurrences):
     return helper_string
 
 
-# TODO - Finish implementing this method
 def calculate(dict):
     """
-    Defines the logic to iterate through the dictionaries values and sum the elements
-    :return: the sum of the dictionaries values
+
+    :param dict:
+    :return:
     """
-    counter = 0 # initial value to start
-    
-    # calculate should be put in wagon_stealers, and have the values of dict_of_wagon_stealers passed to this method
-    
-    for each_element in dict.values():
-        counter += each_element
-    
-    return counter
+
+    counter = 0
+
+    for each_person in users_vs_occurrences.keys():
+        print(each_person)
+
+    for each_value in dict.values():
+        counter += each_value
+
+    print(counter)
