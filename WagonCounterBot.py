@@ -24,9 +24,6 @@ intents = discord.Intents.default()  # Turns on the connection
 intents.members = True  # Ensures the member list will be updated properly
 client = commands.Bot(command_prefix='!', intents=intents)  # defines the symbol used to call a command from the bot
 
-# Declaration of Discord.py Variables
-user_vs_occurrence = {}  # creates an empty dictionary
-
 
 @client.event
 async def on_ready():
@@ -292,8 +289,8 @@ async def members(ctx):
 
     # Splits the users into two groups for formatting
     number_of_members = len(all_members)
-    first_half_of_members = int(number_of_members/2)
-    last_half_of_members = first_half_of_members+1
+    first_half_of_members = int(number_of_members / 2)
+    last_half_of_members = first_half_of_members + 1
 
     half_all_members = all_members[0:first_half_of_members]
     second_half_of_members = all_members[last_half_of_members:number_of_members]
@@ -348,94 +345,260 @@ async def guide(ctx):
     guide_message.set_author(
         name="Katykinss#8895",
         url="https://www.twitch.tv/katymcblagg",
-        icon_url="https://pbs.twimg.com/profile_images/1373717181276491780/vOus29er_400x400.jpg")
+        icon_url="https://cdn.discordapp.com/attachments/868317767818960978/924089703228129340/Logo.png")
+
+    guide_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705/895470756371263578/Guide.jpg?width=1392&height=591")
+
     await ctx.send(embed=guide_message)
+
+
+@client.command()
+async def serverRanks(ctx):
+    """
+    Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
+    of each attainable rank within the guild
+    :param ctx: represents the context in which a command is being invoked under
+    :return: a complete list of all possible roles the members may earn
+    """
+    server_ranks_message = discord.Embed(
+        title="Dead Rabbits RDO - Server Titles",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
+        description="A complete list of the available Server Titles",
+        color=0x008080)
+
+    # This shows the member who called the bot function
+    server_ranks_message.set_author(name=ctx.author.display_name,
+                                    url="https://deadrabbitsrdo.com",
+                                    icon_url=ctx.author.avatar_url)
+
+    server_ranks_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
+                                           "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
+
+    server_ranks_message.add_field(name="Wanderer".title(),
+                                   value="The base role of the server. All members joining the server will receive this "
+                                         "rank once they have acknowledged the rules. Those in this rank are in their "
+                                         "probationary period to last no less than two weeks, and up to one month.",
+                                   inline=False)
+    server_ranks_message.add_field(name="Short Tail".title(),
+                                   value="Members will progress to this rank upon a full member stepping up to take "
+                                         "them on as Sponsor. These are trusted members of the crew and will now have "
+                                         "the ability to request extended absences when real life intervenes and will "
+                                         "not be kicked automatically for inactivity. Short Tails also get access to "
+                                         "the suggestion box where they can make recommendations for the server.",
+                                   inline=True)
+    server_ranks_message.add_field(name="Dead Rabbit".title(),
+                                   value="Members will progress to this rank upon completion of their membership "
+                                         "checklist, concurrence of their sponsor, and completion of initiations. Dead "
+                                         "Rabbits are full members of the crew. They are the most loyal and trusted "
+                                         "members. Dead Rabbits have access to additional channels in the server and "
+                                         "are eligible for Elite Ranks. ", inline=False)
+
+    server_ranks_message.set_footer(text="Membership checklist is maintained by the sponsor.")
+
+    await ctx.send(embed=server_ranks_message)
+
+
+@client.command()
+async def inGameRankTitles(ctx):
+    """
+    Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
+    of each attainable rank within the guild
+    :param ctx: represents the context in which a command is being invoked under
+    :return: a complete list of all possible roles the members may earn
+    """
+    inGameRankTitles_message = discord.Embed(
+        title="Dead Rabbits RDO - In-Game Rank Titles",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
+        description="A complete list of the available In-Game Rank Titles",
+        color=0x008080)
+
+    # This shows the member who called the bot function
+    inGameRankTitles_message.set_author(name=ctx.author.display_name,
+                                        url="https://deadrabbitsrdo.com",
+                                        icon_url=ctx.author.avatar_url)
+
+    inGameRankTitles_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
+                                               "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
+
+    inGameRankTitles_message.add_field(name="Pug Ugly: 0-99".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="Day Breaker: 100-199".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="200-299: Night Walker".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="300-399: Black Bird".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="400-499: Slaughter Houser".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="500-599: Broadway Twister".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="600-699: Bloody Sixther".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="700-799: Autumn Diver".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="800-899: Battle Annie".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="900-999: 40 Thieves".title(),
+                                       value="-",
+                                       inline=False)
+
+    inGameRankTitles_message.add_field(name="1000+: Know Nothing".title(),
+                                       value="-",
+                                       inline=False)
+
+    await ctx.send(embed=inGameRankTitles_message)
+
+
+@client.command()
+async def monthlyEliteRanks(ctx):
+    """
+    Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
+    of each attainable rank within the guild
+    :param ctx: represents the context in which a command is being invoked under
+    :return: a complete list of all possible roles the members may earn
+    """
+    monthlyEliteRanks_message = discord.Embed(
+        title="Dead Rabbits RDO - Monthly Elite Ranks",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
+        description="A complete list of the available Monthly Elite Ranks",
+        color=0xFFDF00)
+
+    # This shows the member who called the bot function
+    monthlyEliteRanks_message.set_author(name=ctx.author.display_name,
+                                         url="https://deadrabbitsrdo.com",
+                                         icon_url=ctx.author.avatar_url)
+
+    monthlyEliteRanks_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
+                                                "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
+
+    monthlyEliteRanks_message.add_field(name="Highwayman".title(),
+                                        value="Awarded monthly to whoever leads the most wagon steals. Steals for this "
+                                              "award must be performed on the server. Credit goes to whoever spotted the "
+                                              "wagon.", inline=False)
+    monthlyEliteRanks_message.add_field(name="Butcher".title(),
+                                        value=" Awarded monthly to whoever has made the most griefers quit. Quitting is "
+                                              "defined as the player(s) parley, leave session, fast travel away or hide in a "
+                                              "safe zone. If they hide or fast travel, you must wait for two minutes and "
+                                              "verify they do not return to fight. Must be performed on the server. Any "
+                                              "member of the posse may claim credit. Salty players after content do not "
+                                              "count as griefers.", inline=False)
+    monthlyEliteRanks_message.add_field(name="Recovery Agent".title(),
+                                        value="Awarded monthly to whoever has earned the most points for player bounties. "
+                                              "Alive: 1 point\n    Dead: 1/2 point\n    "
+                                              "Submissions to the bounty counter must be accompanied by a screenshot of the "
+                                              "Bounty Complete screen. May be performed solo or in a posse. Does not have "
+                                              "to be performed on the server, but is preferred. ", inline=False)
+
+    monthlyEliteRanks_message.add_field(name="Recovery Agent".title(),
+                                        value="Awarded monthly to whoever has earned the most points for player bounties. "
+                                              "Alive: 1 point\n    Dead: 1/2 point\n    "
+                                              "Submissions to the bounty counter must be accompanied by a screenshot of the "
+                                              "Bounty Complete screen. May be performed solo or in a posse. Does not have "
+                                              "to be performed on the server, but is preferred. ", inline=False)
+
+    monthlyEliteRanks_message.add_field(name="Priest".title(),
+                                        value="Awarded Monthly to whoever has earned the most honor as awarded by the "
+                                              "membership in the #honor-counter.", inline=False)
+
+    await ctx.send(embed=monthlyEliteRanks_message)
 
 
 @client.command()
 async def eliteRanks(ctx):
     """
-    Defines the ability for a user to call '!eliteRanks' in a channel and the bot will return a list with descriptions
+    Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
     of each attainable rank within the guild
     :param ctx: represents the context in which a command is being invoked under
     :return: a complete list of all possible roles the members may earn
     """
-    elite_ranks_message = discord.Embed(
-        title="Dead Rabbits RDO - Elite Titles",
+    eliteRanks_message = discord.Embed(
+        title="Dead Rabbits RDO - Elite Ranks",
         url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
-        description="This is a list of the 'Elite Titles' that can be earned as described below ",
+        description="A complete list of the available Elite Rank Titles",
         color=0xFFDF00)
 
     # This shows the member who called the bot function
-    elite_ranks_message.set_author(name=ctx.author.display_name,
-                                   url="https://deadrabbitsrdo.com",
-                                   icon_url=ctx.author.avatar_url)
+    eliteRanks_message.set_author(name=ctx.author.display_name,
+                                  url="https://deadrabbitsrdo.com",
+                                  icon_url=ctx.author.avatar_url)
 
-    elite_ranks_message.add_field(name="Wanderer".title(),
-                                  value="The base role of the server. All members joining the server will receive this "
-                                        "rank once they have acknowledged the rules. Those in this rank are in their "
-                                        "one month probationary period.", inline=False)
-    elite_ranks_message.add_field(name="Short Tail".title(),
-                                  value="Members will progress to this rank upon their initiation after one month of "
-                                        "active membership. These are trusted members of the crew and will now have "
-                                        "access to 'The Clink' where they can post about absences and not be "
-                                        "automatically kicked for inactivity. Short Tails also get access to the "
-                                        "suggestion box where they can make recommendations for the server.",
-                                  inline=False)
-    elite_ranks_message.add_field(name="Dead Rabbit".title(),
-                                  value="Members will progress to this rank after two months spent as a Short Tail for "
-                                        "a total of three months of being an active member. Dead Rabbits are full "
-                                        "members of the crew. They are the most loyal and trusted members. Dead "
-                                        "Rabbits have access to additional channels in the server and are eligible for "
-                                        "Elite Ranks. ", inline=False)
-    elite_ranks_message.add_field(name="Highwayman".title(),
-                                  value="Awarded monthly to whoever leads the most wagon steals. \n"
-                                        "\nNotes: steals for this award must be performed on the server.\n"
-                                        "Credit goes to whoever spotted the wagon. 'drwagon'", inline=False)
-    elite_ranks_message.add_field(name="Butcher".title(),
-                                  value="Awarded monthly to whoever has made the most griefers parley or leave session "
-                                        "during a griefer call.\n\n"
-                                        "Notes: Must be performed on the server. Any member of the posse may claim "
-                                        "credit. \n"
-                                        "Salty players after content do not count as griefers. 'drparley'",
-                                  inline=False)
-    elite_ranks_message.add_field(name="Recovery Agent".title(),
-                                  value="Awarded monthly to whoever has earned the most points for player bounties.\n\n"
-                                        "Notes: 'dralive' 1 point and 'drdead' 1/2 point\n"
-                                        "submissions to the bounty counter must be accompanied by a screenshot of the "
-                                        "'Bounty Complete' screen.\n"
-                                        "May be performed solo or in a posse. Does not have to be performed on the "
-                                        "server, but is preferred."
-                                  , inline=False)
-    elite_ranks_message.add_field(name="Hell-Cat Maggie".title(),
-                                  value="Love stealing wagons? This Rank goes to any member that has lead 100 wagon "
-                                        "steals as tracked in the Wagon Steal Counter, and has performed at least one "
-                                        "of them solo without killing anyone. The Solo No Kill steal must be witnessed "
-                                        "by a full Dead Rabbit. Any steals led while a Wanderer or Short Tail will"
-                                        " count towards the total."
-                                  , inline=False)
-    elite_ranks_message.add_field(name="Roach Guard".title(),
-                                  value="These are the most feared and ruthless members of the crew when it comes to "
-                                        "PvP. This Rank goes to members who have documented 50 Parleys in the counter, "
-                                        "and have Defended the crew 10 times during content. "
-                                        "(Content can be anything from a rival trader attempting to steal a wagon, a "
-                                        "player bounty, or hostile players attacking a free roam mission.)"
-                                  , inline=False)
-    elite_ranks_message.add_field(name="Bondsman".title(),
-                                  value="Criminals flee from them. This rank goes to members who have met the following "
-                                        "criteria:\n"
-                                        "- 50 player bounties brought in alive\n"
-                                        "- 50 player bounties brought in dead\n"
-                                        "- Achieved max player bounty of $100 with screenshot as proof"
-                                        "- Been turned in to jail with screenshot as proof)"
-                                  , inline=False)
-    elite_ranks_message.add_field(name="Five Pointer".title(),
-                                  value="The Moderators of the crew. They have the authority and ability to mute,"
-                                        " deafen members should the rare need arise. They are well versed in the rules"
-                                        " and support the vision of the crew.)"
-                                  , inline=False)
+    eliteRanks_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
+                                         "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
 
-    await ctx.send(embed=elite_ranks_message)
+    eliteRanks_message.add_field(name="Hell-Cat Maggie".title(),
+                                 value="Love stealing wagons? This Rank goes to any member that has lead 100 "
+                                       "wagon steals as tracked in the Wagon Steal Counter, and has performed "
+                                       "at "
+                                       "least one of them solo without killing anyone. The Solo No Kill steal "
+                                       "must be witnessed by a full Dead Rabbit. Any steals led while a "
+                                       "Wanderer "
+                                       "or Short Tail will count towards the total.", inline=False)
+
+    eliteRanks_message.add_field(name="Roach Guard".title(),
+                                 value="These are the most feared and ruthless members of the crew when it comes to "
+                                       "PvP. This Rank goes to members who have documented 50 Parleys in the counter, "
+                                       "and have Defended the crew 10 times during content. (Content can be anything "
+                                       "from a rival trader attempting to steal a wagon, a player bounty, or hostile "
+                                       "players attacking a free roam mission.)", inline=False)
+
+    eliteRanks_message.add_field(name="Bondsman".title(),
+                                 value="Criminals flee from them. This rank goes to members who have met the "
+                                       "following criteria: "
+                                       "50 player bounties brought in alive    50 player bounties brought in dead    "
+                                       "Achieved max player bounty of $100 with screenshot as proof "
+                                       "    Been turned in to jail with screenshot as proof", inline=False)
+
+    eliteRanks_message.add_field(name="Five Pointer".title(),
+                                 value="The Moderators of the crew. They have the authority and ability to mute, "
+                                       "and deafen members should the rare need arise.", inline=False)
+
+    await ctx.send(embed=eliteRanks_message)
+
+
+@client.command()
+async def progressionDates(ctx):
+    """
+    Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
+    of each attainable rank within the guild
+    :param ctx: represents the context in which a command is being invoked under
+    :return: a complete list of all possible roles the members may earn
+    """
+    progressionDates_message = discord.Embed(
+        title="Dead Rabbits RDO - Wanderer Progression Dates",
+        url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
+        description="A helpful resource to view the progression dates for new members",
+        color=0x32a869)
+
+    # This shows the member who called the bot function
+    progressionDates_message.set_author(name=ctx.author.display_name,
+                                        url="https://deadrabbitsrdo.com",
+                                        icon_url=ctx.author.avatar_url)
+
+    progressionDates_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705/895471020583055360/Progression_dates.jpg?width=1392&height=591")
+
+    progressionDates_message.add_field(name="Progression Date Spreadsheet".title(),
+                                       value="https://docs.google.com/spreadsheets/d/1y3GK_q1fOYUGrAZ_n4cbSXGRLKw"
+                                             "-Ulub0-leGYlDaEA/edit#gid=0", inline=False)
+
+    await ctx.send(embed=progressionDates_message)
 
 
 @client.command()
@@ -479,8 +642,8 @@ async def command(ctx):
                               , inline=False)
 
     command_message.add_field(name="!members",
-                              value="This command returns a complete list of each user in the guild, along with how many"
-                                    " members are in each available role.", inline=False)
+                              value="This command returns a complete list of each user in the guild, along with how "
+                                    "many members are in each available role.", inline=False)
     command_message.add_field(name="!guide",
                               value="This command returns the Black Hat Outlaw 101 - Survival Guide created by "
                                     "Katykinss#8895.", inline=False)
@@ -517,7 +680,6 @@ def remove_all_bots(list_of_members):
     list_of_members.remove("Carl-bot#1536")
     list_of_members.remove("JB Cripps#8388")
     list_of_members.remove("JB Cripps#8388")
-    list_of_members.remove("Live Countdown#4463")
     list_of_members.remove("Statbot#3472")
     list_of_members.remove("GatorRed#9857")
     list_of_members.remove("PollBot Advanced#5365")
@@ -526,9 +688,8 @@ def remove_all_bots(list_of_members):
     list_of_members.remove("Hydra#1214")
     list_of_members.remove("Hydra 2#9193")
     list_of_members.remove("ModMail#5460")
-    list_of_members.remove("rj#2899")
     list_of_members.remove("Kovop#9237")
-
+    list_of_members.remove("Live Countdown#4463")
 
 
 signal.signal(signal.SIGTERM, lambda *_: client.loop.create_task(client.close()))
