@@ -40,6 +40,31 @@ async def on_message(message):
     """
     if message.content.startswith("drwagon"):
         await cool_down_ended(message)
+    elif message.content.startswith("!command"):
+        await message.delete()
+    elif message.content.startswith("!bounties "):
+        await message.delete()
+    elif message.content.startswith("!bountiesDead "):
+        await message.delete()
+    elif message.content.startswith("!bountiesAlive"):
+        await message.delete()
+    elif message.content.startswith("!parley"):
+        await message.delete()
+    elif message.content.startswith("!members"):
+        await message.delete()
+    elif message.content.startswith("!guide"):
+        await message.delete()
+    elif message.content.startswith("!serverRanks"):
+        await message.delete()
+    elif message.content.startswith("!monthlyEliteRanks"):
+        await message.delete()
+    elif message.content.startswith("!eliteRanks"):
+        await message.delete()
+    elif message.content.startswith("!progressionDates"):
+        await message.delete()
+    elif message.content.startswith("!wagonSteals"):
+        await message.delete()
+
 
 
 async def cool_down_ended(message):
@@ -157,6 +182,8 @@ async def wagonSteals(ctx, days):
                                    url="https://www.deadrabbitsrdo.com",
                                    icon_url=ctx.author.avatar_url)
 
+    wagon_steal_message.set_thumbnail(url="https://media-rockstargames-com.akamaized.net/tina-uploads/posts/k498991k775ka8/0d8094e147c018ccd87c79294eedce3fcfcbb405.png")
+
     # Determines which message to print based on the users passed in 'days' argument
     if int(days) > 1:
         wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last {days} Days",
@@ -190,6 +217,8 @@ async def bounties(ctx, days):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
+    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
+
     # Logic to determine which embed message should send
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Top Bounty Hunters in the last {days} days".title(),
@@ -215,6 +244,8 @@ async def bountiesDead(ctx, days):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
+    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
+
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last {days} days".title(),
                                      value=bounties_recovered_data, inline=False)
@@ -239,6 +270,8 @@ async def bountiesAlive(ctx, days):
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
+    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
+
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last {days} days".title(),
                                      value=bounties_recovered_data, inline=False)
@@ -262,6 +295,8 @@ async def parley(ctx, days):
     bounties_recovered.set_author(name=ctx.author.display_name,
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
+
+    bounties_recovered.set_thumbnail(url="https://preview.redd.it/hzzvz0gi0j121.jpg?auto=webp&s=86411716d80ffc4516a2829ea362883ebc0ef36a")
 
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Parleys in the last {days} days".title(),
@@ -371,8 +406,7 @@ async def serverRanks(ctx):
                                     url="https://deadrabbitsrdo.com",
                                     icon_url=ctx.author.avatar_url)
 
-    server_ranks_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
-                                           "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
+    server_ranks_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
 
     server_ranks_message.add_field(name="Wanderer".title(),
                                    value="The base role of the server. All members joining the server will receive this "
@@ -417,10 +451,9 @@ async def inGameRankTitles(ctx):
                                         url="https://deadrabbitsrdo.com",
                                         icon_url=ctx.author.avatar_url)
 
-    inGameRankTitles_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
-                                               "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
+    inGameRankTitles_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
 
-    inGameRankTitles_message.add_field(name="Pug Ugly: 0-99".title(),
+    inGameRankTitles_message.add_field(name="Plug Ugly: 0-99".title(),
                                        value="-",
                                        inline=False)
 
@@ -479,15 +512,14 @@ async def monthlyEliteRanks(ctx):
         title="Dead Rabbits RDO - Monthly Elite Ranks",
         url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         description="A complete list of the available Monthly Elite Ranks",
-        color=0xFFDF00)
+        color=0x008080)
 
     # This shows the member who called the bot function
     monthlyEliteRanks_message.set_author(name=ctx.author.display_name,
                                          url="https://deadrabbitsrdo.com",
                                          icon_url=ctx.author.avatar_url)
 
-    monthlyEliteRanks_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
-                                                "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
+    monthlyEliteRanks_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
 
     monthlyEliteRanks_message.add_field(name="Highwayman".title(),
                                         value="Awarded monthly to whoever leads the most wagon steals. Steals for this "
@@ -533,15 +565,14 @@ async def eliteRanks(ctx):
         title="Dead Rabbits RDO - Elite Ranks",
         url="https://docs.google.com/spreadsheets/d/1K-bY3MriRt1Qm4CP-6odIf-0CA2Rc8l-IMlSVmjMj6g/edit#gid=837843276",
         description="A complete list of the available Elite Rank Titles",
-        color=0xFFDF00)
+        color=0x008080)
 
     # This shows the member who called the bot function
     eliteRanks_message.set_author(name=ctx.author.display_name,
                                   url="https://deadrabbitsrdo.com",
                                   icon_url=ctx.author.avatar_url)
 
-    eliteRanks_message.set_thumbnail(url="https://media.discordapp.net/attachments/880157196141338705"
-                                         "/895468459931082782/Ranks_and_titles.jpg?width=1920&height=815")
+    eliteRanks_message.set_thumbnail(url="https://github.com/yet-it-compiles/Wagon-Counter-Bot/blob/main/Ranks_and_titles.jpg?raw=true")
 
     eliteRanks_message.add_field(name="Hell-Cat Maggie".title(),
                                  value="Love stealing wagons? This Rank goes to any member that has lead 100 "
