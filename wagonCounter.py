@@ -3,6 +3,7 @@ guilds channels messages. This program returns a leaderboard sorted by the membe
 
 import datetime as dt
 
+
 async def wagon_steals(ctx, days):
     """
     Defines the functionality which sends the dictionaries contents to the client as a string
@@ -21,7 +22,6 @@ async def wagon_steals(ctx, days):
 
     list_output = build_output_string(sorted_occurrences)
 
-    calculate(users_vs_occurrences)
     return list_output
 
 
@@ -34,7 +34,7 @@ async def build_dictionary(ctx, days):
     :param days: the number of days the user wants to search back in a channels message history
     :return: a dictionary of each member along with the number of occurrences from the time frame specified
     """
-
+    global users_vs_occurrences
     users_vs_occurrences = {}  # declares an empty dictionary
 
     # Defines logic for searching through a channels messages
@@ -80,19 +80,10 @@ def build_output_string(dictionary_occurrences):
     return helper_string
 
 
-def calculate(dict):
-    """
-
-    :param dict:
-    :return:
-    """
-
+def calculate():
     counter = 0
 
-    for each_person in users_vs_occurrences.keys():
-        print(each_person)
-
-    for each_value in dict.values():
+    for each_value in users_vs_occurrences.values():
         counter += each_value
 
-    print(counter)
+    return counter

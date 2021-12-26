@@ -32,6 +32,7 @@ async def build_dictionary(ctx, days):
     :param days: the number of days the user wants to search back in a channels message history
     :return: a dictionary of each member along with the number of occurrences from the time frame specified
     """
+    global users_vs_occurrences
     users_vs_occurrences = {}  # declares an empty dictionary
 
     # Defines logic for searching through a channels messages
@@ -75,3 +76,12 @@ def build_output_string(dictionary_occurrences):
         number_of_steals = tuple[1]
         helper_string += wagon_stealers_name + ": " + str(number_of_steals) + "\n"
     return helper_string
+
+
+def calculate():
+    counter = 0
+
+    for each_value in users_vs_occurrences.values():
+        counter += each_value
+
+    return counter
