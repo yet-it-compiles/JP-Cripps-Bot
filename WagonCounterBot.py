@@ -575,28 +575,21 @@ async def monthlyEliteRanks(ctx):
 
     monthlyEliteRanks_message.add_field(name="Highwayman".title(),
                                         value="Awarded monthly to whoever leads the most wagon steals. Steals for this "
-                                              "award must be performed on the server. Credit goes to whoever spotted the "
-                                              "wagon.", inline=False)
+                                              "award must be performed on the server. Credit goes to whoever spotted "
+                                              "the wagon.", inline=False)
     monthlyEliteRanks_message.add_field(name="Butcher".title(),
-                                        value=" Awarded monthly to whoever has made the most griefers quit. Quitting is "
-                                              "defined as the player(s) parley, leave session, fast travel away or hide in a "
-                                              "safe zone. If they hide or fast travel, you must wait for two minutes and "
-                                              "verify they do not return to fight. Must be performed on the server. Any "
-                                              "member of the posse may claim credit. Salty players after content do not "
-                                              "count as griefers.", inline=False)
+                                        value="Awarded monthly to whoever has made the most griefers quit. Quitting is "
+                                              "defined as the player(s) parley, leave session, fast travel away or hide"
+                                              " in a safe zone. If they hide or fast travel, you must wait for two "
+                                              "minutes and verify they do not return to fight. Must be performed on "
+                                              "the server. Any member of the posse may claim credit. Salty players "
+                                              "after content do not count as griefers.", inline=False)
     monthlyEliteRanks_message.add_field(name="Recovery Agent".title(),
-                                        value="Awarded monthly to whoever has earned the most points for player bounties. "
-                                              "Alive: 1 point\n    Dead: 1/2 point\n    "
-                                              "Submissions to the bounty counter must be accompanied by a screenshot of the "
-                                              "Bounty Complete screen. May be performed solo or in a posse. Does not have "
-                                              "to be performed on the server, but is preferred. ", inline=False)
-
-    monthlyEliteRanks_message.add_field(name="Recovery Agent".title(),
-                                        value="Awarded monthly to whoever has earned the most points for player bounties. "
-                                              "Alive: 1 point\n    Dead: 1/2 point\n    "
-                                              "Submissions to the bounty counter must be accompanied by a screenshot of the "
-                                              "Bounty Complete screen. May be performed solo or in a posse. Does not have "
-                                              "to be performed on the server, but is preferred. ", inline=False)
+                                        value="Awarded monthly to whoever has earned the most points for player "
+                                              "bounties. Alive: 1 point\n    Dead: 1/2 point\n Submissions to the "
+                                              "bounty counter must be accompanied by a screenshot of the Bounty "
+                                              "Complete screen. May be performed solo or in a posse. Does not have to "
+                                              "be performed on the server, but is preferred.", inline=False)
 
     monthlyEliteRanks_message.add_field(name="Priest".title(),
                                         value="Awarded Monthly to whoever has earned the most honor as awarded by the "
