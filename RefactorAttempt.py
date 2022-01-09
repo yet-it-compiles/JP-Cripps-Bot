@@ -73,8 +73,6 @@ class RedDeadRedemptionCounter:
         """
         if message.content == "drwagon":
             return True
-        if message.content == "drdead":
-            return True
         else:
             return False
 
@@ -184,6 +182,18 @@ class BountiesCounter(RedDeadRedemptionCounter):
         else:
             return False
 
+    def calculate(self):
+        """
+        Calculates the total number of values in the dictionary
+
+        :return: the sum of values in the dictionary
+        """
+        counter = 0
+
+        for each_value in self.user_vs_occurrences.values():
+            counter += each_value
+        return counter
+
 
 class DeadCounter(RedDeadRedemptionCounter):
     """ Calculates the bounties brought in alive ,and dead then returns the dictionary to the client """
@@ -215,6 +225,19 @@ class DeadCounter(RedDeadRedemptionCounter):
                     self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 0.5
 
         return self.user_vs_occurrences
+
+    def is_target_phrase(self, message):
+        """
+        Determines if the message is the target phrase or not
+
+        :param message: each message visible in the channels' history
+        :type message: discord.message.Message
+        :return: a boolean value dependent on if the message is target phrase
+        """
+        if message.content == "drdead":
+            return True
+        else:
+            return False
 
     def calculate(self):
         """
