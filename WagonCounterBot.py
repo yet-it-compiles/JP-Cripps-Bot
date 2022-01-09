@@ -1,11 +1,11 @@
 """ This module embeds the information sent to it within a message and sends it to the chat based on method specific
 command calls. """
+
 import asyncio
 import os
 import signal
 import discord
 import random
-
 import RefactorAttempt
 from discord.ext import commands
 from dotenv import load_dotenv
@@ -14,7 +14,6 @@ load_dotenv()  # loads the encapsulated values from the .env file
 
 # Declaration of Encapsulated Variables
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-WAGON_CHANNEL = os.getenv('WAGON_STEAL_CHANNEL_KEY')
 
 # Declaration Discord.py Variables
 intents = discord.Intents.default()  # Turns on the connection
@@ -32,7 +31,9 @@ async def on_ready():
 async def on_message(message):
     """
     Listens for when a member calls 'drwagon', and after 24 minutes, sends them a message to the user
+
     :param message: the message sent by the user
+    :type message: discord.message.Message
     :return: a DM to the user letting them know their cooldown has ended
     """
     if message.content.startswith("drwagon"):
@@ -44,7 +45,9 @@ async def on_message(message):
 async def cool_down_ended(message):
     """
     Sends the author of the message a personal DM 24 minutes after they type 'drwagon' in a guild channel
+
     :param message: message the author sent
+    :type message: discord.message.Message
     :return: a message to the author letting them know they can wagon steal again
     """
     # Variables which store pictures messages
@@ -88,7 +91,9 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
     """
     Sends a message to a user 24 minutes later, after they react to a message
     :param reaction: '✅' - checkmark emoji/reaction
+    :type reaction: discord.reaction.Reaction
     :param user: is the member who reacted to the message
+    :type user: discord.member.Member
     :return: a message to the user letting them know their cool down is up
     """
     if reaction.emoji == '✅':  # See if the reaction is the same as in the code
@@ -138,10 +143,14 @@ async def on_reaction_add(reaction, user):  # reaction & user as an argument
 async def wagonSteals(ctx, days):
     """
     Defines a command which is called by typing '!wagonCounter xx' in any channel.
+
     The xx represents the amount of days look back through.
     NOTE: 'Read Message History' must be turn on in Channel Permissions
+
     :param ctx: represents the context in which a command is being invoked under
-    :param days: the number of days a member wants to look back into a channels message history
+    :type ctx: discord.ext.commands.context.Context
+    :param days: the number of days the user wants to search back in a channels message history
+    :type days: str
     :return: an embedded message with a list of users and their number of occurrences of 'bhwagon'
     """
 
@@ -180,9 +189,12 @@ async def bounties(ctx, days):
     """
     Defines a command which keeps track of the amount of points a player received by determined by weather or not they
     bring the bounty in dead or alive
+
     :param ctx: represents the context in which a command is being invoked under
-    :param days: the number of days a member wants to look back into a channels message history
-    :return: an embedded message with a list of users with the amount of points they've recieved from their bounties
+    :type ctx: discord.ext.commands.context.Context
+    :param days: the number of days the user wants to search back in a channels message history
+    :type days: str
+    :return: an embedded message with a list of users with the amount of points they've received from their bounties
     """
     bounties_recovered_data = await RefactorAttempt.BountiesCounter().to_client(ctx, days)
     total_bounties = RefactorAttempt.BountiesCounter().calculate()
@@ -215,6 +227,18 @@ async def bounties(ctx, days):
 
 @client.command()
 async def bountiesDead(ctx, days):
+    """
+    Defines a command which is called by typing '!bountiesDead xx' in any channel.
+
+    The xx represents the amount of days to look back through.
+    NOTE: 'Read Message History' must be turned on in Channel Permissions
+
+    :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
+    :param days: the number of days the user wants to search back in a channels message history
+    :type days: str
+    :return: an embedded message with a list of users with the amount of points they've received from their dead bounty
+    """
     bounties_recovered_data = await RefactorAttempt.DeadCounter().to_client(ctx, days)
     total_bounties = RefactorAttempt.DeadCounter().calculate()
 
@@ -243,7 +267,20 @@ async def bountiesDead(ctx, days):
 
 @client.command()
 async def bountiesAlive(ctx, days):
-    bounties_recovered_data = await RefactorAttempt.AliveCounter().to_client(ctx, days)  # gets the dictionary output list
+    """
+    Defines a command which is called by typing '!bountiesAlive xx' in any channel.
+
+    The xx represents the amount of days to look back through.
+    NOTE: 'Read Message History' must be turned on in Channel Permissions
+
+    :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
+    :param days: the number of days the user wants to search back in a channels message history
+    :type days: str
+    :return: an embedded message with a list of users with the amount of points they've received from their alive bounty
+    """
+    # returns the dictionary output list and calculates the values in the dictionary
+    bounties_recovered_data = await RefactorAttempt.AliveCounter().to_client(ctx, days)
     total_bounties = RefactorAttempt.AliveCounter().calculate()
 
     bounties_recovered = discord.Embed(
@@ -271,7 +308,20 @@ async def bountiesAlive(ctx, days):
 
 @client.command()
 async def parley(ctx, days):
-    bounties_recovered_data = await RefactorAttempt.ParleyCounter().to_client(ctx, days)  # gets the dictionary output list
+    """
+    Defines a command which is called by typing '!parley xx' in any channel.
+
+    The xx represents the amount of days to look back through.
+    NOTE: 'Read Message History' must be turned on in Channel Permissions
+
+    :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
+    :param days: the number of days the user wants to search back in a channels message history
+    :type days: str
+    :return: an embedded message with a list of users with the amount of points they've received from their parleys
+    """
+    # returns the dictionary output list and calculates the values in the dictionary
+    bounties_recovered_data = await RefactorAttempt.ParleyCounter().to_client(ctx, days)
     total_parleys = RefactorAttempt.ParleyCounter().calculate()
 
     bounties_recovered = discord.Embed(
@@ -302,7 +352,9 @@ async def members(ctx):
     """
     Defines the ability for a user to call '!members' in a channel and the bot will return a list of all members
     organized into two columns. The end of the message displays the total number of members in each role.
+
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
     :return: an embedded message displaying all the users, and how many are in each role
     """
 
@@ -354,7 +406,9 @@ async def guide(ctx):
     """
     Defines the ability for a user to call '!guide' in a channel and the bot will return a Survival Guide - Outlaw 101
     created by a member of the Dead Rabbits (author field)
+
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
     :return: a hyperlink to a website which contains the Black Hats Survival Guide - Outlaw 101
     """
     guide_message = discord.Embed(
@@ -381,7 +435,9 @@ async def serverRanks(ctx):
     """
     Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
     of each attainable rank within the guild
+
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
     :return: a complete list of all possible roles the members may earn
     """
     server_ranks_message = discord.Embed(
@@ -427,7 +483,9 @@ async def inGameRankTitles(ctx):
     """
     Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
     of each attainable rank within the guild
+
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
     :return: a complete list of all possible roles the members may earn
     """
     inGameRankTitles_message = discord.Embed(
@@ -496,7 +554,9 @@ async def monthlyEliteRanks(ctx):
     """
     Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
     of each attainable rank within the guild
+
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
     :return: a complete list of all possible roles the members may earn
     """
     monthlyEliteRanks_message = discord.Embed(
@@ -550,7 +610,9 @@ async def eliteRanks(ctx):
     """
     Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
     of each attainable rank within the guild
-    :param ctx: represents the context in which a command is being invoked under
+
+    :param ctx: represents the context in which a command is being invoked under.
+    :type ctx: discord.ext.commands.context.Context
     :return: a complete list of all possible roles the members may earn
     """
     eliteRanks_message = discord.Embed(
@@ -602,7 +664,9 @@ async def dates(ctx):
     """
     Defines the ability for a user to call '!serverRanks' in a channel and the bot will return a list with descriptions
     of each attainable rank within the guild
+
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
     :return: a complete list of all possible roles the members may earn
     """
     progressionDates_message = discord.Embed(
@@ -631,7 +695,9 @@ async def command(ctx):
     """
     Defines the ability for a user to call '!command' in a channel and the bot will return a list of all command calls
     along with the description of each call
+
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
     :return: returns a message from the bot that has all the commands and their descriptions
     """
     command_message = discord.Embed(
@@ -682,6 +748,7 @@ async def command(ctx):
 def get_all_members():
     """
     Gets each member in the guild, and puts them into a list
+
     :return: A list of users currently in the server
     """
     list_of_members = []  # Declaration of empty list
@@ -699,7 +766,9 @@ def get_all_members():
 def remove_all_bots(list_of_members):
     """
     Removes all the bots recorded in the server
+
     :param list_of_members: a list of all members visible to the bot in the guild
+    :type list_of_members: list
     :return: nothing
     """
     list_of_members.remove("Carl-bot#1536")
