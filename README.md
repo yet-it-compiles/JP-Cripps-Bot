@@ -8,7 +8,8 @@ A simple readme file for the Wagon Count Bot
 ## About The Project
 The 'Wagon Counter Bot' is a fully functional command-oriented program implemented using Discord.py API. The bot's purpose is to manage medial administrative level tasks in an efficent way, and to provide useful functionality to iterate through a channels message history and take relevant data to construct into a list. 
 
-![command call snip]![image](https://user-images.githubusercontent.com/43221618/148702094-87bf688a-58f5-417c-8beb-e35af6e09de4.png)
+![command call snip]![image]
+(https://user-images.githubusercontent.com/43221618/148702094-87bf688a-58f5-417c-8beb-e35af6e09de4.png)
 
 
 ## Project Inspiration
