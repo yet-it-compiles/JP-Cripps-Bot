@@ -9,15 +9,15 @@ import datetime as dt
 
 class RedDeadRedemptionCounter:
     """
-    Provides structure it its Subclasses and creates a dictionary of every member of the guild and assigns them a dict.
-    value of 0 to represent the number of typed target phrases. Each subclass is different only in the way the value of
-    the target phrase is calculated.
+    Creates a dictionary of users vs. amount of occurrences of a target phrase, orders it in descending order ands sends
+    the information to the client
     """
     users_vs_occurrences = {}
 
     async def to_client(self, ctx, days):
         """
         Sends the client a string representation of the names of the users along with their number of occurrences
+
         :param ctx: represents the context in which a command is being invoked under
         :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
@@ -39,7 +39,8 @@ class RedDeadRedemptionCounter:
 
     async def build_dictionary(self, ctx, days):
         """
-        Builds a dict. assigning each member to its key, and the number of occurrences to it's value
+        Builds a dict. assigning each member to its key, and the number of occurrences of target phrase to its value
+
         :param ctx: represents the context in which a command is being invoked under
         :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
@@ -66,21 +67,34 @@ class RedDeadRedemptionCounter:
     def is_target_phrase(self, message):
         """
         Determines if the message is 'drwagon' or not.
+
         :param message: each message visible in the channels' history
+        :type message: discord.message.Message
         :return: a boolean value dependent on if the message is 'drwagon' or not
         """
         if message.content == "drwagon":
+            return True
+        if message.content == "drdead":
             return True
         else:
             return False
 
     def decode_message(self, message):
+        """
+        Unwraps the message and returns it
+
+        :param message: each message visible in the channels' history
+        :type message: discord.message.Message
+        :return: the content of the message
+        """
         return message.content
 
     def build_output_string(self, dictionary_occurrences):
         """
-        Creates the layout of the scoreboard of the member and the value associated
+        Creates the layout of the scoreboard from the dictionary
+
         :param dictionary_occurrences:  each member of the guild along with the number of times each said 'drwagon'
+        :param dictionary_occurrences: list
         :return: a string representation of the dictionary
         """
         helper_string = ""
@@ -96,6 +110,7 @@ class RedDeadRedemptionCounter:
     def calculate(self):
         """
         Calculates the total number of values in the dictionary
+
         :return: the sum of values in the dictionary
         """
         counter = 0
@@ -106,17 +121,25 @@ class RedDeadRedemptionCounter:
         return counter
 
 
-"""
-
-"""
-
-
 class AliveCounter(RedDeadRedemptionCounter):
-    """ TODO """
+    """ Calculates the amount of bounties brought in alive and returns the dictionary to the client """
+
+    def is_target_phrase(self, message):
+        """
+        Determines if the message is 'drwagon' or not.
+
+        :param message: each message visible in the channels' history
+        :type message: discord.message.Message
+        :return: a boolean value dependent on if the message is 'drwagon' or not
+        """
+        if message.content == "dralive":
+            return True
+        else:
+            return False
 
 
 class BountiesCounter(RedDeadRedemptionCounter):
-    """ Todo """
+    """ Calculates the sum of both bounties brought in alive ,and dead then returns the dictionary to the client """
     user_vs_occurrences = {}
 
     async def build_dictionary(self, ctx, days):
@@ -140,15 +163,65 @@ class BountiesCounter(RedDeadRedemptionCounter):
                 if member not in self.user_vs_occurrences:
                     self.user_vs_occurrences[member] = 0
 
-                # else they are already in the dictionary, and increment the amount of this users occurrences by 1
                 if message == 'dralive':
                     self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 1
-                else:
+                else:  # else the message is 'drdead' which = 0.5 pts
+                    self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 0.5
+
+        return self.user_vs_occurrences
+
+    def is_target_phrase(self, message):
+        """
+        Determines if the message is 'drwagon' or not.
+
+        :param message: each message visible in the channels' history
+        :type message: discord.message.Message
+        :return: a boolean value dependent on if the message is 'drwagon' or not
+        """
+        if message.content == "dralive":
+            return True
+        if message.content == "drdead":
+            return True
+        else:
+            return False
+
+
+class DeadCounter(RedDeadRedemptionCounter):
+    """ Calculates the bounties brought in alive ,and dead then returns the dictionary to the client """
+    user_vs_occurrences = {}
+
+    async def build_dictionary(self, ctx, days):
+        """
+        Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
+        :param ctx: represents the context in which a command is being invoked under
+        :type ctx: discord.ext.commands.context.Context
+        :param days: the number of days the user wants to search back in a channels message history
+        :type days: str
+        :return: a dictionary of each member along with the number of occurrences from the time frame specified
+        """
+        self.user_vs_occurrences.clear()  # ensures we are starting with a new dict
+
+        # Defines logic for searching through a channels messages
+        async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
+            if self.is_target_phrase(each_message):  # if this message is a target message
+                member = each_message.author.name
+                message = self.decode_message(each_message)  # the message the user sent
+
+                # Logic for adding new members into the dictionary and sets their occurrences to 0
+                if member not in self.user_vs_occurrences:
+                    self.user_vs_occurrences[member] = 0
+
+                if each_message.content == "drdead":
                     self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 0.5
 
         return self.user_vs_occurrences
 
     def calculate(self):
+        """
+        Calculates the total number of values in the dictionary
+
+        :return: the sum of values in the dictionary
+        """
         counter = 0
 
         for each_value in self.user_vs_occurrences.values():
@@ -157,33 +230,17 @@ class BountiesCounter(RedDeadRedemptionCounter):
         return counter
 
 
-class DeadCounter(RedDeadRedemptionCounter):
-    """ TODO """
-    user_vs_occurrences = {}
-
-    async def build_dictionary(self, ctx, days):
+class ParleyCounter(RedDeadRedemptionCounter):
+    """ """
+    def is_target_phrase(self, message):
         """
-        Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
-        :param ctx: represents the context in which a command is being invoked under
-        :type ctx: discord.ext.commands.context.Context
-        :param days: the number of days the user wants to search back in a channels message history
-        :type days: str
-        :return: a dictionary of each member along with the number of occurrences from the time frame specified
+        Determines if the message is 'drwagon' or not.
+
+        :param message: each message visible in the channels' history
+        :type message: discord.message.Message
+        :return: a boolean value dependent on if the message is 'drwagon' or not
         """
-        self.user_vs_occurrences.clear()  # ensures we are starting with a new dict
-
-        # Defines logic for searching through a channels messages
-        async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
-            if self.is_target_phrase(each_message):  # if this message is a target message
-                member = each_message.author.name
-                message = self.decode_message(each_message)  # the message the user sent
-
-                # Logic for adding new members into the dictionary and sets their occurrences to 0
-                if member not in self.user_vs_occurrences:
-                    self.user_vs_occurrences[member] = 0
-
-                # else they are already in the dictionary, and increment the amount of this users occurrences by 1
-            if message == 'drdead':
-                self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 1
-
-        return self.user_vs_occurrences
+        if message.content == "drparley":
+            return True
+        else:
+            return False
