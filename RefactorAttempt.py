@@ -18,7 +18,6 @@ class RedDeadRedemptionCounter:
     async def to_client(self, ctx, days):
         """
         Sends the client a string representation of the names of the users along with their number of occurrences
-
         :param ctx: represents the context in which a command is being invoked under
         :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
@@ -41,7 +40,6 @@ class RedDeadRedemptionCounter:
     async def build_dictionary(self, ctx, days):
         """
         Builds a dict. assigning each member to its key, and the number of occurrences to it's value
-
         :param ctx: represents the context in which a command is being invoked under
         :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
@@ -68,17 +66,13 @@ class RedDeadRedemptionCounter:
     def is_target_phrase(self, message):
         """
         Determines if the message is 'drwagon' or not.
-
         :param message: each message visible in the channels' history
         :return: a boolean value dependent on if the message is 'drwagon' or not
         """
-        list_of_commands = ["drwagon", "dralive", "drdead", "bounties", "drparley"]
-
-        for each_command in list_of_commands:
-            if message.content == each_command:
-                return True
-            else:
-                False
+        if message.content == "drwagon":
+            return True
+        else:
+            return False
 
     def decode_message(self, message):
         return message.content
@@ -86,7 +80,6 @@ class RedDeadRedemptionCounter:
     def build_output_string(self, dictionary_occurrences):
         """
         Creates the layout of the scoreboard of the member and the value associated
-
         :param dictionary_occurrences:  each member of the guild along with the number of times each said 'drwagon'
         :return: a string representation of the dictionary
         """
@@ -111,6 +104,11 @@ class RedDeadRedemptionCounter:
             counter += each_value
 
         return counter
+
+
+"""
+
+"""
 
 
 class AliveCounter(RedDeadRedemptionCounter):
@@ -189,17 +187,3 @@ class DeadCounter(RedDeadRedemptionCounter):
                 self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 1
 
         return self.user_vs_occurrences
-
-class ParleyCounter(RedDeadRedemptionCounter):
-    """ TODO """
-
-    def is_target_phrase(self, message):
-        """
-        Determines if the message from the channel is 'dralive' or 'drdead'
-        :param message: each message visible in the channels' history
-        :return: a true or false value dependent on if the message is 'drwagon' or not
-        """
-        if 'drparley' in message.content:
-            return True
-        else:
-            return False

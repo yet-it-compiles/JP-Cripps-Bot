@@ -255,8 +255,9 @@ async def bountiesDead(ctx, days):
 
 @client.command()
 async def bountiesAlive(ctx, days):
-    bounties_recovered_data = await bountyAliveCounter.bounty_hunters(ctx, days)  # gets the dictionary output list
-    total_bounties = bountyAliveCounter.calculate()
+    a = RefactorAttempt.AliveCounter()
+    bounties_recovered_data = await a.to_client(ctx, days)  # gets the dictionary output list
+    total_bounties = a.calculate()
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
