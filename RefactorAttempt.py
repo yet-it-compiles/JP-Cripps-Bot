@@ -107,10 +107,10 @@ class AliveCounter(RedDeadRedemptionCounter):
     """ TODO """
 
 
-
 class BountiesCounter(RedDeadRedemptionCounter):
     """ Todo """
     user_vs_occurrences = {}
+
     async def build_dictionary(self, ctx, days):
         """
         Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
@@ -149,16 +149,32 @@ class BountiesCounter(RedDeadRedemptionCounter):
 
 class DeadCounter(RedDeadRedemptionCounter):
     """ TODO """
+    user_vs_occurrences = {}
 
-    def is_target_phrase(self, message):
+    async def build_dictionary(self, ctx, days):
         """
-        Determines if the message from the channel is 'dralive' or 'drdead'
-        :param message: each message visible in the channels' history
-        :return: a true or false value dependent on if the message is 'drwagon' or not
+        Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
+        :param ctx: represents the context in which a command is being invoked under
+        :param days: the number of days the user wants to search back in a channels message history
+        :return: a dictionary of each member along with the number of occurrences from the time frame specified
         """
-        if 'drdead' in self.message.content:
-            return True
+        self.user_vs_occurrences.clear()  # ensures we are starting with a new dict
 
+        # Defines logic for searching through a channels messages
+        async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
+            if self.is_target_phrase(each_message):  # if this message is a target message
+                member = each_message.author.name
+                message = self.decode_message(each_message)  # the message the user sent
+
+                # Logic for adding new members into the dictionary and sets their occurrences to 0
+                if member not in self.user_vs_occurrences:
+                    self.user_vs_occurrences[member] = 0
+
+                # else they are already in the dictionary, and increment the amount of this users occurrences by 1
+            if message == 'drdead':
+                self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 1
+
+        return self.user_vs_occurrences
 
 class ParleyCounter(RedDeadRedemptionCounter):
     """ TODO """

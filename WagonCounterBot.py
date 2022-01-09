@@ -224,7 +224,7 @@ async def bounties(ctx, days):
 
 @client.command()
 async def bountiesDead(ctx, days):
-    a = RefactorAttempt.DeadCounter()
+    a = RefactorAttempt.BountiesCounter()
     bounties_recovered_data = await a.to_client(ctx, days)  # returns the dictionary output list
     total_bounties = a.calculate()
 
