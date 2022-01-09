@@ -3,7 +3,6 @@ This module contains the logic for each of the five counter functionalities. Eac
 RedemptionCounter which gives its subclasses structure. The only differences between each subclass is the way the target
 phrases dictionary value is to be calculated.
 """
-
 import datetime as dt
 
 
@@ -24,15 +23,16 @@ class RedDeadRedemptionCounter:
         :type days: str
         :return: A string of users vs. occurrences of wagon steals in descending order by name and occurrence
         """
-        # Amount of days requested to search through
+        # Calculates the time delta of days requested to search through
         time_interval = dt.datetime.utcnow() - dt.timedelta(days=int(days))
 
-        # Declaration of dictionaries containing members vs. occurrences of the phrases
-        dict_of_wagon_steelers = await self.build_dictionary(ctx, time_interval)
+        # Contains the members vs. occurrences of the phrases
+        dict_of_member_vs_occurrences = await self.build_dictionary(ctx, time_interval)
 
         # Sorts the occurrences and builds an output string
-        sorted_occurrences = sorted(dict_of_wagon_steelers.items(), key=lambda x: x[1], reverse=True)
+        sorted_occurrences = sorted(dict_of_member_vs_occurrences.items(), key=lambda x: x[1], reverse=True)
 
+        # Is the compiled scoreboard output
         list_output = self.build_output_string(sorted_occurrences)
 
         return list_output
@@ -47,7 +47,6 @@ class RedDeadRedemptionCounter:
         :type days: str
         :return: a dictionary of each member along with the number of occurrences from the time frame specified
         """
-        global users_vs_occurrences
         self.users_vs_occurrences.clear()  # Ensures dictionary is clear before recomputing
 
         # Defines logic for searching through a channels messages
@@ -66,11 +65,11 @@ class RedDeadRedemptionCounter:
 
     def is_target_phrase(self, message):
         """
-        Determines if the message is 'drwagon' or not.
+        Determines if the message is the target phrase or not
 
         :param message: each message visible in the channels' history
         :type message: discord.message.Message
-        :return: a boolean value dependent on if the message is 'drwagon' or not
+        :return: a boolean value dependent on if the message is target phrase
         """
         if message.content == "drwagon":
             return True
@@ -100,9 +99,9 @@ class RedDeadRedemptionCounter:
         helper_string = ""
 
         # Logic for how the dictionary should be printed
-        for each_index, tuple in enumerate(dictionary_occurrences):
-            members_name = tuple[0]
-            value_collected = tuple[1]
+        for each_index, name_of_member in enumerate(dictionary_occurrences):
+            members_name = name_of_member[0]
+            value_collected = name_of_member[1]
 
             helper_string += members_name + ": " + str(value_collected) + "\n"
         return helper_string
@@ -126,7 +125,7 @@ class AliveCounter(RedDeadRedemptionCounter):
 
     def is_target_phrase(self, message):
         """
-        Determines if the message is 'drwagon' or not.
+        Determines if the message is the target phrase
 
         :param message: each message visible in the channels' history
         :type message: discord.message.Message
@@ -172,7 +171,7 @@ class BountiesCounter(RedDeadRedemptionCounter):
 
     def is_target_phrase(self, message):
         """
-        Determines if the message is 'drwagon' or not.
+        Determines if the message is the target phrase
 
         :param message: each message visible in the channels' history
         :type message: discord.message.Message
@@ -193,6 +192,7 @@ class DeadCounter(RedDeadRedemptionCounter):
     async def build_dictionary(self, ctx, days):
         """
         Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
+
         :param ctx: represents the context in which a command is being invoked under
         :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
@@ -232,9 +232,10 @@ class DeadCounter(RedDeadRedemptionCounter):
 
 class ParleyCounter(RedDeadRedemptionCounter):
     """ """
+
     def is_target_phrase(self, message):
         """
-        Determines if the message is 'drwagon' or not.
+        Determines if the message is the target phrase
 
         :param message: each message visible in the channels' history
         :type message: discord.message.Message
