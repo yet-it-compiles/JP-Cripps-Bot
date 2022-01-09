@@ -1,12 +1,18 @@
 """
-TODO =
+This module contains the logic for each of the five counter functionalities. Each class is a subclass of RedDead-
+RedemptionCounter which gives its subclasses structure. The only differences between each subclass is the way the target
+phrases dictionary value is to be calculated.
 """
 
 import datetime as dt
 
 
 class RedDeadRedemptionCounter:
-    """ Super Class which defines the functionality of these counters """
+    """
+    Provides structure it its Subclasses and creates a dictionary of every member of the guild and assigns them a dict.
+    value of 0 to represent the number of typed target phrases. Each subclass is different only in the way the value of
+    the target phrase is calculated.
+    """
     users_vs_occurrences = {}
 
     async def to_client(self, ctx, days):
@@ -14,7 +20,9 @@ class RedDeadRedemptionCounter:
         Sends the client a string representation of the names of the users along with their number of occurrences
 
         :param ctx: represents the context in which a command is being invoked under
+        :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
+        :type days: str
         :return: A string of users vs. occurrences of wagon steals in descending order by name and occurrence
         """
         # Amount of days requested to search through
@@ -32,10 +40,12 @@ class RedDeadRedemptionCounter:
 
     async def build_dictionary(self, ctx, days):
         """
-        Builds a dictionary of key/value pairs by iterating through a discords channels
+        Builds a dict. assigning each member to its key, and the number of occurrences to it's value
 
         :param ctx: represents the context in which a command is being invoked under
+        :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
+        :type days: str
         :return: a dictionary of each member along with the number of occurrences from the time frame specified
         """
         global users_vs_occurrences
@@ -115,7 +125,9 @@ class BountiesCounter(RedDeadRedemptionCounter):
         """
         Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
         :param ctx: represents the context in which a command is being invoked under
+        :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
+        :type days: str
         :return: a dictionary of each member along with the number of occurrences from the time frame specified
         """
         self.user_vs_occurrences.clear()  # ensures we are starting with a new dict
@@ -155,7 +167,9 @@ class DeadCounter(RedDeadRedemptionCounter):
         """
         Builds a dictionary, counting the occurrences of wagon for each user in a given timeframe
         :param ctx: represents the context in which a command is being invoked under
+        :type ctx: discord.ext.commands.context.Context
         :param days: the number of days the user wants to search back in a channels message history
+        :type days: str
         :return: a dictionary of each member along with the number of occurrences from the time frame specified
         """
         self.user_vs_occurrences.clear()  # ensures we are starting with a new dict
