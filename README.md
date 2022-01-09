@@ -2,13 +2,14 @@
 ![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
 
 
-## Version 1.2.1
+## Version 2.0
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
 The 'Wagon Counter Bot' is a fully functional command-oriented program implemented using Discord.py API. The bot's purpose is to manage medial administrative level tasks in an efficent way, and to provide useful functionality to iterate through a channels message history and take relevant data to construct into a list. 
 
-![command call snip](https://user-images.githubusercontent.com/43221618/130944745-fd25d690-5f3d-44df-9c8a-83c020fb2ad0.PNG)
+![command call snip]![image](https://user-images.githubusercontent.com/43221618/148702094-87bf688a-58f5-417c-8beb-e35af6e09de4.png)
+
 
 ## Project Inspiration
 This bot was inspired by an activity in Red Dead Redemption Online (RDO), which allows you to preform wagon steals on players running deliveries. The objective of this content is to steal the player's wagon, and successfully make it to an alternative seller location. Upon successful delivery, the guild member will say type a target phrase in a designated channel to record their wagon steal.
