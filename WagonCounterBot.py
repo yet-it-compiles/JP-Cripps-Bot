@@ -6,7 +6,7 @@ import os
 import signal
 import discord
 import random
-import RefactorAttempt
+import CounterFunctionality
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -40,6 +40,11 @@ async def on_message(message):
         await cool_down_ended(message)
     elif message.content.startswith("!"):
         await message.delete()
+
+
+@client.command()
+async def change_channel_name(ctx, channel: discord.VoiceChannel, new_name):
+    """ """
 
 
 async def cool_down_ended(message):
@@ -76,7 +81,7 @@ async def cool_down_ended(message):
         ]
 
     await asyncio.sleep(1440)  # sets a time for 24 minutes = 1440 seconds
-    response_to_send = random.choice(list_of_quotes)  # randomizes the the responses
+    response_to_send = random.choice(list_of_quotes)  # randomizes the responses
 
     if response_to_send == picture1:
         await message.author.send(file=discord.File('Old Cripps Looking Weathered.png'))
@@ -154,8 +159,8 @@ async def wagonSteals(ctx, days):
     :return: an embedded message with a list of users and their number of occurrences of 'bhwagon'
     """
 
-    wagon_steals_data = await RefactorAttempt.RedDeadRedemptionCounter().to_client(ctx, days)  # gets the dictionary v. occur. output list
-    number_of_wagon_steals = RefactorAttempt.RedDeadRedemptionCounter().calculate()
+    wagon_steals_data = await CounterFunctionality.RedDeadRedemptionCounter().to_client(ctx, days)
+    number_of_wagon_steals = CounterFunctionality.RedDeadRedemptionCounter().calculate()
 
     # Defines the name of the embed message along with the site to take a member to if they click on it
     wagon_steal_message = discord.Embed(
@@ -175,11 +180,13 @@ async def wagonSteals(ctx, days):
     if int(days) > 1:
         wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last {days} Days",
                                       value=wagon_steals_data, inline=False)
-        wagon_steal_message.set_footer(text=f"Total number of steals in the last {days} days is {number_of_wagon_steals}")
+        wagon_steal_message.set_footer(
+            text=f"Total number of steals in the last {days} days is {number_of_wagon_steals}")
     elif int(days) == 1:
         wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last Day",
                                       value=wagon_steals_data, inline=False)
-        wagon_steal_message.set_footer(text=f"Total number of steals in the last {days} days is {number_of_wagon_steals}")
+        wagon_steal_message.set_footer(
+            text=f"Total number of steals in the last {days} days is {number_of_wagon_steals}")
 
     await ctx.send(embed=wagon_steal_message)
 
@@ -196,8 +203,8 @@ async def bounties(ctx, days):
     :type days: str
     :return: an embedded message with a list of users with the amount of points they've received from their bounties
     """
-    bounties_recovered_data = await RefactorAttempt.BountiesCounter().to_client(ctx, days)
-    total_bounties = RefactorAttempt.BountiesCounter().calculate()
+    bounties_recovered_data = await CounterFunctionality.BountiesCounter().to_client(ctx, days)
+    total_bounties = CounterFunctionality.BountiesCounter().calculate()
 
     # Defines the embed header
     bounties_recovered = discord.Embed(
@@ -239,8 +246,8 @@ async def bountiesDead(ctx, days):
     :type days: str
     :return: an embedded message with a list of users with the amount of points they've received from their dead bounty
     """
-    bounties_recovered_data = await RefactorAttempt.DeadCounter().to_client(ctx, days)
-    total_bounties = RefactorAttempt.DeadCounter().calculate()
+    bounties_recovered_data = await CounterFunctionality.DeadCounter().to_client(ctx, days)
+    total_bounties = CounterFunctionality.DeadCounter().calculate()
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
@@ -257,11 +264,13 @@ async def bountiesDead(ctx, days):
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last {days} days".title(),
                                      value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of dead bounties recovered in the last {days} days is {total_bounties}")
+        bounties_recovered.set_footer(
+            text=f"Total number of dead bounties recovered in the last {days} days is {total_bounties}")
     elif int(days) == 1:
         bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last day".title(),
                                      value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of dead bounties recovered in the last {days} day is {total_bounties}")
+        bounties_recovered.set_footer(
+            text=f"Total number of dead bounties recovered in the last {days} day is {total_bounties}")
     await ctx.send(embed=bounties_recovered)
 
 
@@ -280,8 +289,8 @@ async def bountiesAlive(ctx, days):
     :return: an embedded message with a list of users with the amount of points they've received from their alive bounty
     """
     # returns the dictionary output list and calculates the values in the dictionary
-    bounties_recovered_data = await RefactorAttempt.AliveCounter().to_client(ctx, days)
-    total_bounties = RefactorAttempt.AliveCounter().calculate()
+    bounties_recovered_data = await CounterFunctionality.AliveCounter().to_client(ctx, days)
+    total_bounties = CounterFunctionality.AliveCounter().calculate()
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
@@ -298,11 +307,13 @@ async def bountiesAlive(ctx, days):
     if int(days) > 1:
         bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last {days} days".title(),
                                      value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of living bounties in the last {days} days is {total_bounties}")
+        bounties_recovered.set_footer(
+            text=f"Total number of living bounties in the last {days} days is {total_bounties}")
     elif int(days) == 1:
         bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last day".title(),
                                      value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of living bounties in the last {days} day is {total_bounties}")
+        bounties_recovered.set_footer(
+            text=f"Total number of living bounties in the last {days} day is {total_bounties}")
     await ctx.send(embed=bounties_recovered)
 
 
@@ -321,8 +332,8 @@ async def parley(ctx, days):
     :return: an embedded message with a list of users with the amount of points they've received from their parleys
     """
     # returns the dictionary output list and calculates the values in the dictionary
-    bounties_recovered_data = await RefactorAttempt.ParleyCounter().to_client(ctx, days)
-    total_parleys = RefactorAttempt.ParleyCounter().calculate()
+    bounties_recovered_data = await CounterFunctionality.ParleyCounter().to_client(ctx, days)
+    total_parleys = CounterFunctionality.ParleyCounter().calculate()
 
     bounties_recovered = discord.Embed(
         title="Bounty Leader Board",
