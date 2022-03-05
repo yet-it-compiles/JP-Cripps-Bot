@@ -8,7 +8,7 @@ import datetime as dt
 
 class RedDeadRedemptionCounter:
     """
-    Creates a dictionary of users vs. amount of occurrences of a target phrase, orders it in descending order ands sends
+    Creates a dictionary of users vs. amount of occurrences of a target phrase, orders it in descending order and sends
     the information to the client
     """
     users_vs_occurrences = {}
@@ -39,7 +39,7 @@ class RedDeadRedemptionCounter:
 
     async def build_dictionary(self, ctx, days):
         """
-        Builds a dict. assigning each member to its key, and the number of occurrences of target phrase to its value
+        Builds a dict. assigning each member as its key, and the number of occurrences of target phrase to its value
 
         :param ctx: represents the context in which a command is being invoked under
         :type ctx: discord.ext.commands.context.Context
@@ -119,7 +119,7 @@ class RedDeadRedemptionCounter:
 
 
 class AliveCounter(RedDeadRedemptionCounter):
-    """ Calculates the amount of bounties brought in alive and returns the dictionary to the client """
+    """ Calculates the amount of bounties brought in alive, and returns the dictionary to the client """
 
     def is_target_phrase(self, message):
         """
@@ -136,7 +136,7 @@ class AliveCounter(RedDeadRedemptionCounter):
 
 
 class BountiesCounter(RedDeadRedemptionCounter):
-    """ Calculates the sum of both bounties brought in alive, and dead as a whole number thenreturns the dictionary to the client """
+    """ Calculates the sum of both bounties brought in alive, and dead then returns the dictionary to the client """
     user_vs_occurrences = {}
 
     async def build_dictionary(self, ctx, days):
@@ -196,7 +196,7 @@ class BountiesCounter(RedDeadRedemptionCounter):
 
 
 class DeadCounter(RedDeadRedemptionCounter):
-    """ Calculates the bounties brought in dead, and returns the dictionary to the client """
+    """ Calculates the bounties brought in alive ,and dead then returns the dictionary to the client """
     user_vs_occurrences = {}
 
     async def build_dictionary(self, ctx, days):
@@ -215,14 +215,14 @@ class DeadCounter(RedDeadRedemptionCounter):
         async for each_message in ctx.channel.history(limit=None, oldest_first=True, after=days):
             if self.is_target_phrase(each_message):  # if this message is a target message
                 member = each_message.author.name
-                message = self.decode_message(each_message)  # the message the user sent
+                self.decode_message(each_message)  # the message the user sent
 
                 # Logic for adding new members into the dictionary and sets their occurrences to 0
                 if member not in self.user_vs_occurrences:
                     self.user_vs_occurrences[member] = 0
 
                 if each_message.content == "drdead":
-                    self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 0.5
+                    self.user_vs_occurrences[member] = self.user_vs_occurrences[member] + 1
 
         return self.user_vs_occurrences
 
