@@ -136,7 +136,7 @@ class AliveCounter(RedDeadRedemptionCounter):
 
 
 class BountiesCounter(RedDeadRedemptionCounter):
-    """ Calculates the sum of both bounties brought in alive ,and dead then returns the dictionary to the client """
+    """ Calculates the sum of both bounties brought in alive, and dead as a whole number thenreturns the dictionary to the client """
     user_vs_occurrences = {}
 
     async def build_dictionary(self, ctx, days):
@@ -196,7 +196,7 @@ class BountiesCounter(RedDeadRedemptionCounter):
 
 
 class DeadCounter(RedDeadRedemptionCounter):
-    """ Calculates the bounties brought in alive ,and dead then returns the dictionary to the client """
+    """ Calculates the bounties brought in dead, and returns the dictionary to the client """
     user_vs_occurrences = {}
 
     async def build_dictionary(self, ctx, days):
