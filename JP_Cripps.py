@@ -22,10 +22,6 @@ intents.members = True  # Ensures the member list will be updated properly
 client = commands.Bot(command_prefix="!", intents=intents)  # defines the symbol used to call a command from the bot
 
 bot_bar_color = 0x115555  # Main color for the bot response window
-wagon_counter_channel = 925193742045028383
-server_creation = dt.datetime(day=25, month=8, year=2021)
-server_today = dt.datetime.utcnow()
-start_num_days = server_today - server_creation
 
 
 @client.event
@@ -38,7 +34,6 @@ async def on_ready():
 async def on_message(message):
     """
     Listens for when a member calls 'drwagon',  refresh the counter, and after 24 minutes sends user a message
-
     :param message: the message sent by the user
     :type message: discord.message.Message
     :return: a DM to the user letting them know their cooldown has ended
@@ -162,34 +157,44 @@ async def wagonSteals(ctx, days):
     :type days: str
     :return: an embedded message with a list of users and their number of occurrences of 'drwagon'
     """
-
+    # Returns the dictionary output list and calculates the values in the dictionary
     wagon_steals_data = await CounterFunctionality.RedDeadRedemptionCounter().to_client(ctx, days)
-    num_of_wagon_steals = CounterFunctionality.RedDeadRedemptionCounter().calculate()
+    total_wagon_steals = CounterFunctionality.RedDeadRedemptionCounter().calculate()
 
-    # Defines the name of the embed message along with the site to take a member to if they click on it
-    wagon_steal_message = discord.Embed(title="Wagon Steals Counter", url="https://deadrabbitsrdo.com/contest-winners/",
-                                        color=bot_bar_color)
+    # Defines the header of the embed message along with the site to take a member to if they click on it
+    wagon_steals_embed = discord.Embed(
+        title="Wagon Steals Counter",
+        url="https://deadrabbitsrdo.com/contest-winners/",
+        color=bot_bar_color)
 
-    # Assigns the author field to the member who called the bot
-    wagon_steal_message.set_author(name=ctx.author.display_name, url="https://www.deadrabbitsrdo.com",
-                                   icon_url=ctx.author.avatar_url)
+    # Assigns the author field to the member who called the command
+    wagon_steals_embed.set_author(
+        name=ctx.author.display_name,
+        url="https://www.deadrabbitsrdo.com",
+        icon_url=ctx.author.avatar_url)
 
-    wagon_steal_message.set_thumbnail(url="https://media-rockstargames-com.akamaized.net/tina-uploads/posts"
-                                          "/k498991k775ka8/0d8094e147c018ccd87c79294eedce3fcfcbb405.png")
+    # Sets the thumbnail of the embed
+    wagon_steals_embed.set_thumbnail(
+        url="https://media-rockstargames-com.akamaized.net/tina-uploads/posts"
+            "/k498991k775ka8/0d8094e147c018ccd87c79294eedce3fcfcbb405.png")
 
-    # Determines which message to print based on the users passed in 'days' argument
+    # Determines which message to send based on the users passed in 'days' argument
     if int(days) > 1:
-        wagon_steal_message.add_field(name=f"Top Occurrences of 'drwagon' In The Last {days} Days",
-                                      value=wagon_steals_data, inline=False)
-        wagon_steal_message.set_footer(text=f"Total number of steals in the last {days} days is {num_of_wagon_steals}")
+        wagon_steals_embed.add_field(
+            name=f"Top Occurrences of 'drwagon' In The Last {days} Days",
+            value=wagon_steals_data,
+            inline=False)
+        wagon_steals_embed.set_footer(
+            text=f"Total number of steals in the last {days} days is {total_wagon_steals}")
     elif int(days) == 1:
-        wagon_steal_message.add_field(
+        wagon_steals_embed.add_field(
             name=f"Top Occurrences of 'drwagon' In The Last Day",
             value=wagon_steals_data,
             inline=False)
-        wagon_steal_message.set_footer(text=f"Total number of steals in the last {days} days is {num_of_wagon_steals}")
+        wagon_steals_embed.set_footer(
+            text=f"Total number of steals in the last {days} days is {total_wagon_steals}")
 
-    await ctx.send(embed=wagon_steal_message)
+    await ctx.send(embed=wagon_steals_embed)
 
 
 @client.command()
@@ -204,31 +209,43 @@ async def bounties(ctx, days):
     :type days: str
     :return: an embedded message with a list of users with the amount of points they've received from their bounties
     """
-    bounties_recovered_data = await CounterFunctionality.BountiesCounter().to_client(ctx, days)
+    # Returns the dictionary output list and calculates the values in the dictionary
+    bounties_data = await CounterFunctionality.BountiesCounter().to_client(ctx, days)
     total_bounties = CounterFunctionality.BountiesCounter().calculate()
 
-    # Defines the embed header
-    bounties_recovered = discord.Embed(title="Bounty Leader Board", url="https://deadrabbitsrdo.com/contest-winners/",
-                                       color=bot_bar_color)
+    # Defines the header of the embed message along with the site to take a member to if they click on it
+    bounties_embed = discord.Embed(
+        title="Bounty Leader Board",
+        url="https://deadrabbitsrdo.com/contest-winners/",
+        color=bot_bar_color)
 
-    # Displays the person who called the command
-    bounties_recovered.set_author(name=ctx.author.display_name, url="https://deadrabbitsrdo.com",
-                                  icon_url=ctx.author.avatar_url)
+    # Assigns the author field to the member who called the command
+    bounties_embed.set_author(
+        name=ctx.author.display_name,
+        url="https://deadrabbitsrdo.com",
+        icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(
+    # Sets the thumbnail of the embed
+    bounties_embed.set_thumbnail(
         url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
 
-    # Logic to determine which embed message should send
+    # Determines which message to send based on the users passed in 'days' argument
     if int(days) > 1:
-        bounties_recovered.add_field(name=f"Top Bounty Hunters in the last {days} days".title(),
-                                     value=bounties_recovered_data,
-                                     inline=False)
-        bounties_recovered.set_footer(text=f"Total number of bounties in the last {days} days is {total_bounties}")
+        bounties_embed.add_field(
+            name=f"Top Bounty Hunters in the last {days} days".title(),
+            value=bounties_data,
+            inline=False)
+        bounties_embed.set_footer(
+            text=f"Total number of bounties in the last {days} days is {total_bounties}")
     elif int(days) == 1:
-        bounties_recovered.add_field(name=f"Top Bounty Hunters in the last {days} day".title(),
-                                     value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of bounties in the last {days} day is {total_bounties}")
-    await ctx.send(embed=bounties_recovered)
+        bounties_embed.add_field(
+            name=f"Top Bounty Hunters in the last {days} day".title(),
+            value=bounties_data,
+            inline=False)
+        bounties_embed.set_footer(
+            text=f"Total number of bounties in the last {days} day is {total_bounties}")
+
+    await ctx.send(embed=bounties_embed)
 
 
 @client.command()
@@ -244,29 +261,43 @@ async def bountiesDead(ctx, days):
     :type days: str
     :return: an embedded message with a list of users with the amount of points they've received from their dead bounty
     """
-    bounties_recovered_data = await CounterFunctionality.DeadCounter().to_client(ctx, days)
+    # Returns the dictionary output list and calculates the values in the dictionary
+    bounties_data = await CounterFunctionality.DeadCounter().to_client(ctx, days)
     total_bounties = CounterFunctionality.DeadCounter().calculate()
 
-    bounties_recovered = discord.Embed(title="Bounty Leader Board", url="https://deadrabbitsrdo.com/contest-winners/",
-                                       color=bot_bar_color)
+    # Defines the header of the embed message along with the site to take a member to if they click on it
+    bounties_embed = discord.Embed(
+        title="Bounty Leader Board",
+        url="https://deadrabbitsrdo.com/contest-winners/",
+        color=bot_bar_color)
 
-    bounties_recovered.set_author(name=ctx.author.display_name, url="https://deadrabbitsrdo.com",
-                                  icon_url=ctx.author.avatar_url)
+    # Assigns the author field to the member who called the command
+    bounties_embed.set_author(
+        name=ctx.author.display_name,
+        url="https://deadrabbitsrdo.com",
+        icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041"
-                                         "-image004.png")
+    # Sets the thumbnail of the embed
+    bounties_embed.set_thumbnail(
+        url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
 
+    # Determines which message to send based on the users passed in 'days' argument
     if int(days) > 1:
-        bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last {days} days".title(),
-                                     value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of dead bounties recovered in the last {days} days is "
-                                           f"{total_bounties}")
+        bounties_embed.add_field(
+            name=f"Number of Dead Bounties Brought in the last {days} days".title(),
+            value=bounties_data,
+            inline=False)
+        bounties_embed.set_footer(
+            text=f"Total number of dead bounties recovered in the last {days} days is {total_bounties}")
     elif int(days) == 1:
-        bounties_recovered.add_field(name=f"Number of Dead Bounties Brought in the last day".title(),
-                                     value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(
+        bounties_embed.add_field(
+            name=f"Number of Dead Bounties Brought in the last day".title(),
+            value=bounties_data,
+            inline=False)
+        bounties_embed.set_footer(
             text=f"Total number of dead bounties recovered in the last {days} day is {total_bounties}")
-    await ctx.send(embed=bounties_recovered)
+
+    await ctx.send(embed=bounties_embed)
 
 
 @client.command()
@@ -282,30 +313,41 @@ async def bountiesAlive(ctx, days):
     :type days: str
     :return: an embedded message with a list of users with the amount of points they've received from their alive bounty
     """
-    # returns the dictionary output list and calculates the values in the dictionary
-    bounties_recovered_data = await CounterFunctionality.AliveCounter().to_client(ctx, days)
+    # Returns the dictionary output list and calculates the values in the dictionary
+    bounties_data = await CounterFunctionality.AliveCounter().to_client(ctx, days)
     total_bounties = CounterFunctionality.AliveCounter().calculate()
 
-    bounties_recovered = discord.Embed(title="Bounty Leader Board", url="https://deadrabbitsrdo.com/contest-winners/",
-                                       color=bot_bar_color)
+    # Defines the header of the embed message along with the site to take a member to if they click on it
+    bounties_embed = discord.Embed(title="Bounty Leader Board", url="https://deadrabbitsrdo.com/contest-winners/",
+        color=bot_bar_color)
 
-    bounties_recovered.set_author(name=ctx.author.display_name, url="https://deadrabbitsrdo.com",
-                                  icon_url=ctx.author.avatar_url)
+    # Assigns the author field to the member who called the command
+    bounties_embed.set_author(
+        name=ctx.author.display_name,
+        url="https://deadrabbitsrdo.com",
+        icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(
+    # Sets the thumbnail of the embed
+    bounties_embed.set_thumbnail(
         url="https://www.gamespot.com/a/uploads/screen_kubrick/1585/15855271/3765041-image004.png")
 
+    # Determines which message to send based on the users passed in 'days' argument
     if int(days) > 1:
-        bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last {days} days".title(),
-                                     value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of living bounties in the last {days} days is "
-                                           f"{total_bounties}")
+        bounties_embed.add_field(
+            name=f"Number of Living Bounties Brought in the last {days} days".title(),
+            value=bounties_data,
+            inline=False)
+        bounties_embed.set_footer(
+            text=f"Total number of living bounties in the last {days} days is {total_bounties}")
     elif int(days) == 1:
-        bounties_recovered.add_field(name=f"Number of Living Bounties Brought in the last day".title(),
-                                     value=bounties_recovered_data, inline=False)
-        bounties_recovered.set_footer(text=f"Total number of living bounties in the last {days} day is "
-                                           f"{total_bounties}")
-    await ctx.send(embed=bounties_recovered)
+        bounties_embed.add_field(
+            name=f"Number of Living Bounties Brought in the last day".title(),
+            value=bounties_data,
+            inline=False)
+        bounties_embed.set_footer(
+            text=f"Total number of living bounties in the last {days} day is {total_bounties}")
+
+    await ctx.send(embed=bounties_embed)
 
 
 @client.command()
@@ -321,30 +363,43 @@ async def parley(ctx, days):
     :type days: str
     :return: an embedded message with a list of users with the amount of points they've received from their parleys
     """
-    # returns the dictionary output list and calculates the values in the dictionary
-    bounties_recovered_data = await CounterFunctionality.ParleyCounter().to_client(ctx, days)
+    # Returns the dictionary output list and calculates the values in the dictionary
+    parleys_data = await CounterFunctionality.ParleyCounter().to_client(ctx, days)
     total_parleys = CounterFunctionality.ParleyCounter().calculate()
 
-    bounties_recovered = discord.Embed(title="Parley Leader Board", url="https://deadrabbitsrdo.com/contest-winners/",
-                                       color=0x1BF761)
+    # Defines the header of the embed message along with the site to take a member to if they click on it
+    parleys_embed = discord.Embed(
+        title="Parley Leader Board",
+        url="https://deadrabbitsrdo.com/contest-winners/",
+        color=bot_bar_color)
 
-    bounties_recovered.set_author(name=ctx.author.display_name, url="https://deadrabbitsrdo.com",
-                                  icon_url=ctx.author.avatar_url)
+    # Assigns the author field to the member who called the command
+    parleys_embed.set_author(
+        name=ctx.author.display_name,
+        url="https://deadrabbitsrdo.com",
+        icon_url=ctx.author.avatar_url)
 
-    bounties_recovered.set_thumbnail(url="https://preview.redd.it/hzzvz0gi0j121.jpg?auto=webp&s"
-                                         "=86411716d80ffc4516a2829ea362883ebc0ef36a")
+    # Sets the thumbnail of the embed
+    parleys_embed.set_thumbnail(
+        url="https://preview.redd.it/hzzvz0gi0j121.jpg?auto=webp&s=86411716d80ffc4516a2829ea362883ebc0ef36a")
 
+    # Determines which message to send based on the users passed in 'days' argument
     if int(days) > 1:
-        bounties_recovered.add_field(
+        parleys_embed.add_field(
             name=f"Number of Parleys in the last {days} days".title(),
-            value=bounties_recovered_data,
+            value=parleys_data,
             inline=False)
-        bounties_recovered.set_footer(text=f"Total number of parleys in the last {days} days is {total_parleys}")
+        parleys_embed.set_footer(
+            text=f"Total number of parleys in the last {days} days is {total_parleys}")
     elif int(days) == 1:
-        bounties_recovered.add_field(name=f"Number of Parleys in the last day".title(), value=bounties_recovered_data,
-                                     inline=False)
-        bounties_recovered.set_footer(text=f"Total number of parleys in the last {days} day is {total_parleys}")
-    await ctx.send(embed=bounties_recovered)
+        parleys_embed.add_field(
+            name=f"Number of Parleys in the last day".title(),
+            value=parleys_data,
+            inline=False)
+        parleys_embed.set_footer(
+            text=f"Total number of parleys in the last {days} day is {total_parleys}")
+
+    await ctx.send(embed=parleys_embed)
 
 
 @client.command()
@@ -376,7 +431,8 @@ async def members(ctx):
     wanderer = ctx.guild.get_role(880154109041319957)
 
     # Declaration of embed header
-    members_message = discord.Embed(title="\tCurrent Members List", url="https://deadrabbitsrdo.com", color=0x4EEDEB)
+    members_message = discord.Embed(title="\tCurrent Members List", url="https://deadrabbitsrdo.com",
+                                    color=bot_bar_color)
 
     # This shows the member who called the bot function
     members_message.set_author(name=ctx.author.display_name, url="https://deadrabbitsrdo.com",
@@ -721,7 +777,7 @@ async def pvpGuide(ctx):
 
     # Displays the author of the PVP Guide
     guide_message.set_author(name="BroomhildaChunks#0822",
-                             icon_url="https://cdn.discordapp.com/attachments/868317767818960978/924089703228129340/Logo.png")  # Change
+                             icon_url="https://media.discordapp.net/attachments/924114659936710666/951945951084429362/1f9f9.png")  # Change
     # this once Broom sends John his pic
 
     guide_message.set_thumbnail(
@@ -742,8 +798,7 @@ async def wagonGuide(ctx):
     :return: a hyperlink to a website which contains the wagon clinic PowerPoint
     """
     guide_message = discord.Embed(title="Dead Rabbits RDO - Wagon Clinic",
-                                  url="https://docs.google.com/presentation/d"
-                                      "/19JE_pxvicWPNkucdqyi9BQzsZrVSKY7g1yDZ_DX86-0/edit#slide=id.p1",
+                                  url="https://docs.google.com/presentation/d/19JE_pxvicWPNkucdqyi9BQzsZrVSKY7g1yDZ_DX86-0/edit#slide=id.p1",
                                   description="Click on the link to take you to the presentation.", color=bot_bar_color)
 
     # Displays the author of the Wagon Guide
@@ -767,6 +822,13 @@ async def wagonRefresh(ctx):
     :type ctx: discord.ext.commands.context.Context
     :return: New name for the wagon counter name.
     """
+
+    wagon_counter_channel = os.getenv("WAGON_COUNT_VOICE")
+
+    server_creation = dt.datetime(day=25, month=8, year=2021)
+    server_today = dt.datetime.utcnow()
+    start_num_days = server_today - server_creation
+
     channel = await client.fetch_channel(wagon_counter_channel)
     print(start_num_days.days)
 
@@ -776,200 +838,372 @@ async def wagonRefresh(ctx):
 
 
 @client.command()
-async def eliteRankProgress(ctx):
+async def eliteRankProgress(ctx, member_name=""):
     """
-    # TODO - Add description
+    Defines the ability for a user to call '!eliteRankProgress' in a channel and the bot will return an embed that
+    displays the user's progress toward the Elite Ranks. If a user meets the requirements for any of the Elite
+    Ranks, they will be assigned the roles for the Elite Ranks they have completed, and an announcement will be sent
+    in the #announcements channel.
+    NOTE: The Elite Rank Roles must be below the role for JP Cripps so the bot has permission to assign the roles.
 
     :param ctx: represents the context in which a command is being invoked under
+    :type ctx: discord.ext.commands.context.Context
+    :param member_name: A string representing the name, name and discriminator, or nickname of a member
+    :type member_name: str
     :return: An embed that displays a member's progress toward the Elite Ranks
     """
-    # Reset all count & flag values
-    hell_cat_maggie_wagon_steals_count = 0
-    hell_cat_maggie_solo_no_kill_flag = "Incomplete"
-    bondsman_alive_bounties_count = 0
-    bondsman_dead_bounties_count = 0
-    bondsman_max_bounty_flag = "Incomplete"
-    bondsman_thrown_in_jail_flag = "Incomplete"
-    roach_guard_parleys_count = 0
-    roach_guard_content_defenses_count = 0
 
-    # Retrieving information for the member who called the command
-    command_target = ctx.author
-    command_target_name = ctx.author.name
-    command_target_icon = ctx.author.avatar_url
-    command_target_roles = command_target.roles
+    # No specified command target, so command_target and command_author are set to the command's author
+    if member_name == "":
+        command_target = ctx.author
+        command_target_name = ctx.author.name
+        command_target_roles = ctx.author.roles
+        command_author = ctx.author
+        command_author_icon = ctx.author.avatar_url
+    # Specified command target, so command_target is set to the entered name, and command_author is set to the
+    # command's author
+    else:
+        # Defines Dead Rabbits server
+        dead_rabbits_server = await get_dead_rabbits_server()
+        command_target = dead_rabbits_server.get_member_named(member_name)
+        command_target_name = command_target.name
+        command_target_roles = command_target.roles
+        command_author = ctx.author
+        command_author_icon = command_author.avatar_url
 
-    # Defining Elite Rank roles
-    hell_cat_maggie_role = discord.utils.get(ctx.guild.roles, name="Hell-Cat Maggie")
-    bondsman_role = discord.utils.get(ctx.guild.roles, name="Bondsman")
-    roach_guard_role = discord.utils.get(ctx.guild.roles, name="Roach Guard")
+    # Defines Elite Rank roles
+    hell_cat_maggie_role, bondsman_role, roach_guard_role = await get_elite_rank_roles()
 
-    # Defining Wagon Counter channel
-    wagon_counter_channel_id = 880186622375788614
-    wagon_counter_channel = await client.fetch_channel(wagon_counter_channel_id)
-
-    # Defining Bounty Counter channel
-    bounty_counter_channel_id = 890970371698864208
-    bounty_counter_channel = await client.fetch_channel(bounty_counter_channel_id)
-
-    # Defining Parley Counter channel
-    parley_counter_channel_id = 890970322612932648
-    parley_counter_channel = await client.fetch_channel(parley_counter_channel_id)
-
-    # Defining Announcement channel
-    announcement_channel_id = 891350640989712424
-    announcement_channel = await client.fetch_channel(announcement_channel_id)
-
-    # Executes if target has all three Elite Rank roles. Creates an embed with a congratulatory message.
+    # Executes if the command target has all three Elite Rank roles
     if (hell_cat_maggie_role in command_target_roles) and (bondsman_role in command_target_roles) and \
             (roach_guard_role in command_target_roles):
-        elite_ranks_complete = discord.Embed(
-            description="Congratulations! You've already completed all the Elite Ranks.",
-            color=bot_bar_color)
+        # Creates an embed with a congratulatory message.
+        elite_ranks_complete_embed = await build_elite_ranks_complete_embed()
+        # Sends the embed
+        await ctx.send(embed=elite_ranks_complete_embed)
 
-        await ctx.send(embed=elite_ranks_complete)
-
-    # Executes if target does not have all three Elite Rank roles
+    # Executes if a command target does not have all three Elite Rank roles
     else:
-        # Create header for the Elite Rank progress embed
-        elite_rank_progress = discord.Embed(title="Elite Rank Progress for " + (str(command_target_name)),
-                                            color=bot_bar_color)
+        # Gets a member's progress toward the Elite Ranks, and saves them as variables
+        wagon_steals_count, solo_no_kill_flag, alive_bounties_count, dead_bounties_count, max_bounty_flag, \
+        jailed_flag, parleys_count, content_defenses_count = await get_elite_rank_progress(command_target)
+        # Creates an embedded message that includes the member's progress toward the Elite Ranks
+        elite_ranks_progress_embed = await build_elite_ranks_progress_embed(
+            command_target, command_target_name, command_target_roles, command_author, command_author_icon,
+            wagon_steals_count, solo_no_kill_flag, alive_bounties_count, dead_bounties_count, max_bounty_flag,
+            jailed_flag, parleys_count, content_defenses_count)
+        # Sends the embed
+        await ctx.send(embed=elite_ranks_progress_embed)
 
-        elite_rank_progress.set_author(name=command_target, icon_url=command_target_icon)
 
-        # Executes if target has the Hell-Cat Maggie Role. Appends a message to the Elite Rank progress embed that the
-        # target has already completed the role.
-        if hell_cat_maggie_role in command_target_roles:  # Target has Hell-Cat Maggie role
-            elite_rank_progress.add_field(name="Hell-Cat Maggie", value="Hell-Cat Maggie Elite Rank complete",
-                                          inline=False)
+async def get_dead_rabbits_server():
+    """
+    Retrieves the Dead Rabbit server ID and defines a discord.guild.Guild object representing the Dead Rabbits server
 
-        # Executes if target does not have the Hell-Cat Maggie role.
+    :return: A discord.guild.Guild object representing the Dead Rabbits server
+    """
+
+    # Gets Dead Rabbits server ID
+    dead_rabbits_server_id = os.getenv("PRIMARY_GUILD_KEY")
+
+    # Defines object representing the Dead Rabbits server
+    dead_rabbits_server = client.get_guild(int(dead_rabbits_server_id))
+
+    # Returns server object
+    return dead_rabbits_server
+
+
+async def get_elite_rank_roles():
+    """
+    Defines discord.role.Role objects for the Elite Rank roles in the Dead Rabbits server
+
+    :return: Three discord.role.Role objects representing the Elite Rank roles
+    """
+
+    # Defines Dead Rabbits server object
+    dead_rabbits_server = await get_dead_rabbits_server()
+
+    # Defines Elite Rank roles
+    hell_cat_maggie_role = discord.utils.get(dead_rabbits_server.roles, name="Hell-Cat Maggie")
+    bondsman_role = discord.utils.get(dead_rabbits_server.roles, name="Bondsman")
+    roach_guard_role = discord.utils.get(dead_rabbits_server.roles, name="Roach Guard")
+
+    # Returns elite rank role objects
+    return hell_cat_maggie_role, bondsman_role, roach_guard_role
+
+
+async def get_counter_channels():
+    """
+    Defines discord.channel.TextChannel objects representing the counter channels in the Dead Rabbits server
+
+    :return:Three discord.channel.TextChannel objects representing the counter channels in the Dead Rabbits server
+    """
+
+    # Defines wagon counter channel
+    wagon_counter_channel_id = os.getenv("WAGON_COUNTER_CHANNEL_ID")
+    wagon_counter_channel = await client.fetch_channel(wagon_counter_channel_id)
+
+    # Defines bounty counter channel
+    bounty_counter_channel_id = os.getenv("BOUNTY_COUNTER_CHANNEL_ID")
+    bounty_counter_channel = await client.fetch_channel(bounty_counter_channel_id)
+
+    # Defines parley counter channel
+    parley_counter_channel_id = os.getenv("PARLEY_COUNTER_CHANNEL_ID")
+    parley_counter_channel = await client.fetch_channel(parley_counter_channel_id)
+
+    # Return objects for counter channels
+    return wagon_counter_channel, bounty_counter_channel, parley_counter_channel
+
+
+async def get_announcement_channel():
+    """
+    Defines a discord.channel.TextChannel object representing the announcement channel in the Dead Rabbits server
+
+    :return: A discord.channel.TextChannel object representing the announcement channel in the Dead Rabbits server
+    """
+
+    # Defines announcement channel
+    announcement_channel_id = os.getenv("ANNOUNCEMENT_CHANNEL_ID")
+    announcement_channel = await client.fetch_channel(announcement_channel_id)
+
+    # Return object for announcement channel
+    return announcement_channel
+
+
+async def build_elite_ranks_complete_embed():
+    """
+    Creates an embedded message that informs a member that they have already completed all the Elite Ranks
+
+    :return: An embedded message that informs a member that they have already completed all the Elite Ranks
+    """
+    elite_ranks_complete_embed = discord.Embed(
+        description="Congratulations! You've already completed all the Elite Ranks.",
+        color=bot_bar_color)
+    return elite_ranks_complete_embed
+
+
+async def get_elite_rank_progress(command_target):
+    """
+    Searches the counter channels for the keywords used to mark successful content, and either adds one to the
+    overall counter, or marks a challenge as completed.
+
+    :param command_target: An object representing the member who is the target of the command
+    :type command_target: discord.member.Member
+    :return: Eight count or flag values representing a member's progress toward the Elite Ranks
+    """
+
+    # Gathers a member's progress towards the elite rank and builds an embed with the data
+
+    # Define counter channels
+    wagon_counter_channel, bounty_counter_channel, parley_counter_channel = await get_counter_channels()
+
+    # Reset all count & flag values
+    wagon_steals_count = 0
+    solo_no_kill_flag = "Incomplete"
+    alive_bounties_count = 0
+    dead_bounties_count = 0
+    max_bounty_flag = "Incomplete"
+    jailed_flag = "Incomplete"
+    parleys_count = 0
+    content_defenses_count = 0
+
+    async for message in wagon_counter_channel.history(limit=None):
+        if message.author == command_target:
+            if message.content == "drwagon":
+                wagon_steals_count = wagon_steals_count + 1
+            if "solonokill" in message.content:
+                solo_no_kill_flag = "Complete"
+
+    async for message in bounty_counter_channel.history(limit=None):
+        if message.author == command_target:
+            if message.content == "dralive":
+                alive_bounties_count = alive_bounties_count + 1
+            if message.content == "drdead":
+                dead_bounties_count = dead_bounties_count + 1
+            if "maxbounty" in message.content:
+                max_bounty_flag = "Complete"
+            if "timeserved" in message.content:
+                jailed_flag = "Complete"
+
+    async for message in parley_counter_channel.history(limit=None):
+        if message.author == command_target:
+            if message.content == "drparley":
+                parleys_count = parleys_count + 1
+            if message.content == "drdefense":
+                content_defenses_count = content_defenses_count + 1
+
+    return wagon_steals_count, solo_no_kill_flag, alive_bounties_count, dead_bounties_count, max_bounty_flag, \
+           jailed_flag, parleys_count, content_defenses_count
+
+
+async def build_elite_ranks_progress_embed(command_target, command_target_name, command_target_roles, command_author,
+                                           command_author_icon, wagon_steals_count, solo_no_kill_flag,
+                                           alive_bounties_count, dead_bounties_count, max_bounty_flag, jailed_flag,
+                                           parleys_count, content_defenses_count):
+    """
+    Builds an embed that displays a member's progress toward the Elite Ranks.
+
+    :param command_target: An object representing the member who is the target of the command
+    :type command_target: discord.member.Member
+    :param command_target_name: A string representing the target's name
+    :type command_target_name: str
+    :param command_target_roles: A list of the target's roles
+    :type command_target_roles: list
+    :param command_author: An object representing the member who is the author of the command
+    :type command_author: discord.member.Member
+    :param command_author_icon: The profile picture of the author of the command
+    :type command_author_icon: discord.asset.Asset
+    :param wagon_steals_count: A count of how many wagaons a member has stolen
+    :type wagon_steals_count: int
+    :param solo_no_kill_flag: A string flag representing if a member has completed a solo, no kill wagon steal
+    :type solo_no_kill_flag: str
+    :param alive_bounties_count: A count of how many alive player bounties a member has turned in
+    :type alive_bounties_count: int
+    :param dead_bounties_count: A count of how many dead player bounties a member has turned in
+    :type dead_bounties_count: int
+    :param max_bounty_flag: A string flag representing if a member has reached the maximum bounty level of $100
+    :type max_bounty_flag: str
+    :param jailed_flag: A string flag representing if a member has been thrown in jail
+    :type jailed_flag: str
+    :param parleys_count: A count of how many times a member has made a griefer parley, leave, or run away
+    :type parleys_count: int
+    :param content_defenses_count: A count of how many times a member has successfully defended a content mission
+    :type  content_defenses_count: int
+    :return: An embed displaying a members progress toward the Elite Ranks.
+    """
+
+    # Define roles
+    hell_cat_maggie_role, bondsman_role, roach_guard_role = await get_elite_rank_roles()
+
+    # Create header for the Elite Rank progress embed
+    elite_ranks_progress_embed = discord.Embed(title="Elite Rank Progress for " + (str(command_target_name)),
+                                               color=bot_bar_color)
+    elite_ranks_progress_embed.set_author(name=command_author, icon_url=command_author_icon)
+
+    if hell_cat_maggie_role in command_target_roles:
+        elite_ranks_progress_embed.add_field(name="Hell-Cat Maggie",
+                                             value="Hell-Cat Maggie Elite Rank complete",
+                                             inline=False)
+    else:
+        # If the target now meets the requirement(s) for the role, the role is given to them
+        if (wagon_steals_count >= 100) and (solo_no_kill_flag == "Complete"):
+            elite_ranks_progress_embed.add_field(name="Hell-Cat Maggie",
+                                                 value="Congratulations, you have now completed the requirements for "
+                                                       "the Hell-Cat Maggie Elite Rank, and you have been given the "
+                                                       "role.",
+                                                 inline=False)
+            # Adds role to command target
+            await command_target.add_roles(hell_cat_maggie_role)
+
+            # Build announcement message and post in #announcements channel
+            await elite_rank_complete_announcement("Hell-Cat Maggie", command_target_name)
+
+        # If the target does not meet the requirement(s) for the role, their progress toward the role is displayed
         else:
-            # Gather the target's progress toward the role
-            async for each_message in wagon_counter_channel.history(limit=None):
-                if each_message.author == command_target:
-                    if each_message.content == "drwagon":
-                        hell_cat_maggie_wagon_steals_count += 1
-                    if "solonokill" in each_message.content:
-                        hell_cat_maggie_solo_no_kill_flag = "Complete"
-            # If the target now meets the requirement(s) for the role, the role is given to the target
-            if hell_cat_maggie_wagon_steals_count >= 100 and hell_cat_maggie_solo_no_kill_flag == "Complete":
-                elite_rank_progress.add_field(name="Hell-Cat Maggie",
-                                              value="Congratulations, you have now completed the requirements for the "
-                                                    "Hell-Cat Maggie Elite Rank, and you have been given the role.",
-                                              inline=False)
+            elite_ranks_progress_embed.add_field(name="Hell-Cat Maggie",
+                                                 value=str(wagon_steals_count) + " / 100 Wagon steals\n"
+                                                                                 "Solo, no kill (include screenshot): " + solo_no_kill_flag,
+                                                 inline=False)
 
-                await command_target.add_roles(hell_cat_maggie_role)
+    if bondsman_role in command_target_roles:
+        elite_ranks_progress_embed.add_field(name="Bondsman",
+                                             value="Bondsman Elite Rank complete",
+                                             inline=False)
+    else:
+        # If the target now meets the requirement(s) for the role, the role is given to them
+        if alive_bounties_count >= 50 and dead_bounties_count >= 50 and (max_bounty_flag and jailed_flag) == "Complete":
+            elite_ranks_progress_embed.add_field(name="Bondsman",
+                                                 value="Congratulations, you have now completed the requirements for "
+                                                       "the Bondsman Elite Rank, and you have been given the role.",
+                                                 inline=False)
+            # Adds role to command target
+            await command_target.add_roles(bondsman_role)
 
-                # Build announcement message and post in #announcements channel
-                hell_cat_maggie_complete_announcement = discord.Embed(
-                    title="Hell-Cat Maggie Elite Rank Complete",
-                    description=str(command_target_name) + " has completed the Hell-Cat Maggie Elite Rank!",
-                    color=bot_bar_color)
-                hell_cat_maggie_complete_announcement.set_image(
-                    url="https://cdn.discordapp.com/attachments/924114659936710666/953079911990583316"
-                        "/elite_rank_hellcat.png")
-                await announcement_channel.send("@everyone")
-                await announcement_channel.send(embed=hell_cat_maggie_complete_announcement)
+            # Build announcement message and post in #announcements channel
+            await elite_rank_complete_announcement("Bondsman", command_target_name)
 
-            # If the target does not meet the requirement(s) for the role, their progress toward the role is displayed
-            else:
-                elite_rank_progress.add_field(name="Hell-Cat Maggie",
-                                              value=str(
-                                                  hell_cat_maggie_wagon_steals_count) + "/ 100 Wagon steals\nSolo, "
-                                                                                        "no kill (include "
-                                                                                        "screenshot): " + hell_cat_maggie_solo_no_kill_flag,
-                                              inline=False)
-
-        # Executes if target has the Bondsman Role. Appends a message to the Elite Rank progress embed that the target
-        # has already completed the role.
-        if bondsman_role in command_target_roles:
-            elite_rank_progress.add_field(name="Bondsman", value="Bondsman Elite Rank complete", inline=False)
-
-        # Executes if target does not have the Bondsman role
+        # If the target does not meet the requirement(s) for the role, their progress toward the role is displayed
         else:
-            # Gather the target's progress toward the role
-            async for each_message in bounty_counter_channel.history(limit=None):
-                if each_message.author == command_target:
-                    if each_message.content == "dralive":
-                        bondsman_alive_bounties_count = bondsman_alive_bounties_count + 1
-                    if each_message.content == "drdead":
-                        bondsman_dead_bounties_count = bondsman_dead_bounties_count + 1
-                    if "maxbounty" in each_message.content:
-                        bondsman_max_bounty_flag = "Complete"
-                    if "timeserved" in each_message.content:
-                        bondsman_thrown_in_jail_flag = "Complete"
-            # If the target now meets the requirement(s) for the role, the role is given to the target
-            if bondsman_alive_bounties_count >= 50 and bondsman_dead_bounties_count >= 50 and \
-                    bondsman_max_bounty_flag == "Complete" and bondsman_thrown_in_jail_flag == "Complete":
-                elite_rank_progress.add_field(name="Bondsman",
-                                              value="Congratulations, you have now completed the requirements for the "
-                                                    "Bondsman Elite Rank, and you have been given the role.",
-                                              inline=False)
-                await command_target.add_roles(bondsman_role)
+            elite_ranks_progress_embed.add_field(name="Bondsman",
+                                                 value=str(alive_bounties_count) + " / 50 Alive bounties\n" +
+                                                       str(dead_bounties_count) + " / 50 Dead bounties\n" +
+                                                       "Max bounty ($100, include screenshot): " + max_bounty_flag +
+                                                       "\nThrown in jail (include screenshot): " + jailed_flag,
+                                                 inline=False)
 
-                # Build announcement message and post in #announcements channel
-                bondsman_complete_announcement = discord.Embed(title="Bondsman Elite Rank Complete",
-                                                               description=str(
-                                                                   command_target_name) + " has completed the Bondsman Elite Rank!",
-                                                               color=bot_bar_color)
-                bondsman_complete_announcement.set_image(
-                    url="https://cdn.discordapp.com/attachments/924114659936710666/953079338985734184"
-                        "/elite_rank_bondsman.png")
-                await announcement_channel.send("@everyone")
-                await announcement_channel.send(embed=bondsman_complete_announcement)
+    if roach_guard_role in command_target_roles:
+        elite_ranks_progress_embed.add_field(name="Roach Guard",
+                                             value="Roach Guard Elite Rank complete",
+                                             inline=False)
 
-            # If the target does not meet the requirement(s) for the role, their progress toward the role is displayed
-            else:
-                elite_rank_progress.add_field(
-                    name="Bondsman",
-                    value=str(bondsman_alive_bounties_count) + " / 50 Alive bounties\n"
-                          + str(bondsman_dead_bounties_count) + " / 50 Dead bounties\n"
-                          + "Max bounty ($100, include screenshot): " + bondsman_max_bounty_flag + "\n"
-                          + "Thrown in jail (include screenshot): " + bondsman_thrown_in_jail_flag, inline=False)
+    else:
 
-        # Executes if target has the Roach Guard Role. Appends a message to the Elite Rank progress embed that the
-        # target has already completed the role.
-        if roach_guard_role in command_target_roles:
-            elite_rank_progress.add_field(name="Roach Guard", value="Roach Guard Elite Rank complete", inline=False)
+        # If the target now meets the requirement(s) for the role, the role is given to them
+        if parleys_count >= 50 and content_defenses_count >= 10 and (roach_guard_role not in command_target_roles):
+            elite_ranks_progress_embed.add_field(name="Roach Guard",
+                                                 value="Congratulations, you have now completed the requirements for "
+                                                       "the Roach Guard Elite Rank and you have been given the role.",
+                                                 inline=False)
+            # Adds role to command target
+            await command_target.add_roles(roach_guard_role)
 
-        # Executes if target does not have the Roach Guard role
+            # Build announcement message and post in #announcements channel
+            await elite_rank_complete_announcement("Roach Guard", command_target_name)
+
+        # If the target does not meet the requirement(s) for the role, their progress towards the role is displayed
         else:
-            # Gather the target's progress toward the role
-            async for each_message in parley_counter_channel.history(limit=None):
-                if each_message.author == command_target:
-                    if each_message.content == "drparley":
-                        roach_guard_parleys_count = roach_guard_parleys_count + 1
-                    if each_message.content == "drdefense":
-                        roach_guard_content_defenses_count = roach_guard_content_defenses_count + 1
-            # If the target now meets the requirement(s) for the role, the role is given to them
-            if roach_guard_parleys_count >= 50 and roach_guard_content_defenses_count >= 10:
-                elite_rank_progress.add_field(
-                    name="Roach Guard",
-                    value="Congratulations, you have now completed the requirements for the Roach Guard Elite Rank, "
-                          "and you have been given the role.", inline=False)
-                await command_target.add_roles(roach_guard_role)
-                # Build announcement message and post in #announcements channel
-                roach_guard_complete_announcement = discord.Embed(
-                    title="Roach Guard Elite Rank Complete",
-                    description=str(command_target_name) + " has completed the Roach Guard Elite Rank!",
-                    color=bot_bar_color)
-                roach_guard_complete_announcement.set_image(
-                    url="https://cdn.discordapp.com/attachments/924114659936710666/953078752793989190"
-                        "/elite_rank_roach_guard.png")
-                await announcement_channel.send("@everyone")
-                await announcement_channel.send(embed=roach_guard_complete_announcement)
+            elite_ranks_progress_embed.add_field(name="Roach Guard",
+                                                 value=str(parleys_count) + " / 50 Parleys\n" +
+                                                       str(content_defenses_count) + " / 10 Content defenses",
+                                                 inline=False)
 
-            # If the target does not meet the requirement(s) for the role, their progress towards the role is displayed
-            else:
-                elite_rank_progress.add_field(
-                    name="Roach Guard",
-                    value=str(roach_guard_parleys_count) + " / 50 Parleys\n"
-                          + str(roach_guard_content_defenses_count) + " / 10 Content defenses",
-                    inline=False)
+    # Return finished elite rank progress embed
+    return elite_ranks_progress_embed
 
-        # Sends completed Elite Rank progress embed
-        await ctx.send(embed=elite_rank_progress)
+
+async def elite_rank_complete_announcement(elite_rank, command_target_name):
+    """
+    Creates an embedded message that informs server members that a member has completed the requirements for an Elite
+    Rank. Sends "@everyone" in the announcement channel to ping server members, followed by the embedded message.
+
+    :param elite_rank: A string value representing which Elite Rank to create the announcement for
+    :type elite_rank: str
+    :param command_target_name: A string representing the target's name
+    :type command_target_name: str
+    """
+    if elite_rank == "Hell-Cat Maggie":
+        announcement_embed = discord.Embed(
+            title="Hell-Cat Maggie Elite Rank Complete",
+            description=str(command_target_name) + " has completed the Hell-Cat Maggie Elite Rank!",
+            color=bot_bar_color,
+            inline=False)
+        announcement_embed.set_image(
+            url="https://cdn.discordapp.com/attachments/924114659936710666/953079911990583316"
+                "/elite_rank_hellcat.png")
+
+    if elite_rank == "Bondsman":
+        announcement_embed = discord.Embed(
+            title="Bondsman Elite Rank Complete",
+            description=str(command_target_name) + " has completed the Bondsman Elite Rank!",
+            color=bot_bar_color,
+            inline=False)
+        announcement_embed.set_image(
+            url="https://cdn.discordapp.com/attachments/924114659936710666/953079338985734184"
+                "/elite_rank_bondsman.png")
+
+    if elite_rank == "Roach Guard":
+        announcement_embed = discord.Embed(
+            title="Roach Guard Elite Rank Complete",
+            description=str(command_target_name) + " has completed the Roach Guard Elite Rank!",
+            color=bot_bar_color,
+            inline=False)
+        announcement_embed.set_image(
+            url="https://cdn.discordapp.com/attachments/924114659936710666/953078752793989190"
+                "/elite_rank_roach_guard.png")
+
+    announcement_channel = await get_announcement_channel()
+    await announcement_channel.send("@everyone")
+    await announcement_channel.send(embed=announcement_embed)
 
 
 def get_all_members():
@@ -992,7 +1226,7 @@ def get_all_members():
 def remove_all_bots(list_of_members):
     """
     Removes all the bots recorded in the server
-    
+
     :param list_of_members: a list of all members visible to the bot in the guild
     :type list_of_members: list
     :return: nothing
