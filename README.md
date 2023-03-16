@@ -1,4 +1,4 @@
-# Wagon-Counter-Bot 
+# JP Cripps Bot
 ![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
 
 
