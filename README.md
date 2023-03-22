@@ -8,8 +8,15 @@ A simple readme file for the Wagon Count Bot
 ## About The Project
    JP Cripps is a fully functional, command-oriented Discord bot implemented using the Discord.py API. Its primary objective is to provide a range of useful, fun, and interactive community-driven functionality that enables community members the ability to participate in challenges, track progress towards completing role milestones, and engage in various leaderboard-oriented games centered around the Red Dead Redemption Online universe. In addition, JP Cripps efficiently handles medial administrative level tasks, helping server administrators tackle issues faster and more effectively.
 
-# Command Help
+## Command Help
 ![Command  Help](https://user-images.githubusercontent.com/43221618/226866118-b5e7c335-103b-4c1f-a7c8-39aefcbec613.png)
+
+## Monthly Elite Ranks
+![Monthly Elite Ranks](https://user-images.githubusercontent.com/43221618/226869874-6abd1934-3a21-4b0f-9153-420c54aa8573.png)
+
+## Elite Rank Progress
+![Elite Rank Progresss](https://user-images.githubusercontent.com/43221618/226870189-9b2642d5-54aa-4493-9c27-9954576685d6.png)
+
 
 ## Project Inspiration
 This bot was inspired by an activity in Red Dead Redemption Online (RDO), which allows you to preform wagon steals on players running deliveries. The objective of this content is to steal the player's wagon, and successfully make it to an alternative seller location. Upon successful delivery, the guild member will say type a target phrase in a designated channel to record their wagon steal. Overtime, this bots functionality grew to be able to record many other activies in RDO.
