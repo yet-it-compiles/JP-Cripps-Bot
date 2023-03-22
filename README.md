@@ -6,15 +6,18 @@
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
-   JP Cripps is a fully functional, command-oriented Discord bot implemented using the Discord.py API. Its primary objective is to provide a range of useful, fun, and interactive community-driven functionality that enables community members the ability to participate in challenges, track progress towards completing role milestones, and engage in various leaderboard-oriented games centered around the Red Dead Redemption Online universe. In addition, JP Cripps efficiently handles medial administrative level tasks, helping server administrators tackle issues faster and more effectively.
+   JP Cripps is a fully functional, command-oriented Discord bot implemented using the Discord.py API. Its primary objective is to provide a range of useful, fun, and interactive community-driven features that enables community members the ability to participate in challenges, track progress towards role milestones, and engage in competitive games centered around the Red Dead Redemption Online universe. In addition, JP Cripps efficiently handles medial administrative level tasks, helping server administrators tackle issues faster and more effectively.
 
 ## Command Help
 ![Command  Help](https://user-images.githubusercontent.com/43221618/226866118-b5e7c335-103b-4c1f-a7c8-39aefcbec613.png)
 
-## Monthly Elite Ranks
+## Wagon Steal
 ![Monthly Elite Ranks](https://user-images.githubusercontent.com/43221618/226869874-6abd1934-3a21-4b0f-9153-420c54aa8573.png)
 
-## Elite Rank Progress
+## Elite Rank
+![Monthly Elite Ranks](https://user-images.githubusercontent.com/43221618/226919727-e2488e79-46f7-4a42-bbd3-dec89fd3697f.png)
+
+ank Progress
 ![Elite Rank Progresss](https://user-images.githubusercontent.com/43221618/226870189-9b2642d5-54aa-4493-9c27-9954576685d6.png)
 
 
