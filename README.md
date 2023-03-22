@@ -12,12 +12,12 @@ A simple readme file for the Wagon Count Bot
 ![Command  Help](https://user-images.githubusercontent.com/43221618/226866118-b5e7c335-103b-4c1f-a7c8-39aefcbec613.png)
 
 ## Wagon Steal
-![Monthly Elite Ranks](https://user-images.githubusercontent.com/43221618/226869874-6abd1934-3a21-4b0f-9153-420c54aa8573.png)
+![Wagon Steal](https://user-images.githubusercontent.com/43221618/226920059-f11a21fb-d010-4a7c-8324-600448a3fee7.png)
 
 ## Elite Rank
 ![Monthly Elite Ranks](https://user-images.githubusercontent.com/43221618/226919727-e2488e79-46f7-4a42-bbd3-dec89fd3697f.png)
 
-ank Progress
+## Elite Rank Progress
 ![Elite Rank Progresss](https://user-images.githubusercontent.com/43221618/226870189-9b2642d5-54aa-4493-9c27-9954576685d6.png)
 
 
