@@ -1,46 +1,46 @@
-# JP Cripps Bot
+# JP Cripps
 ![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
 
 
-## Version 3.0 - *Final Release*
+## 1. Version 3.0 - *Final Release*
 The development of this application has concluded, and is now hosted on a scalable environment.
 
 
-## About The Project
+## 2. About The Project
 Initially developed as a freelance solution with the goal of enhancing member engagement, and fostering server interaction for a large Red Dead Redemption Online (RDO) community. JP Cripps aims to offer a variety of community-driven activities related to the RDO universe that enables members to participate in competitive, leaderboard-styled challenges. Additionally, JP Cripps streamlines administrative tasks, making it easier for server administrators to handle issues quickly and effectively.
 
 
-## Total Number of Wagons Stolen (03/26/2023)
+### Total Number of Wagons Stolen _(Updated: 03/26/2023)_
 <img width="190" alt="image" src="https://user-images.githubusercontent.com/43221618/227765867-2a17e2e7-017d-4a6f-a72d-deba7b4e5d03.png">
 
-## Command Help
+### Command Help
 ![Command  Help](https://user-images.githubusercontent.com/43221618/226866118-b5e7c335-103b-4c1f-a7c8-39aefcbec613.png)
 
-## Wagon Steal Leaderboard
+### Wagon Steal Leaderboard
 <img width="404" alt="image" src="https://user-images.githubusercontent.com/43221618/227765927-46fe213f-511f-4cde-9def-52f22235f59a.png">
 
-## Honor Leaderboard
+### Honor Leaderboard
 <img width="254" alt="image" src="https://user-images.githubusercontent.com/43221618/227765985-41a7f0d5-73e6-49ae-9bd0-1a650136bf4b.png">
 
-## Parley Leader Board
+### Parley Leaderboard
 <img width="359" alt="image" src="https://user-images.githubusercontent.com/43221618/227766061-1464b59d-1809-4698-b755-827b73d726c0.png">
 
-## Elite Rank Checklist
+### Elite Rank Checklist
 ![Monthly Elite Ranks](https://user-images.githubusercontent.com/43221618/226919727-e2488e79-46f7-4a42-bbd3-dec89fd3697f.png)
 
-## Elite Rank Progress
+### Elite Rank Progress
 <img width="336" alt="image" src="https://user-images.githubusercontent.com/43221618/227766100-af7346ae-ce3f-42fe-94d0-07aa0e31eacd.png">
 
 
-## Project Inspiration
+### 3. Project Inspiration
 The inspiration for the project was derived from a in-game PvP activity in which a group of players can engage with another in attempt to steal their wagon when riding out to a delivery. Originally created to track wagon thefts during in-game PvP activities, JP Cripps has evolved into a feature-rich bot that offers a variety of community-driven features enabling users to users to participate in challenges, track progress towards role milestones, and engage in competitive games centered around the Red Dead Redemption Online universe.
 
 
-## Planned Features
+## 4. Planned Features
 All Requested Features and Requirements have been met.
 
 
-## Requested Features Implemented
+## 5. Application Features
 - [x] Consistent color embeds for all commands
 - [x] Displays the total member count for each role at the bottom of !members command
 - [x] ⚠️ Fixed issue with repeated server members, and removed all server members with @bot role in !members command
@@ -65,5 +65,5 @@ All Requested Features and Requirements have been met.
 - [X] ⭐ New Community Feature - Implemented various calls that returns embedded messages of server information, roles, and vetting requirements
 
 
-## License
+## 6. License
 I retain all rights to the source code and no one may reproduce, distribute, or create derivative works from this work. Anyone may download and utilize JP Cripps within their server freely.
