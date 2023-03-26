@@ -58,6 +58,8 @@ All Requested Features and Requirements have been met.
 - [X] Displays the total number of parleys and bounties during a specified time interval at the bottom of the Leaderboard
 - [X] Added various fun in-game quotes to attached to the cool down message that's sent after 24 minutes
 - [X] Updated links for a popular members PvP and Wagon stealing guide
+- [X] Now auto deletes any JP Cripps command, to ensure the server stays clean from clutter
+- [X] Now displays at the top of the embed who called the command
 - [X] ⭐ New Administrative Feature - Messages sent to JP Cripps is forwarded to all members with the @admin role
 - [X] ⭐ New Community Feature - Tracks each members progress towards various server roles
 - [X] ⭐ New Community Feature - Implemented various calls that returns embedded messages of server information, roles, and vetting requirements
