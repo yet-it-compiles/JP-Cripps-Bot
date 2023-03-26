@@ -6,7 +6,7 @@
 A simple readme file for the Wagon Count Bot
 
 ## About The Project
-   JP Cripps is a fully functional, command-oriented Discord bot implemented using the Discord.py API. Its primary objective is to provide a range of useful, fun, and interactive community-driven features that enables community members the ability to participate in challenges, track progress towards role milestones, and engage in competitive games centered around the Red Dead Redemption Online universe. In addition, JP Cripps efficiently handles medial administrative level tasks, helping server administrators tackle issues faster and more effectively.
+JP Cripps is a feature-rich Discord bot that utilizes the Discord.py API to provide a comprehensive range of community-driven features. It facilitates participation in challenges, tracks progress towards role milestones, and enables competitive games focused on the Red Dead Redemption Online universe. Additionally, JP Cripps streamlines administrative tasks, making it easier for server administrators to handle issues quickly and effectively.
 
 ## Command Help
 ![Command  Help](https://user-images.githubusercontent.com/43221618/226866118-b5e7c335-103b-4c1f-a7c8-39aefcbec613.png)
@@ -22,12 +22,11 @@ A simple readme file for the Wagon Count Bot
 
 
 ## Project Inspiration
-This bot was inspired by an activity in Red Dead Redemption Online (RDO), which allows you to preform wagon steals on players running deliveries. The objective of this content is to steal the player's wagon, and successfully make it to an alternative seller location. Upon successful delivery, the guild member will say type a target phrase in a designated channel to record their wagon steal. Overtime, this bots functionality grew to be able to record many other activies in RDO.
-
-Therefore, the bot aims to give the ability to any member to look back in the message history and see how many occurrences of a target word/phrase of have been said by each user, and then return this information in a formated chart.
+Initially developed as a freelance solution aimed at providing a fun, and competitive activity for a large Red Dead Redemption Online (RDO) community. The inspiration for the project was derived from a in-game PvP activity in which a group of players can engage with another in attempt to steal their wagon when riding out to a delivery. Originally created to track wagon thefts during in-game PvP activities, JP Cripps has evolved into a feature-rich bot that offers a variety of community-driven features enabling users to users to participate in challenges, track progress towards role milestones, and engage in competitive games centered around the Red Dead Redemption Online universe.
 
 
-## Planned Features - All Features and Requirements - COMPLETED
+## Planned Features
+All Requested Features and Requirements have been met.
 
 
 ## Requested Features Implemented
