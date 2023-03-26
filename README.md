@@ -2,8 +2,9 @@
 ![Wagon Counter Bot Image](https://user-images.githubusercontent.com/43221618/130929520-c6de4482-474a-4030-883e-e1797cbd7531.PNG)
 
 
-## Version 2.0
-A simple readme file for the Wagon Count Bot
+## Version 3.0 - *Final Release*
+The development of this application has concluded, and is now hosted on a scalable environment.
+
 
 ## About The Project
 JP Cripps is a feature-rich Discord bot that utilizes the Discord.py API to provide a comprehensive range of community-driven features. It facilitates participation in challenges, tracks progress towards role milestones, and enables competitive games focused on the Red Dead Redemption Online universe. Additionally, JP Cripps streamlines administrative tasks, making it easier for server administrators to handle issues quickly and effectively.
