@@ -30,27 +30,27 @@ All Requested Features and Requirements have been met.
 
 
 ## Requested Features Implemented
-- [x] Each command should contains a consistent color embed
-- [x] Members list should now reflect the number of people in each role accurately to what's avaliable in the server.
-- [x] Displays Playing RDO - Wagon Stealing as a game activity.
-- [x] Removed all bots in !members command, along with repeated server memebers.
-- [x] Updated bot command calls to reflect recent updates.
-- [x] Fixed '!commands' clash between other bots and reset it to !command.
-- [x] Making '!members' more readable by separating users into 2+ columns.
-- [x] Updated the '!wagonSteals' command to search each message for 'bhwagon' and return the count.
-- [X] Sends a private message to a member 24 minutes after typing 'bhwagon' in the server, to let them know their cooldown is up.
+- [x] Consistent color embeds for all commands
+- [x] Accurate member count for each role displayed in the Members list
+- [x] Removed repeated server members and all bots from !members command
+- [x] Renamed conflicting !commands command to !command
+- [x] Improved readability of !members by separating users into multiple columns
+- [x] Updated bot command calls to reflect recent changes
+- [x] Game activity for "Playing RDO - Wagon Stealing" added
+- [x] Updated !wagonSteals command to search for 'drwagon' and return updated scoreboard
+- [X] ⭐ New Interactive Community Game - Parley Tracking Leaderboard
+- [X] Sends a private message to a member 24 minutes after typing 'drwagon' in the server, to let them know their cooldown is up.
+- [X] ⭐ New Interactive Community Game - Bounty Alive Leaderboard
+- [X] ⭐ New Interactive Community Game - Bounty Dead Leaderboard
 - [X] Records the amount of alive/dead bounties brought in by the player
-- [X] Allows players to see how many alive / dead bounties the possee has brought by typing '!bountiesAlive', '!bountiesDead', and '!bounties'
-- [X] Create a command to view the total number of wagon steals
-- [X] Displays at the bottom of '!wagonSteal' the total amount of wagons stolen during the time call xx.
-- [X] Add more community games like bounties, bountiesAlive/Dead
-- [X] Updated PvPGuide, and wagonGuide links
-
-
-## Additional Administrative Features Implemented
-- [x] Send embedded message announcements to #announcements
-- [x] Users may send messages to the bot which will be delivered to everyone with the @admins role
+- [X] Displays the total number of wagons stolen during a specified time interval at the bottom of the Leaderboard
+- [X] Displays the total number of parleys and bounties during a specified time interval at the bottom of the Leaderboard
+- [X] Added various fun in-game quotes to attached to the cool down message that's sent after 24 minutes
+- [X] Updated links for a popular members PvP and Wagon stealing guide
+- [X] ⭐ New Administrative Feature - Allows members to send a message to JP Cripps that is relayed to all members with the @admin role
+- [X] ⭐ New Community Feature - Tracks each members progress towards various server roles
+- [X] ⭐ New Community Feature - Implemented various calls that returns embedded messages of server information, roles, and vetting requirements
 
 
 ## License
-I retain all rights to the source code and no one may reproduce, distribute, or create derivative works from this work. 
+I retain all rights to the source code and no one may reproduce, distribute, or create derivative works from this work. Anyone may download and utilize JP Cripps within their server freely.
